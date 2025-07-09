@@ -1,0 +1,5 @@
+{
+    "ChestOpennedCount": 0,
+    "AccumulationAmount": 0,
+    "CompletedCount": 0
+}

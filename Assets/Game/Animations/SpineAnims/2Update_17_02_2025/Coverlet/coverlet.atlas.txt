@@ -1,0 +1,6 @@
+coverlet.png
+size:248,184
+filter:Linear,Linear
+pma:true
+coverlet
+bounds:2,2,241,177

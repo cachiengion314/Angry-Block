@@ -1,0 +1,38 @@
+Demo_swap.png
+size:1940,1020
+filter:Linear,Linear
+pma:true
+Ingame Screen/Coc/apple_juice
+bounds:770,192,64,94
+offsets:0,1,64,96
+Ingame Screen/Coc/cappuccino
+bounds:704,96,64,94
+offsets:0,1,64,96
+Ingame Screen/Coc/cherry_juice
+bounds:704,192,64,94
+offsets:0,1,64,96
+Ingame Screen/Coc/green_tea
+bounds:638,73,64,94
+offsets:0,1,64,96
+Ingame Screen/Coc/mocha
+bounds:572,69,64,98
+Ingame Screen/Coc/special
+bounds:504,71,66,96
+offsets:1,0,68,96
+Ingame Screen/Table/grid
+bounds:504,169,198,117
+Ingame Screen/Table/table_play_1
+bounds:1488,610,400,407
+Ingame Screen/Table/table_serve
+bounds:1488,302,450,306
+Ingame Screen/floor
+bounds:2,55,231,500
+rotate:90
+drink_tray
+bounds:2,288,1076,729
+offsets:2,2,1080,733
+khung
+bounds:1080,288,511,406
+rotate:90
+smoke
+bounds:1488,2,298,298

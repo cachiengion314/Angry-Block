@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2773145268447919346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8011661506701809635}
+  - component: {fileID: 1161223517366637439}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &8011661506701809635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2773145268447919346}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1161223517366637439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2773145268447919346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44245bc5aa50411d941c7027bf1f001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beverageFridgePref: {fileID: 4298640053225211963, guid: 9911ecdeb3199406398bd0afad8bbea2,
+    type: 3}
+  BeverageFridges: []
+  coffeeBoardPrefab: {fileID: 1571211788779634851, guid: 0cb0833dc43ec4bafae8fef81012f616,
+    type: 3}
+  CoffeeBoards: []
+  coinPrefab: {fileID: 6651107374613491905, guid: 242d84d687d1b402f83c50ee05e5d406,
+    type: 3}
+  Coins: []
+  coverLetPrefab: {fileID: 9020788138071660712, guid: b36df827579be4048979b864dfd4b413,
+    type: 3}
+  CoverLets: []
+  cupBoardPref: {fileID: 4091782675255015421, guid: 058948fea9a964a519cc9a23d8601a24,
+    type: 3}
+  CupBoards: []
+  cupPrefab: {fileID: 8251344858733850723, guid: f201655ac48e246fdbe39de77285c563,
+    type: 3}
+  curtainLayerPrefab: {fileID: 8131161436655295260, guid: 584ff60cd195e49cca732f24545d2d4e,
+    type: 3}
+  skeExplosionCup: {fileID: 4306160735868235078, guid: 9e848cfcf3c7e4e91808a3c85140fca2,
+    type: 3}
+  CurtainLayers: []
+  flowerPotPrefab: {fileID: 8197155391782280486, guid: b82f15ff2345d4d4284dd121ce7afb2e,
+    type: 3}
+  FlowerPots: []
+  leavesFlowerPrefab: {fileID: 8430322638701275261, guid: 776d8ac5081e144e7808203721067327,
+    type: 3}
+  LeavesFlowers: []
+  giftBoxPrefab: {fileID: 6670880848101338726, guid: f446dc6772d954485aaae3f8c94901d7,
+    type: 3}
+  GiftBoxes: []
+  goldenTrayPrefab: {fileID: 5817267809730351762, guid: 5c2761ebcfb0e483f8d5504936e2af45,
+    type: 3}
+  GoldenTrays: []
+  grassPrefab: {fileID: 2371456379909466607, guid: a1670b8f4af0a4beea3490e98e530a8a,
+    type: 3}
+  Grasses: []
+  grillerPrefab: {fileID: 6896393329895361997, guid: 6aec6fd74668b48469d88c5d34771bc2,
+    type: 3}
+  Grillers: []
+  iceBoxPrefab: {fileID: 3708757428937742846, guid: ea55f916c0e8f4388881eb5f425ccacd,
+    type: 3}
+  IceBoxes: []
+  cupGrid: {fileID: 0}
+  trayGrid: {fileID: 0}
+  boxPackedPref: {fileID: 3904897621643494663, guid: 5ff477279e3e24fdb83d367bf65c4b2a,
+    type: 3}
+  boxPackedGoldenPref: {fileID: 5613353820957892323, guid: d8f19beb4d4d643739a5f29716719112,
+    type: 3}
+  comboTextSpr: {fileID: 21300000, guid: 6adda7bd5515e49cea8dcbbacdff6659, type: 3}
+  videoAdsPrefab: {fileID: 5340607821183327669, guid: dfd351a49c749429b8ee9c3d074c4841,
+    type: 3}
+  themes:
+  - {fileID: 11400000, guid: d081b41fc20d342d89fa72791fcfc66b, type: 2}
+  levelProgressBlock: {fileID: 0}
+  tableDepot: {fileID: 0}
+  grassColor: {r: 0.07450981, g: 0.627451, b: 0.24705882, a: 0.5019608}
+  grillerColor: {r: 0.8509804, g: 0.62352943, b: 0.36078432, a: 0.5019608}
+  giftBoxColor: {r: 0.99607843, g: 0.7019608, b: 0.8784314, a: 0.5019608}
+  coffeeBoardColor: {r: 0.6156863, g: 0.3764706, b: 0.18431373, a: 0.5019608}
+  goldenBoxColor: {r: 0.99607843, g: 0.7882353, b: 0.15294118, a: 0.5019608}
+  cupBoardColor: {r: 0.88235295, g: 0.88235295, b: 0.88235295, a: 0.5019608}
+  machineCreamColor: {r: 0.67058825, g: 0.7921569, b: 0.99215686, a: 0.5019608}
+  magicNestColor: {r: 0.13725491, g: 0.27450982, b: 0.74509805, a: 0.5019608}
+  leaveFlowerColor: {r: 0.7764706, g: 0.19215687, b: 0.0627451, a: 0.5019608}
+  IsPacking: 0
+  SlowFactor: 0.1
+  CurrentThemeIndex: 0
+  matchedQuestCupsRate: 100
+  maxSpawnCupsAmount: 5
+  pairSpawnRate: 0
+  cupsMixedRate: 100
+  machineCreamPref: {fileID: 706306513092399117, guid: 3a5aa05f7cfb44fcb8965af3935fb383,
+    type: 3}
+  MachineCreams: []
+  magicNestPref: {fileID: 4440160770759925982, guid: ec0236b81517946ff8ed58bc75640d84,
+    type: 3}
+  MagicNests: []
+  moneyBagPref: {fileID: 3073108845251690461, guid: 21600e0edefb8464f8415d653d42b7e7,
+    type: 3}
+  MoneyBags: []
+  plantPotPrefab: {fileID: 5228175780950957473, guid: f6636a32a0dbc4ce99f72691ff8f7ee1,
+    type: 3}
+  PlantPots: []
+  availableTrayPosParent: {fileID: 0}
+  spawnTrayPos: {fileID: 0}
+  woodTrayPrefab: {fileID: 3708757428937742846, guid: e93b87832791f49dc8e5e66234abead2,
+    type: 3}
+  trayPrefab: {fileID: 1384925767156393774, guid: 95c0292b255ba456c9f527765d22f56e,
+    type: 3}
+  PlacedTrays: []
+  AvailableTrays: []
+  woodBoxPrefab: {fileID: 3708757428937742846, guid: 2e063ff08f5ff43019c95be9cb4acc8c,
+    type: 3}
+  WoodBoxes: []

@@ -1,0 +1,71 @@
+curtain_2x2.png
+size:932,1952
+filter:Linear,Linear
+pma:true
+border
+bounds:2,1102,436,276
+offsets:1,1,438,278
+border_glow1
+bounds:2,1380,436,276
+offsets:1,1,438,278
+border_glow2
+bounds:2,1658,454,292
+offsets:1,2,456,295
+curtain_blue viollet_2x2_L
+bounds:712,848,215,274
+offsets:1,1,217,276
+curtain_blue viollet_2x2_R
+bounds:657,1124,215,274
+offsets:1,1,217,276
+curtain_green_2x2_L
+bounds:657,1400,215,274
+offsets:1,1,217,276
+curtain_green_2x2_R
+bounds:495,2,215,274
+offsets:1,1,217,276
+curtain_magenta viollet_2x2_L
+bounds:495,278,215,274
+offsets:1,1,217,276
+curtain_magenta viollet_2x2_R
+bounds:495,554,215,274
+offsets:1,1,217,276
+curtain_orange_2x2_L
+bounds:495,830,215,274
+offsets:1,1,217,276
+curtain_orange_2x2_R
+bounds:458,1676,215,274
+offsets:1,1,217,276
+curtain_rainbow_2x2_L
+bounds:440,1106,215,274
+offsets:1,1,217,276
+curtain_rainbow_2x2_R
+bounds:440,1382,215,274
+offsets:1,1,217,276
+curtain_red_2x2_L
+bounds:278,57,215,274
+offsets:1,1,217,276
+curtain_red_2x2_R
+bounds:2,117,215,274
+offsets:1,1,217,276
+rotate:90
+curtain_seafoam_2x2_L
+bounds:219,333,215,274
+offsets:1,1,217,276
+rotate:90
+curtain_seafoam_2x2_R
+bounds:2,334,215,274
+offsets:1,1,217,276
+curtain_sky blue_2x2_L
+bounds:278,550,215,274
+offsets:1,1,217,276
+curtain_sky blue_2x2_R
+bounds:2,610,215,274
+offsets:1,1,217,276
+rotate:90
+curtain_yellow_2x2_L
+bounds:278,826,215,274
+offsets:1,1,217,276
+curtain_yellow_2x2_R
+bounds:2,885,215,274
+offsets:1,1,217,276
+rotate:90

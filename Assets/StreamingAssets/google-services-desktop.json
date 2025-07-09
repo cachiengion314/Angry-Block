@@ -1,0 +1,36 @@
+{
+  "project_info": {
+    "project_number": "1031407332260",
+    "project_id": "coffeesort-8b186",
+    "storage_bucket": "coffeesort-8b186.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031407332260:ios:59b2a97584f9cd46d22f31",
+        "android_client_info": {
+          "package_name": "com.unbrella.man"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvCTJ7bmBEKZTJdiqPR1qAPY8PA77Hs78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031407332260-cmrqr1mjk22n30m7pv19epgtv1lkbo55.apps.googleusercontent.com"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}

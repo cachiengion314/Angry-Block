@@ -1,0 +1,13 @@
+knot.png
+size:244,96
+filter:Linear,Linear
+pma:true
+light1
+bounds:93,11,80,80
+offsets:1,1,82,82
+note
+bounds:175,24,67,67
+offsets:1,1,69,69
+shadow
+bounds:2,2,89,89
+offsets:4,4,97,97

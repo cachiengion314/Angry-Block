@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7288754524028493567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5160761483926919081}
+  - component: {fileID: 6400335707775268905}
+  - component: {fileID: 4878564222669383056}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5160761483926919081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288754524028493567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &6400335707775268905
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288754524028493567}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &4878564222669383056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288754524028493567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568f1949d535347e38197e3237a0f1ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suggesTaks: {fileID: 8300000, guid: e05ba1ee3204b482885d9a251587e36b, type: 3}
+  claimReward: {fileID: 8300000, guid: b110100c0d6b9453bad8eb184aad84ba, type: 3}
+  pickEggs: {fileID: 8300000, guid: aca1cf906e01646089667a778196a8ba, type: 3}
+  brokenEggs: {fileID: 8300000, guid: 6457e2dcb0af8496680cdd48efcf05dc, type: 3}
+  SuggessPosEgg: {fileID: 8300000, guid: 2b1840eaa3d8f40789c4ca5746d2ac70, type: 3}
+  rewardEgg: {fileID: 8300000, guid: 470b09f87e4a34d1aa68100d7fdac7cc, type: 3}
+  mainTheme: {fileID: 8300000, guid: c5791eb90d1944b04b7956f97fd809a4, type: 3}
+  pressBtnSfx: {fileID: 8300000, guid: 1ccfb80eb694b4e5f8b1252f591974dc, type: 3}
+  hittingSfx: {fileID: 8300000, guid: e4a2eed95179647439caeb04dfa6351f, type: 3}
+  trayTranferSfx: {fileID: 8300000, guid: 03b28bb725e7b40748a033f9bca40d9e, type: 3}
+  boomSfx: {fileID: 8300000, guid: ac40c86e27321408f97f98aef111bde8, type: 3}
+  comboSfx: {fileID: 0}
+  coinDropSfx: {fileID: 8300000, guid: 831985985e25b42d5a4f144c8bab480f, type: 3}
+  handOnCoinSfx: {fileID: 8300000, guid: 4abb9c5de516341199d03b90738fa1e5, type: 3}
+  pickedTraySfx: {fileID: 8300000, guid: d26d4e8f561ea4aa7bde8fc6c8a1d5a1, type: 3}
+  placedTraySfx: {fileID: 8300000, guid: 84f6ceddcffd04e7197e112ad35086d4, type: 3}
+  packedSfx: {fileID: 8300000, guid: 132b929570f5649f4af631383b4a6ce1, type: 3}
+  nextStageSfx: {fileID: 8300000, guid: 86c1fe9becbfa4113bf08378e2edebb3, type: 3}
+  nextLevelSfx: {fileID: 8300000, guid: b6bf316b320d0436a83b789c896e9efc, type: 3}
+  levelFailSfx: {fileID: 8300000, guid: 71f6ef2435a1a440c8ceb9b26201bf23, type: 3}
+  iceDestroySfx: {fileID: 8300000, guid: 2c0e45384fd924d43ad7bdb30811327c, type: 3}
+  swapSfx: {fileID: 8300000, guid: 3aa7e35dabfd7451c9f4a2e38226535b, type: 3}
+  claimItemSfx: {fileID: 8300000, guid: b301712911be34685bcd36f56e666ca6, type: 3}
+  balloonItemSfx: {fileID: 8300000, guid: 936bc31516a4b45f9877dac54f962cce, type: 3}
+  coinReceiveSfx: {fileID: 8300000, guid: cedfd992dd7ad4a5b8bc93bb720e981a, type: 3}
+  coinExplodeSfx: {fileID: 8300000, guid: 0342ad59a6e224209a6c18b0076d06e2, type: 3}
+  claimDailyRewardSfx: {fileID: 8300000, guid: ecc31648d6d344c6f9ee266956075bcc, type: 3}
+  claimBreadSfx: {fileID: 8300000, guid: d220330d8275548aabc0e52e84423081, type: 3}
+  giftBoxSfx: {fileID: 8300000, guid: 1bbac1e0047b24a56aeb8fbaf2f7683d, type: 3}
+  coffeeBoardSfx: {fileID: 8300000, guid: c9e8aaecabec2476f8cbae10a6dc881d, type: 3}
+  plantPotSfx: {fileID: 8300000, guid: 7eeb0fb163f454d3eb0cc784a03a7246, type: 3}
+  coverLetSfx: {fileID: 8300000, guid: f9beea7c1df584f9ba2a016b20892de4, type: 3}
+  moneyBagSfx: {fileID: 8300000, guid: 8bf88474dadc39d4589c142a853b6fde, type: 3}
+  cupBoardSfx: {fileID: 8300000, guid: d6672b23f60304fdc842f5dcbc5ed2e2, type: 3}
+  machineCreamSfx: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+  dinhdinhSfx: {fileID: 8300000, guid: 35b57c6bf978d45ddb1c1e27e23007f1, type: 3}
+  getRewardSfx: {fileID: 8300000, guid: cee97c58fa0ef4d1bb7dc57be449afb6, type: 3}
+  magicNestSfx: {fileID: 8300000, guid: f9beea7c1df584f9ba2a016b20892de4, type: 3}
+  flowerPotBloomingSfx: {fileID: 8300000, guid: ff765363f01e949b68b42bb7e00b1fb3,
+    type: 3}
+  leavesSpreadOutSfx: {fileID: 8300000, guid: d269c184595fd435bb1203f202f69f61, type: 3}
+  audioSource: {fileID: 6400335707775268905}

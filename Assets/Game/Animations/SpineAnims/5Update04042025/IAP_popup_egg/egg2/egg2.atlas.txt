@@ -1,0 +1,17 @@
+egg2.png
+size:358,360
+filter:Linear,Linear
+pma:true
+blink
+bounds:265,2,91,91
+offsets:3,3,98,96
+egg2
+bounds:2,149,174,209
+leaf_1
+bounds:178,81,277,123
+offsets:4,4,285,127
+rotate:90
+leaf_2
+bounds:2,2,263,108
+offsets:5,3,273,111
+rotate:180

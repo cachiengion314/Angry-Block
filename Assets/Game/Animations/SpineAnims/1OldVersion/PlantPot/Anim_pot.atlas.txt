@@ -1,0 +1,16 @@
+Anim_pot.png
+size:108,284
+filter:Linear,Linear
+pma:true
+lv_1
+bounds:44,39,52,61
+offsets:0,1,52,62
+rotate:270
+lv_2
+bounds:2,2,61,50
+offsets:0,10,61,60
+lv_3
+bounds:2,85,101,63
+pot
+bounds:2,150,103,130
+offsets:0,3,103,133

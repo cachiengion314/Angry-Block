@@ -1,0 +1,124 @@
+{
+    "availableColors": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "powerUnlockItems": [
+        true,
+        true,
+        true,
+        true
+    ],
+    "phases": [
+        {
+            "shouldSpawnPairTray": true,
+            "availableColors": [],
+            "quests": [
+                {
+                    "cupColorIndex": 1,
+                    "cupAmount": 3
+                },
+                {
+                    "cupColorIndex": 2,
+                    "cupAmount": 3
+                },
+                {
+                    "cupColorIndex": 5,
+                    "cupAmount": 3
+                }
+            ]
+        },
+        {
+            "shouldSpawnPairTray": true,
+            "availableColors": [],
+            "quests": [
+                {
+                    "cupColorIndex": 1,
+                    "cupAmount": 3
+                }
+            ]
+        }
+    ],
+    "emptyBoxes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        111,
+        111,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "grasses": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "iceBoxes": [
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "phaseTable": 1
+}

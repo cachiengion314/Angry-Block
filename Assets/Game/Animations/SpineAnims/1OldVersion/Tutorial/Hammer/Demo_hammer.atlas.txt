@@ -1,0 +1,44 @@
+Demo_hammer.png
+size:2020,816
+filter:Linear,Linear
+pma:true
+Ingame Screen/Coc/apple_juice
+bounds:1676,107,64,94
+offsets:0,1,64,96
+rotate:90
+Ingame Screen/Coc/cappuccino
+bounds:1580,107,64,94
+offsets:0,1,64,96
+rotate:90
+Ingame Screen/Coc/cherry_juice
+bounds:1380,236,64,94
+offsets:0,1,64,96
+rotate:90
+Ingame Screen/Coc/green_tea
+bounds:1890,448,64,94
+offsets:0,1,64,96
+rotate:90
+Ingame Screen/Coc/mocha
+bounds:1890,514,64,98
+rotate:90
+Ingame Screen/Coc/special
+bounds:1890,580,66,96
+offsets:1,0,68,96
+Ingame Screen/Table/grid
+bounds:1380,54,198,117
+Ingame Screen/Table/table_play_1
+bounds:1488,406,400,407
+Ingame Screen/floor
+bounds:1488,173,231,500
+rotate:90
+drink_tray
+bounds:2,84,1076,729
+offsets:2,2,1080,733
+harrem_icon
+bounds:1890,678,127,135
+offsets:0,1,128,136
+khung
+bounds:1080,302,511,406
+rotate:90
+smoke
+bounds:1080,2,298,298

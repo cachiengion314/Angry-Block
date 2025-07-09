@@ -1,0 +1,6 @@
+Level.png
+size:408,440
+filter:Linear,Linear
+pma:true
+coffee_cup
+bounds:2,2,404,436

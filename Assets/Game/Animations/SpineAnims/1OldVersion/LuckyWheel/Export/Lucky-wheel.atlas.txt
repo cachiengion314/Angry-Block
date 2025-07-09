@@ -1,0 +1,26 @@
+Lucky-wheel.png
+size:268,680
+filter:Linear,Linear
+pma:true
+light
+bounds:2,427,32,249
+offsets:2,1,35,250
+lucky copy
+bounds:102,55,115,33
+offsets:0,2,116,36
+lw_1
+bounds:36,446,225,230
+lw_2
+bounds:2,2,98,97
+lw_3
+bounds:36,270,174,174
+ribbon_purple
+bounds:171,90,178,92
+offsets:1,0,180,92
+rotate:90
+tray
+bounds:2,101,167,167
+offsets:0,1,168,168
+wheel
+bounds:102,28,89,25
+offsets:1,2,92,28

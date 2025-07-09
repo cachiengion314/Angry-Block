@@ -1,0 +1,62 @@
+{
+    "Index": 19,
+    "ColorBlocksGridSize": {
+        "x": 8,
+        "y": 8
+    },
+    "InitColorBlocks": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+    ],
+    "DirectionBlocksGridSize": {
+        "x": 7,
+        "y": 11
+    },
+    "InitDirectionBlocks": [
+        {
+            "ColorValue": 3,
+            "Direction": 0
+        },
+        {
+            "ColorValue": 3,
+            "Direction": 1
+        },
+        {
+            "ColorValue": 3,
+            "Direction": 2
+        },
+        {
+            "ColorValue": 3,
+            "Direction": 3
+        },
+        {
+            "ColorValue": 3,
+            "Direction": 0
+        }
+    ]
+}
