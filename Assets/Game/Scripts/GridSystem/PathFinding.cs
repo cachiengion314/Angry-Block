@@ -52,8 +52,7 @@ public partial class GridWorld : MonoBehaviour
 
   /// <summary>
   /// excludes is an array that contain all of positions that is not consider 
-  /// as obstacles. Note that for performance wise excludes own item is int2 
-  /// which is a grid base position
+  /// as obstacles.
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="startPos"></param>

@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [Serializable]
-public enum Direction
+public enum DirectionValue
 {
   Right,
   Up,
@@ -12,22 +12,33 @@ public enum Direction
 }
 
 [Serializable]
+public class ColorBlockData
+{
+  public int ColorValue;
+  [Range(1, 20)]
+  public int Health = 1;
+}
+
+[Serializable]
 public class DirectionBlockData
 {
   public int ColorValue;
-  public Direction Direction;
+  public DirectionValue DirectionValue;
+  [Range(1, 20)]
+  public int Ammunition = 5;
 }
 
 [Serializable]
 public class LevelInformation
 {
+  [ViewOnly]
   public int Index;
   public int2 ColorBlocksGridSize;
   /// <summary>
   /// Should doing quad tree stuffs
   /// </summary>
   [Tooltip("Manual place color blocks in grid positions")]
-  public int[] InitColorBlocks;
+  public ColorBlockData[] InitColorBlocks;
   public int2 DirectionBlocksGridSize;
   public DirectionBlockData[] InitDirectionBlocks;
 }
@@ -36,8 +47,6 @@ public partial class LevelManager : MonoBehaviour
 {
   [Header("Level Editor")]
   [SerializeField] LevelInformation levelInformation;
-
-  [Header("Level Editor")]
   [SerializeField][Range(1, 20)] int levelSelected = 1;
   [SerializeField] bool isSelectedMatchedCurrentLevel;
   public bool IsSelectedMatchedCurrentLevel { get { return isSelectedMatchedCurrentLevel; } }
@@ -47,7 +56,7 @@ public partial class LevelManager : MonoBehaviour
   {
     levelInformation.Index = levelSelected - 1;
     levelInformation.ColorBlocksGridSize = new int2();
-    levelInformation.InitColorBlocks = new int[0];
+    levelInformation.InitColorBlocks = new ColorBlockData[0];
     levelInformation.DirectionBlocksGridSize = new int2();
     levelInformation.InitDirectionBlocks = new DirectionBlockData[0];
   }

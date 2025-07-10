@@ -48,11 +48,12 @@ public partial class LevelManager : MonoBehaviour
     for (int i = 0; i < topGrid.Grid.Length; ++i)
     {
       if (i > initColorBlocks.Length - 1) break;
-      if (initColorBlocks[i] == -1) continue;
+      if (initColorBlocks[i] == null) continue;
 
       var colorBlock = SpawnColorBlockAt(i, spawnedParent);
       colorBlock.SetIndex(i);
-      colorBlock.SetColorValue(initColorBlocks[i]);
+      colorBlock.SetColorValue(initColorBlocks[i].ColorValue);
+      colorBlock.SetInitHealth(initColorBlocks[i].Health);
 
       _colorBlocks[i] = colorBlock;
     }
@@ -66,11 +67,13 @@ public partial class LevelManager : MonoBehaviour
       var directionBlock = SpawnDirectionBlockAt(i, spawnedParent);
       directionBlock.SetIndex(i);
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
-      directionBlock.SetDirection(initDirectionBlocks[i].Direction);
+      directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
+      directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
 
       _directionBlocks[i] = directionBlock;
     }
 
+    InitFiringPositions();
     InitWaitingPositions();
   }
 

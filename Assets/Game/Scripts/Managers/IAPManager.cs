@@ -48,19 +48,8 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
   private void Start()
   {
-#if UNITY_IOS
-    Prefix = "com.cmz.coffeepack.";
-#elif UNITY_ANDROID
     Prefix = Application.identifier + ".";
-#endif
-
     InitializePurchasing();
-
-    // CheckSubscriptionStatus(KeyString.KEY_IAP_REMOVEADS_SUBSCRIPTION, 
-    // (isVIP, productId) =>
-    // {
-    //   GameManager.Instance.IsRemoveAds7d = isVIP;
-    // });
   }
 
   public void InitializePurchasing()

@@ -203,26 +203,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingSlotAMount: 7
+  firingSlotAMount: 4
   levelInformation:
     Index: 19
     ColorBlocksGridSize:
       x: 8
       y: 8
-    InitColorBlocks: 030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000
+    InitColorBlocks:
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
     DirectionBlocksGridSize:
-      x: 7
+      x: 9
       y: 11
     InitDirectionBlocks:
-    - ColorValue: 3
-      Direction: 0
-    - ColorValue: 3
-      Direction: 1
-    - ColorValue: 3
-      Direction: 2
-    - ColorValue: 3
-      Direction: 3
-    - ColorValue: 3
-      Direction: 0
+    - ColorValue: 0
+      DirectionValue: 3
+      Ammunition: 5
+    - ColorValue: 0
+      DirectionValue: 1
+      Ammunition: 10
+    - ColorValue: 1
+      DirectionValue: 0
+      Ammunition: 5
+    - ColorValue: 1
+      DirectionValue: 2
+      Ammunition: 5
+    - ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 10
+    - ColorValue: 0
+      DirectionValue: 2
+      Ammunition: 5
+    - ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   spawnedParent: {fileID: 2142750223}
@@ -276,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 313449924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.49, z: 0}
+  m_LocalPosition: {x: 0, y: -4.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,7 +365,7 @@ MonoBehaviour:
   colorIndex: 2
   degAroundX: 0
   gridSize:
-    x: 7
+    x: 9
     y: 11
   scale:
     x: 1.3

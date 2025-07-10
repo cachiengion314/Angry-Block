@@ -29,7 +29,7 @@ public partial class LevelManager : MonoBehaviour
     Vector2 startTouchPos = Camera.main.ScreenToWorldPoint(finger.ScreenPosition);
     Collider2D[] colliders = Physics2D.OverlapPointAll(startTouchPos);
 
-    Controlling(FindDirectionBlockIn(colliders));
+    TouchControlling(FindDirectionBlockIn(colliders));
   }
 
   void OnGesture(List<LeanFinger> list)
