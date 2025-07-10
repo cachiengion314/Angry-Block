@@ -125,8 +125,8 @@ public partial class LevelManager : MonoBehaviour
   }
 
   void FireTo(
-    DirectionBlockControl directionBlock,
     List<ColorBlockControl> firstLineMatched,
+    DirectionBlockControl directionBlock,
     out List<ColorBlockControl> effectedBlocks
   )
   {
@@ -185,7 +185,7 @@ public partial class LevelManager : MonoBehaviour
         .OnComplete(() => { })
     );
 
-    FireTo(directionBlock, firstLineMatched, out var effectedBlocks);
+    FireTo(firstLineMatched, directionBlock, out var effectedBlocks);
     // Fire animation
     var fireDeltaDuration = .25f;
     for (int x = 0; x < effectedBlocks.Count; ++x)
