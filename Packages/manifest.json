@@ -30,6 +30,7 @@
     "com.unity.services.levelplay": "8.9.0",
     "com.unity.timeline": "1.8.8",
     "com.unity.ugui": "2.0.0",
+    "com.unity.visualscripting": "1.9.8",
     "com.unity.xr.legacyinputhelpers": "2.1.12",
     "net.mikinya.unity-excel-importer": "https://github.com/mikito/unity-excel-importer.git?path=Assets/ExcelImporter#v0.1.1/upm",
     "com.unity.modules.accessibility": "1.0.0",

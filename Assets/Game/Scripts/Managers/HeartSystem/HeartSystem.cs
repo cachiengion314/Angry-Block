@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +38,7 @@ public class HeartSystem : MonoBehaviour
   }
 
   //
-  private UnityEngine.GameObject[] _heartControls;
+  private UnityEngine.Object[] _heartControls;
 
   //
   private DateTime _lastedTimeHeart;
@@ -175,7 +176,7 @@ public class HeartSystem : MonoBehaviour
 
   private void InitFirstTimeOpen()
   {
-    _heartControls = (GameObject[])FindObjectsByType(typeof(HeartControl), FindObjectsSortMode.InstanceID);
+    _heartControls = FindObjectsByType(typeof(HeartControl), FindObjectsSortMode.InstanceID);
 
     // TODO Config remote max energy to infinity
     var maxHearts = FirebaseSetup.Instance.FirebaseRemoteData.parameterGroups.Lobby.parameters.config_game.max_energy;
@@ -210,7 +211,7 @@ public class HeartSystem : MonoBehaviour
 
     _currentHeart = PlayerPrefs.GetInt(KeyString.KEY_CURRENT_HEART);
     _useinfinityHeartTime = PlayerPrefs.GetInt(KeyString.KEY_USE_TIME_INFINITYHEART);
-    _heartControls = (GameObject[])FindObjectsByType(typeof(HeartControl), FindObjectsSortMode.InstanceID);
+    _heartControls = FindObjectsByType(typeof(HeartControl), FindObjectsSortMode.InstanceID);
 
     if (_useinfinityHeartTime > 0)
     {
