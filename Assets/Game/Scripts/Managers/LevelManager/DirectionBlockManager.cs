@@ -125,15 +125,15 @@ public partial class LevelManager : MonoBehaviour
   }
 
   void FireTo(
-    List<ColorBlockControl> firstLineMatched,
+    List<ColorBlockControl> firstRowMatched,
     DirectionBlockControl directionBlock,
     out List<ColorBlockControl> effectedBlocks
   )
   {
     effectedBlocks = new List<ColorBlockControl>();
-    for (int x = 0; x < firstLineMatched.Count; ++x)
+    for (int x = 0; x < firstRowMatched.Count; ++x)
     {
-      var obj = firstLineMatched[x];
+      var obj = firstRowMatched[x];
       if (obj == null) continue;
       if (directionBlock.GetAmmunition() <= 0) break;
 
