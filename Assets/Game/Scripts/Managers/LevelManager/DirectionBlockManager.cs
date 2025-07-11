@@ -185,7 +185,8 @@ public partial class LevelManager : MonoBehaviour
     var seq = DOTween.Sequence();
     var startDuration = 0.0f;
 
-    if (!IsFirstRowMatchWith(directionBlock.GetColorValue(), out var firstLineMatched))
+    var firstRowMatched = FindFirstRowMatchWith(directionBlock.GetColorValue());
+    if (firstRowMatched.Count == 0)
     {
       var emptyWaitingSlotIndex = FindEmptySlotIndex(_waitingSlots);
       MoveTo(
@@ -202,12 +203,13 @@ public partial class LevelManager : MonoBehaviour
     }
 
     var emptyFiringSlotIndex = FindEmptySlotIndex(_firingSlots);
+    if (emptyFiringSlotIndex == -1 || emptyFiringSlotIndex > _firingSlots.Length - 1) return;
+
     MoveTo(
       emptyFiringSlotIndex, directionBlock, _firingSlots, _firingPositions,
       out DirectionBlockControl needMovingObj2,
       out Vector3[] destinations2
     );
-    if (destinations2.Length == 0) return;
 
     // Move to firing position animation
     var moveDuration = destinations2.Length * .1f;
@@ -220,7 +222,7 @@ public partial class LevelManager : MonoBehaviour
     );
     startDuration += moveDuration + Time.deltaTime;
 
-    FireTo(firstLineMatched, directionBlock, out var effectedBlocks);
+    FireTo(firstRowMatched, directionBlock, out var effectedBlocks);
     // Fire animation
     var fireDeltaDuration = .2f;
     var fireDuration = fireDeltaDuration * effectedBlocks.Count;
@@ -303,18 +305,19 @@ public partial class LevelManager : MonoBehaviour
   const string KEY_ARRANGE_COLLUMN = "arrange_collumn_";
   void RearrangeTopGrid()
   {
-    if (IsFirstRowFull(out var emptyCol))
+    var needArrangeCollumn = FindNeedArrangeCollumn();
+    if (needArrangeCollumn == -1)
     {
       return;
     }
     if (
-      _runningAnimations.ContainsKey(KEY_ARRANGE_COLLUMN + emptyCol)
-      && _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol]
+      _runningAnimations.ContainsKey(KEY_ARRANGE_COLLUMN + needArrangeCollumn)
+      && _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn]
     ) return;
 
-    _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol] = true;
+    _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn] = true;
     ArrangeAt(
-      emptyCol,
+      needArrangeCollumn,
       out List<ColorBlockControl> needMovingObjs3,
       out List<float3> destinations3
      );
@@ -339,7 +342,7 @@ public partial class LevelManager : MonoBehaviour
       startDuration,
       () =>
       {
-        _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol] = false;
+        _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn] = false;
       }
     );
   }
