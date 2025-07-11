@@ -81,7 +81,7 @@ public class DirectionBlockControl : MonoBehaviour
     return _directionValue;
   }
 
-  public void InvokeFireAnimationAt(float3 direction, float _duration = .1f, int _loopTime = 2)
+  public void InvokeFireAnimationAt(float3 direction, float _duration = .2f, int _loopTime = 2)
   {
     bodyRenderer.transform
       .DOScale(1.3f, _duration / _loopTime)

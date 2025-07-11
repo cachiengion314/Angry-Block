@@ -6,7 +6,7 @@ public class RendererSystem : MonoBehaviour
 
   [Header("Dependences")]
   [SerializeField] ThemeObj[] themes;
-  private int _currentThemeIndex = 0;
+  int _currentThemeIndex = 0;
 
   void Start()
   {

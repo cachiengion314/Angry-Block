@@ -141,7 +141,41 @@ public partial class LevelManager : MonoBehaviour
       {
         directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
         damageable.SetHealth(damageable.GetHealth() - 1);
+        if (damageable.IsDead())
+        {
+          _colorBlocks[obj.GetIndex()] = null;
+        }
         effectedBlocks.Add(obj);
+      }
+    }
+  }
+
+  void RearrangeTopGrid(
+    out List<ColorBlockControl> needMovingObjs,
+    out List<float3> destinations
+  )
+  {
+    needMovingObjs = new List<ColorBlockControl>();
+    destinations = new List<float3>();
+
+    while (!IsFirstRowFull(out int notFullX))
+    {
+      for (int y = 0; y < topGrid.GridSize.y; ++y)
+      {
+        var grid = new int2(notFullX, y);
+        var idx = topGrid.ConvertGridPosToIndex(grid);
+        var obj = _colorBlocks[idx];
+        if (obj == null) continue;
+        var downGrid = grid + new int2(0, -1);
+        var downIdx = topGrid.ConvertGridPosToIndex(downGrid);
+        if (_colorBlocks[downIdx] == null)
+        {
+          _colorBlocks[obj.GetIndex()] = null;
+          _colorBlocks[downIdx] = obj;
+          obj.SetIndex(downIdx);
+          needMovingObjs.Add(obj);
+          destinations.Add(topGrid.ConvertGridPosToWorldPos(downGrid));
+        }
       }
     }
   }
@@ -153,7 +187,7 @@ public partial class LevelManager : MonoBehaviour
     var seq = DOTween.Sequence();
     var startDuration = 0.0f;
 
-    if (!IsFirstLineMatchWith(directionBlock.GetColorValue(), out var firstLineMatched))
+    if (!IsFirstRowMatchWith(directionBlock.GetColorValue(), out var firstLineMatched))
     {
       var emptyWaitingSlotIndex = FindEmptySlotIndex(_waitingSlots);
       MoveTo(
@@ -175,6 +209,8 @@ public partial class LevelManager : MonoBehaviour
       out DirectionBlockControl needMovingObj2,
       out Vector3[] destinations2
     );
+    if (destinations2.Length == 0) return;
+
     // MoveTo animation
     var moveDuration = destinations2.Length * .1f;
     seq.Insert(
@@ -184,20 +220,79 @@ public partial class LevelManager : MonoBehaviour
         .SetEase(Ease.InQuad)
         .OnComplete(() => { })
     );
+    startDuration += moveDuration + Time.deltaTime;
 
     FireTo(firstLineMatched, directionBlock, out var effectedBlocks);
     // Fire animation
-    var fireDeltaDuration = .25f;
+    var fireDeltaDuration = .2f;
+    var fireDuration = fireDeltaDuration * effectedBlocks.Count;
     for (int x = 0; x < effectedBlocks.Count; ++x)
     {
+      var block = effectedBlocks[x];
+
       seq.InsertCallback(
-        startDuration + moveDuration + x * fireDeltaDuration,
+        startDuration + x * fireDeltaDuration,
         () =>
         {
-          print("InvokeFireAnimationAt");
           directionBlock.InvokeFireAnimationAt(Vector3.up, fireDeltaDuration);
         }
       );
+
+      if (block.IsDead())
+      {
+        seq.InsertCallback(
+          startDuration + x * fireDeltaDuration,
+          () =>
+          {
+            Destroy(block.gameObject);
+          }
+        );
+      }
     }
+    startDuration += fireDuration + Time.deltaTime;
+
+    if (directionBlock.GetAmmunition() <= 0)
+    {
+      var firingSlotIdx = -1;
+      for (int i = 0; i < _firingSlots.Length; ++i)
+      {
+        if (_firingSlots[i] != null
+           && _firingSlots[i].GetIndex() != directionBlock.GetIndex()
+         )
+          continue;
+        firingSlotIdx = i;
+        break;
+      }
+      _firingSlots[firingSlotIdx] = null;
+      _colorBlocks[directionBlock.GetIndex()] = null;
+    }
+    var selfDestroyDuration = .3f;
+    seq.InsertCallback(
+        startDuration,
+       () =>
+       {
+         Destroy(directionBlock.gameObject);
+       }
+    );
+    startDuration += selfDestroyDuration + Time.deltaTime;
+
+    RearrangeTopGrid(
+      out List<ColorBlockControl> needMovingObjs3,
+      out List<float3> destinations3
+    );
+    var rearrangeDeltaDuration = .3f;
+    var rearrangeDuration = rearrangeDeltaDuration * needMovingObjs3.Count;
+    for (int i = 0; i < needMovingObjs3.Count; ++i)
+    {
+      var block = needMovingObjs3[i];
+      var des = destinations3[i];
+
+      seq.Insert(
+        startDuration,
+        block.transform
+          .DOMove(des, rearrangeDeltaDuration)
+      );
+    }
+    startDuration += rearrangeDuration + Time.deltaTime;
   }
 }

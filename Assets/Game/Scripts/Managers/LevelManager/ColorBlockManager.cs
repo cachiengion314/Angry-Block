@@ -22,7 +22,7 @@ public partial class LevelManager : MonoBehaviour
     return arr;
   }
 
-  bool IsFirstLineMatchWith(in int colorValue, out List<ColorBlockControl> firstLineMatched)
+  bool IsFirstRowMatchWith(in int colorValue, out List<ColorBlockControl> firstLineMatched)
   {
     var firstLine = FindFirstLineColorBlocks();
     firstLineMatched = new List<ColorBlockControl>();
@@ -35,5 +35,33 @@ public partial class LevelManager : MonoBehaviour
     }
 
     return firstLineMatched.Count > 0;
+  }
+
+  bool IsColmunEmptyAt(int x)
+  {
+    for (int y = 0; y < topGrid.GridSize.y; ++y)
+    {
+      var grid = new int2(x, y);
+      var idx = topGrid.ConvertGridPosToIndex(grid);
+      var obj = _colorBlocks[idx];
+      if (obj != null) return false;
+    }
+    return true;
+  }
+
+  bool IsFirstRowFull(out int notFullX)
+  {
+    notFullX = -1;
+    for (int x = 0; x < topGrid.GridSize.x; ++x)
+    {
+      if (IsColmunEmptyAt(x)) continue;
+      var grid = new int2(x, 0);
+      var index = topGrid.ConvertGridPosToIndex(grid);
+      var obj = _colorBlocks[index];
+      if (obj != null) continue;
+      notFullX = x;
+      return false;
+    }
+    return true;
   }
 }
