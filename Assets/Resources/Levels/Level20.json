@@ -121,12 +121,12 @@
     "InitDirectionBlocks": [
         {
             "ColorValue": 0,
-            "DirectionValue": 3,
+            "DirectionValue": 0,
             "Ammunition": 5
         },
         {
             "ColorValue": 0,
-            "DirectionValue": 1,
+            "DirectionValue": 0,
             "Ammunition": 10
         },
         {
@@ -136,7 +136,7 @@
         },
         {
             "ColorValue": 1,
-            "DirectionValue": 2,
+            "DirectionValue": 0,
             "Ammunition": 5
         },
         {
@@ -146,7 +146,7 @@
         },
         {
             "ColorValue": 0,
-            "DirectionValue": 2,
+            "DirectionValue": 0,
             "Ammunition": 5
         },
         {

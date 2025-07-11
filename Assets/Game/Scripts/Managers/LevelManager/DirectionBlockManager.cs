@@ -150,7 +150,8 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  void RearrangeTopGrid(
+  void ArrangeAt(
+    in int collumn,
     out List<ColorBlockControl> needMovingObjs,
     out List<float3> destinations
   )
@@ -158,24 +159,21 @@ public partial class LevelManager : MonoBehaviour
     needMovingObjs = new List<ColorBlockControl>();
     destinations = new List<float3>();
 
-    while (!IsFirstRowFull(out int notFullX))
+    for (int y = 0; y < topGrid.GridSize.y; ++y)
     {
-      for (int y = 0; y < topGrid.GridSize.y; ++y)
+      var grid = new int2(collumn, y);
+      var idx = topGrid.ConvertGridPosToIndex(grid);
+      var obj = _colorBlocks[idx];
+      if (obj == null) continue;
+      var downGrid = grid + new int2(0, -1);
+      var downIdx = topGrid.ConvertGridPosToIndex(downGrid);
+      if (_colorBlocks[downIdx] == null)
       {
-        var grid = new int2(notFullX, y);
-        var idx = topGrid.ConvertGridPosToIndex(grid);
-        var obj = _colorBlocks[idx];
-        if (obj == null) continue;
-        var downGrid = grid + new int2(0, -1);
-        var downIdx = topGrid.ConvertGridPosToIndex(downGrid);
-        if (_colorBlocks[downIdx] == null)
-        {
-          _colorBlocks[obj.GetIndex()] = null;
-          _colorBlocks[downIdx] = obj;
-          obj.SetIndex(downIdx);
-          needMovingObjs.Add(obj);
-          destinations.Add(topGrid.ConvertGridPosToWorldPos(downGrid));
-        }
+        _colorBlocks[obj.GetIndex()] = null;
+        _colorBlocks[downIdx] = obj;
+        obj.SetIndex(downIdx);
+        needMovingObjs.Add(obj);
+        destinations.Add(topGrid.ConvertGridPosToWorldPos(downGrid));
       }
     }
   }
@@ -195,7 +193,7 @@ public partial class LevelManager : MonoBehaviour
         out DirectionBlockControl needMovingObj1,
         out Vector3[] destinations1
       );
-      // MoveTo animation
+      // Move to waiting animation
       needMovingObj1.transform
         .DOPath(destinations1, destinations1.Length * .1f)
         .SetEase(Ease.InQuad)
@@ -211,7 +209,7 @@ public partial class LevelManager : MonoBehaviour
     );
     if (destinations2.Length == 0) return;
 
-    // MoveTo animation
+    // Move to firing position animation
     var moveDuration = destinations2.Length * .1f;
     seq.Insert(
       startDuration,
@@ -251,37 +249,78 @@ public partial class LevelManager : MonoBehaviour
     }
     startDuration += fireDuration + Time.deltaTime;
 
-    if (directionBlock.GetAmmunition() <= 0)
-    {
-      var firingSlotIdx = -1;
-      for (int i = 0; i < _firingSlots.Length; ++i)
-      {
-        if (_firingSlots[i] != null
-           && _firingSlots[i].GetIndex() != directionBlock.GetIndex()
-         )
-          continue;
-        firingSlotIdx = i;
-        break;
-      }
-      _firingSlots[firingSlotIdx] = null;
-      _colorBlocks[directionBlock.GetIndex()] = null;
-    }
-    var selfDestroyDuration = .3f;
-    seq.InsertCallback(
-        startDuration,
-       () =>
-       {
-         Destroy(directionBlock.gameObject);
-       }
-    );
-    startDuration += selfDestroyDuration + Time.deltaTime;
+    seq.InsertCallback(startDuration, () => SelfDestruct(directionBlock));
+  }
 
-    RearrangeTopGrid(
+  const string KEY_SELF_DESTRUCT = "self_destruct_";
+  void SelfDestruct(DirectionBlockControl directionBlock)
+  {
+    if (directionBlock.GetAmmunition() > 0) return;
+    if (
+     _runningAnimations.ContainsKey(KEY_SELF_DESTRUCT + directionBlock.GetInstanceID())
+     && _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()]
+   ) return;
+
+    _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()] = true;
+
+    var seq = DOTween.Sequence();
+    var startDuration = 0.0f;
+    var selfDestructDuration = .3f;
+
+    var firingSlotIdx = -1;
+    for (int i = 0; i < _firingSlots.Length; ++i)
+    {
+      if (_firingSlots[i] != null
+         && _firingSlots[i].GetIndex() != directionBlock.GetIndex()
+       )
+        continue;
+      firingSlotIdx = i;
+      break;
+    }
+    _firingSlots[firingSlotIdx] = null;
+    _colorBlocks[directionBlock.GetIndex()] = null;
+
+    seq.Insert(
+      startDuration,
+      directionBlock.transform
+        .DOScale(new float3(1.3f, 1.3f, 1.3f), selfDestructDuration / 2f)
+        .SetLoops(2, LoopType.Yoyo)
+    );
+    startDuration += selfDestructDuration + Time.deltaTime;
+
+    seq.InsertCallback(
+      startDuration,
+      () =>
+      {
+        Destroy(directionBlock.gameObject);
+        _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()] = false;
+      }
+    );
+  }
+
+  const string KEY_ARRANGE_COLLUMN = "arrange_collumn_";
+  void RearrangeTopGrid()
+  {
+    if (IsFirstRowFull(out var emptyCol))
+    {
+      return;
+    }
+    if (
+      _runningAnimations.ContainsKey(KEY_ARRANGE_COLLUMN + emptyCol)
+      && _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol]
+    ) return;
+
+    _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol] = true;
+    ArrangeAt(
+      emptyCol,
       out List<ColorBlockControl> needMovingObjs3,
       out List<float3> destinations3
-    );
-    var rearrangeDeltaDuration = .3f;
-    var rearrangeDuration = rearrangeDeltaDuration * needMovingObjs3.Count;
+     );
+
+    var seq = DOTween.Sequence();
+    var startDuration = 0.0f;
+    var rearrangeDuration = .3f;
+
     for (int i = 0; i < needMovingObjs3.Count; ++i)
     {
       var block = needMovingObjs3[i];
@@ -290,9 +329,16 @@ public partial class LevelManager : MonoBehaviour
       seq.Insert(
         startDuration,
         block.transform
-          .DOMove(des, rearrangeDeltaDuration)
+          .DOMove(des, rearrangeDuration)
       );
     }
     startDuration += rearrangeDuration + Time.deltaTime;
+    seq.InsertCallback(
+      startDuration,
+      () =>
+      {
+        _runningAnimations[KEY_ARRANGE_COLLUMN + emptyCol] = false;
+      }
+    );
   }
 }

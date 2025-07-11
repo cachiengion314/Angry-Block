@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
@@ -9,6 +10,7 @@ public partial class LevelManager : MonoBehaviour
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
+  Dictionary<string, bool> _runningAnimations;
 
   void Start()
   {
@@ -22,6 +24,13 @@ public partial class LevelManager : MonoBehaviour
 
     LoadLevelFrom(levelSelected);
     SetupCurrentLevel();
+
+    _runningAnimations = new Dictionary<string, bool>();
+  }
+
+  void Update()
+  {
+    RearrangeTopGrid();
   }
 
   void OnDestroy()
