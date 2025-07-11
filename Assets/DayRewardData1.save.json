@@ -1,0 +1,56 @@
+{
+    "IsReachMaxPrice": false,
+    "DayDatas": [
+        {
+            "DayIndex": 0,
+            "CoinValue": [
+                50
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 1,
+            "CoinValue": [
+                1
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 2,
+            "CoinValue": [
+                1
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 3,
+            "CoinValue": [
+                100
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 4,
+            "CoinValue": [
+                1
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 5,
+            "CoinValue": [
+                1
+            ],
+            "DayActivated": -1
+        },
+        {
+            "DayIndex": 6,
+            "CoinValue": [
+                200,
+                30,
+                1
+            ],
+            "DayActivated": -1
+        }
+    ]
+}
