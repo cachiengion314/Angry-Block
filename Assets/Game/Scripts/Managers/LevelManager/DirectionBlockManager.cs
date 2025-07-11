@@ -249,13 +249,15 @@ public partial class LevelManager : MonoBehaviour
     }
     startDuration += fireDuration + Time.deltaTime;
 
-    seq.InsertCallback(startDuration, () => SelfDestruct(directionBlock));
+    if (directionBlock.GetAmmunition() == 0)
+    {
+      seq.InsertCallback(startDuration, () => SelfDestruct(directionBlock));
+    }
   }
 
   const string KEY_SELF_DESTRUCT = "self_destruct_";
   void SelfDestruct(DirectionBlockControl directionBlock)
   {
-    if (directionBlock.GetAmmunition() > 0) return;
     if (
      _runningAnimations.ContainsKey(KEY_SELF_DESTRUCT + directionBlock.GetInstanceID())
      && _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()]
