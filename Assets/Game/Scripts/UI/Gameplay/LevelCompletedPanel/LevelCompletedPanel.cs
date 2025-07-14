@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelCompletedPanel : MonoBehaviour
 {
   [SerializeField] TMP_Text levelText;
-  [SerializeField] Image x2CoinImg;
+  [SerializeField] Transform x2CoinImg;
   [SerializeField] Button nextBtn;
   [SerializeField] Button nextWithVideoBtn;
   public static LevelCompletedPanel Instance { get; private set; }
