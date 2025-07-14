@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Sych.ShareAssets.Runtime;
 using UnityEngine.Networking;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class SettingModal : MonoBehaviour
@@ -12,9 +13,9 @@ public class SettingModal : MonoBehaviour
   [SerializeField] Image hapticNegativeBarImg;
   [SerializeField] Image soundNegativeBarImg;
   [SerializeField] Image musicNegativeBarImg;
-  [SerializeField] Image hapticNegativeBarImgAndroid;
-  [SerializeField] Image soundNegativeBarImgAndroid;
-  [SerializeField] Image musicNegativeBarImgAndroid;
+  // [SerializeField] Image hapticNegativeBarImgAndroid;
+  // [SerializeField] Image soundNegativeBarImgAndroid;
+  // [SerializeField] Image musicNegativeBarImgAndroid;
   [SerializeField] RectTransform hackPanel;
   [SerializeField] TMP_Text versionText;
   [SerializeField] TMP_Text versionTextAndroid;
@@ -27,7 +28,7 @@ public class SettingModal : MonoBehaviour
   {
     UpdateUI();
     versionText.text = "Version " + Application.version;
-    versionTextAndroid.text = "Version " + Application.version;
+    // versionTextAndroid.text = "Version " + Application.version;
   }
 
   void UpdateUI()
@@ -35,34 +36,34 @@ public class SettingModal : MonoBehaviour
     if (!GameManager.Instance.IsSoundOn)
     {
       soundNegativeBarImg.gameObject.SetActive(true);
-      soundNegativeBarImgAndroid.gameObject.SetActive(true);
+      // soundNegativeBarImgAndroid.gameObject.SetActive(true);
     }
     else
     {
       soundNegativeBarImg.gameObject.SetActive(false);
-      soundNegativeBarImgAndroid.gameObject.SetActive(false);
+      // soundNegativeBarImgAndroid.gameObject.SetActive(false);
     }
 
     if (!GameManager.Instance.IsMusicOn)
     {
       musicNegativeBarImg.gameObject.SetActive(true);
-      musicNegativeBarImgAndroid.gameObject.SetActive(true);
+      // musicNegativeBarImgAndroid.gameObject.SetActive(true);
     }
     else
     {
       musicNegativeBarImg.gameObject.SetActive(false);
-      musicNegativeBarImgAndroid.gameObject.SetActive(false);
+      // musicNegativeBarImgAndroid.gameObject.SetActive(false);
     }
 
     if (!GameManager.Instance.IsHapticOn)
     {
       hapticNegativeBarImg.gameObject.SetActive(true);
-      hapticNegativeBarImgAndroid.gameObject.SetActive(true);
+      // hapticNegativeBarImgAndroid.gameObject.SetActive(true);
     }
     else
     {
       hapticNegativeBarImg.gameObject.SetActive(false);
-      hapticNegativeBarImgAndroid.gameObject.SetActive(false);
+      // hapticNegativeBarImgAndroid.gameObject.SetActive(false);
     }
   }
 
@@ -70,42 +71,42 @@ public class SettingModal : MonoBehaviour
   {
     GameManager.Instance.IsMusicOn = true;
     musicNegativeBarImg.gameObject.SetActive(false);
-    musicNegativeBarImgAndroid.gameObject.SetActive(false);
+    // musicNegativeBarImgAndroid.gameObject.SetActive(false);
   }
 
   void TurnOffMainThemeMusic()
   {
     GameManager.Instance.IsMusicOn = false;
     musicNegativeBarImg.gameObject.SetActive(true);
-    musicNegativeBarImgAndroid.gameObject.SetActive(true);
+    // musicNegativeBarImgAndroid.gameObject.SetActive(true);
   }
 
   void TurnOnSound()
   {
     GameManager.Instance.IsSoundOn = true;
     soundNegativeBarImg.gameObject.SetActive(false);
-    soundNegativeBarImgAndroid.gameObject.SetActive(false);
+    // soundNegativeBarImgAndroid.gameObject.SetActive(false);
   }
 
   void TurnOffSound()
   {
     GameManager.Instance.IsSoundOn = false;
     soundNegativeBarImg.gameObject.SetActive(true);
-    soundNegativeBarImgAndroid.gameObject.SetActive(true);
+    // soundNegativeBarImgAndroid.gameObject.SetActive(true);
   }
 
   void TurnOnHaptic()
   {
     GameManager.Instance.IsHapticOn = true;
     hapticNegativeBarImg.gameObject.SetActive(false);
-    hapticNegativeBarImgAndroid.gameObject.SetActive(false);
+    // hapticNegativeBarImgAndroid.gameObject.SetActive(false);
   }
 
   void TurnOffHaptic()
   {
     GameManager.Instance.IsHapticOn = false;
     hapticNegativeBarImg.gameObject.SetActive(true);
-    hapticNegativeBarImgAndroid.gameObject.SetActive(true);
+    // hapticNegativeBarImgAndroid.gameObject.SetActive(true);
   }
 
   public void ToggleHackPanel()
@@ -209,6 +210,12 @@ public class SettingModal : MonoBehaviour
       Debug.Log($"Chia sẻ {(success ? "thành công" : "thất bại")}");
     });
 
+  }
+
+  public void BackHome()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+    SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);
   }
 
 }

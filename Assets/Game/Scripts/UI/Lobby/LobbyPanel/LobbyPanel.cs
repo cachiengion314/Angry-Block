@@ -140,47 +140,47 @@ public partial class LobbyPanel : MonoBehaviour
     InitPosDefaultLiveOps();
     shopModal.GetComponent<ShopModal>().InitPosDefault();
 
-    StartCoroutine(InitUIFollowEvent());
+    // StartCoroutine(InitUIFollowEvent());
 
-    var isNeedShowDailyReward = dailyRewardModal.CheckDayilyReward();
-    if (isNeedShowDailyReward)
-    {
-      TurnOnNoticeDailyReward();
-      HasShowAnyPopup = true;
-      if (GameManager.Instance.IsEvented() && PlayerPrefs.GetInt(KeyString.KEY_BOOL_ISCOMPLETED_TUTORIALNOEL, 0) == 1)
-      {
-        OpenDailyRewardModal();
-      }
-      else if (!GameManager.Instance.IsEvented())
-      {
-        OpenDailyRewardModal();
-      }
-    }
-    else
-    {
-      TurnOffNoticeDailyReward();
-    }
+    // var isNeedShowDailyReward = dailyRewardModal.CheckDayilyReward();
+    // if (isNeedShowDailyReward)
+    // {
+    //   TurnOnNoticeDailyReward();
+    //   HasShowAnyPopup = true;
+    //   if (GameManager.Instance.IsEvented() && PlayerPrefs.GetInt(KeyString.KEY_BOOL_ISCOMPLETED_TUTORIALNOEL, 0) == 1)
+    //   {
+    //     OpenDailyRewardModal();
+    //   }
+    //   else if (!GameManager.Instance.IsEvented())
+    //   {
+    //     OpenDailyRewardModal();
+    //   }
+    // }
+    // else
+    // {
+    //   TurnOffNoticeDailyReward();
+    // }
 
-    InitNoticeLuckyWheel();
-    InitNoticeFreeCoin();
-    InitNoticeLuckySpin();
-    InitNoticeLuckyEggHunt();
-    if (ProgerssSteakBtnSystem.Instance != null)
-    {
-      ProgerssSteakBtnSystem.Instance.UpdateUi(0);
-    }
+    // InitNoticeLuckyWheel();
+    // InitNoticeFreeCoin();
+    // InitNoticeLuckySpin();
+    // InitNoticeLuckyEggHunt();
+    // if (ProgerssSteakBtnSystem.Instance != null)
+    // {
+    //   ProgerssSteakBtnSystem.Instance.UpdateUi(0);
+    // }
 
-    HeartSystem.Instance.InvokeOnce();
+    // HeartSystem.Instance.InvokeOnce();
 
-    if (SceneManager.GetActiveScene().name == "Lobby" && !HasShowAnyPopup && GameManager.Instance.IsMetaProgressHappenning())
-    {
-      GameManager.Instance.PlayAnimClaimRewardMeta();
-    }
+    // if (SceneManager.GetActiveScene().name == "Lobby" && !HasShowAnyPopup && GameManager.Instance.IsMetaProgressHappenning())
+    // {
+    //   GameManager.Instance.PlayAnimClaimRewardMeta();
+    // }
 
-    if (SceneManager.GetActiveScene().name == "Lobby" && !HasShowAnyPopup && IsLuckyEggHuntProcessing())
-    {
-      GameManager.Instance.PlayAnimClaimEggHuntProgress();
-    }
+    // if (SceneManager.GetActiveScene().name == "Lobby" && !HasShowAnyPopup && IsLuckyEggHuntProcessing())
+    // {
+    //   GameManager.Instance.PlayAnimClaimEggHuntProgress();
+    // }
   }
 
   public bool IsLuckyEggHuntProcessing()
@@ -388,18 +388,19 @@ public partial class LobbyPanel : MonoBehaviour
   public void LoadSceneWithDelay(string sceneName)
   {
     SoundManager.Instance.PlayPressBtnSfx();
+    SceneManager.LoadScene(sceneName);
 
-    LeanTween.delayedCall(gameObject, .2f, () =>
-    {
-      if (!HeartSystem.Instance.TryDecreaseHeart(1))
-      {
-        ToggleBuyHeartPanel();
-        return;
-      }
+    // LeanTween.delayedCall(gameObject, .2f, () =>
+    // {
+    //   if (!HeartSystem.Instance.TryDecreaseHeart(1))
+    //   {
+    //     ToggleBuyHeartPanel();
+    //     return;
+    //   }
 
-      HeartSystem.Instance.TryIncreaseHeart(1);
-      SceneManager.LoadScene(sceneName);
-    });
+    //   HeartSystem.Instance.TryIncreaseHeart(1);
+    //   SceneManager.LoadScene(sceneName);
+    // });
   }
 
   public void LoadSceneAt(int i)

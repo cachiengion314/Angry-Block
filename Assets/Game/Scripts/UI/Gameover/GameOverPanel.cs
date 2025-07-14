@@ -14,7 +14,7 @@ public class GameOverPanel : MonoBehaviour
   {
     reviveBtn.interactable = true;
     retryBtn.interactable = true;
-    BalloonSystem.Instance.HideBalloon();
+    // BalloonSystem.Instance.HideBalloon();
 
     if (GameManager.Instance.ReviveCount >= MAX_REVIVE_TODAY_COUNT)
     {
