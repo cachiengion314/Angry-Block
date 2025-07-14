@@ -22,6 +22,7 @@ public partial class LevelManager : MonoBehaviour
 
     SubscribeTouchEvent();
 
+    InitPool();
     LoadLevelFrom(levelSelected);
     SetupCurrentLevel();
 
@@ -30,7 +31,9 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
-    RearrangeTopGrid();
+    ReArrangeTopGridUpdate();
+    BulletPositionsUpdate();
+    LockAndFireUpddate();
   }
 
   void OnDestroy()

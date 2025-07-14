@@ -1,9 +1,9 @@
-using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class DirectionBlockControl : MonoBehaviour
   , IDirectionBlock
+  , IGun
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
@@ -79,15 +79,5 @@ public class DirectionBlockControl : MonoBehaviour
   public DirectionValue GetDirectionValue()
   {
     return _directionValue;
-  }
-
-  public void InvokeFireAnimationAt(float3 direction, float _duration = .2f, int _loopTime = 2)
-  {
-    bodyRenderer.transform
-      .DOScale(1.3f, _duration / _loopTime)
-      .SetLoops(_loopTime, LoopType.Yoyo);
-    directionRenderer.transform
-      .DOScale(1.3f, _duration / _loopTime)
-      .SetLoops(_loopTime, LoopType.Yoyo);
   }
 }

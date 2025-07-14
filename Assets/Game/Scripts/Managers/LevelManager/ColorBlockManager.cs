@@ -11,24 +11,28 @@ public partial class LevelManager : MonoBehaviour
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
 
-  ColorBlockControl[] FindFirstLineColorBlocks()
+  ColorBlockControl FindFirstBlockMatchedWith(in int colorValue)
   {
-    var arr = new ColorBlockControl[topGrid.GridSize.x];
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
       var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
-      arr[x] = _colorBlocks[idx];
+      var obj = _colorBlocks[idx];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.GetWhoLocked() != null) continue;
+      if (colorBlock.GetColorValue() == colorValue) return obj;
     }
-    return arr;
+    return null;
   }
 
-  List<ColorBlockControl> FindFirstRowMatchWith(in int colorValue)
+  List<ColorBlockControl> FindFirstRowMatchedWith(in int colorValue)
   {
-    var firstLine = FindFirstLineColorBlocks();
     var firstLineMatched = new List<ColorBlockControl>();
-    for (int i = 0; i < firstLine.Length; ++i)
+    for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
-      var obj = firstLine[i];
+      var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
+      var obj = _colorBlocks[idx];
       if (obj == null) continue;
       if (obj.GetColorValue() == colorValue)
         firstLineMatched.Add(obj);
@@ -50,16 +54,20 @@ public partial class LevelManager : MonoBehaviour
 
   int FindNeedArrangeCollumn()
   {
-    var notFullX = -1;
-    for (int x = 0; x < topGrid.GridSize.x; ++x)
+    for (int y = 0; y < topGrid.GridSize.y; ++y)
     {
-      if (IsColmunEmptyAt(x)) continue;
-      var grid = new int2(x, 0);
-      var index = topGrid.ConvertGridPosToIndex(grid);
-      var obj = _colorBlocks[index];
-      if (obj != null) continue;
-      notFullX = x;
+      for (int x = 0; x < topGrid.GridSize.x; ++x)
+      {
+        if (IsColmunEmptyAt(x)) continue;
+        var grid = new int2(x, y);
+        var index = topGrid.ConvertGridPosToIndex(grid);
+        var obj = _colorBlocks[index];
+        if (obj != null) continue;
+
+        return x;
+      }
     }
-    return notFullX;
+
+    return -1;
   }
 }

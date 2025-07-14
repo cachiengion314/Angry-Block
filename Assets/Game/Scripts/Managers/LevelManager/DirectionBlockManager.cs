@@ -18,6 +18,28 @@ public partial class LevelManager : MonoBehaviour
   DirectionBlockControl[] _directionBlocks;
   public DirectionBlockControl[] DirectionBlocks { get { return _directionBlocks; } }
 
+  void TouchControlling(DirectionBlockControl directionBlock)
+  {
+    if (directionBlock == null) return;
+
+    var firstRowMatched = FindFirstRowMatchedWith(directionBlock.GetColorValue());
+    if (firstRowMatched.Count == 0)
+    {
+      var emptyWaitingSlotIndex = FindEmptySlotIndex(_waitingSlots);
+      MoveTo(
+        emptyWaitingSlotIndex, directionBlock, _waitingSlots, _waitingPositions
+      );
+      return;
+    }
+
+    var emptyFiringSlotIndex = FindEmptySlotIndex(_firingSlots);
+    if (emptyFiringSlotIndex == -1 || emptyFiringSlotIndex > _firingSlots.Length - 1) return;
+
+    MoveTo(
+      emptyFiringSlotIndex, directionBlock, _firingSlots, _firingPositions
+    );
+  }
+
   void InitFiringPositions()
   {
     _firingPositions = new float3[firingSlotAMount];
@@ -48,6 +70,16 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
+  int FindSlotIndex(DirectionBlockControl block, DirectionBlockControl[] slots)
+  {
+    for (int i = 0; i < slots.Length; ++i)
+    {
+      if (slots[i] == null) continue;
+      if (slots[i] == block) return i;
+    }
+    return -1;
+  }
+
   DirectionBlockControl FindDirectionBlockIn(Collider2D[] cols)
   {
     var colorBlock = FindObjIn<DirectionBlockControl>(cols);
@@ -72,17 +104,12 @@ public partial class LevelManager : MonoBehaviour
   }
 
   void MoveTo(
-    in int slotIndex,
-    in DirectionBlockControl directionBlock,
-    in DirectionBlockControl[] slots,
-    in float3[] positions,
-    out DirectionBlockControl needMovingObj,
-    out Vector3[] destinations
+    int slotIndex,
+    DirectionBlockControl directionBlock,
+    DirectionBlockControl[] slots,
+    in float3[] positions
   )
   {
-    needMovingObj = directionBlock;
-    destinations = new Vector3[0];
-
     if (slotIndex > positions.Length - 1 || slotIndex < 0)
     {
       print("Slots is not available");
@@ -110,7 +137,6 @@ public partial class LevelManager : MonoBehaviour
     _directionBlocks[directionBlock.GetIndex()] = null;
     var index = bottomGrid.ConvertWorldPosToIndex(endPos);
     directionBlock.SetIndex(index);
-    slots[slotIndex] = directionBlock;
     _directionBlocks[index] = directionBlock;
 
     /// animation
@@ -120,34 +146,14 @@ public partial class LevelManager : MonoBehaviour
       var movePos = bottomGrid.ConvertGridPosToWorldPos(moves[i]);
       _moves[i] = movePos;
     }
-    destinations = _moves;
-    moves.Dispose();
-  }
 
-  void FireTo(
-    List<ColorBlockControl> firstRowMatched,
-    DirectionBlockControl directionBlock,
-    out List<ColorBlockControl> effectedBlocks
-  )
-  {
-    effectedBlocks = new List<ColorBlockControl>();
-    for (int x = 0; x < firstRowMatched.Count; ++x)
+    directionBlock.transform.DOPath(_moves, 1)
+    .OnComplete(() =>
     {
-      var obj = firstRowMatched[x];
-      if (obj == null) continue;
-      if (directionBlock.GetAmmunition() <= 0) break;
+      slots[slotIndex] = directionBlock;
+    });
 
-      if (obj.TryGetComponent<IDamageable>(out var damageable))
-      {
-        directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
-        damageable.SetHealth(damageable.GetHealth() - 1);
-        if (damageable.IsDead())
-        {
-          _colorBlocks[obj.GetIndex()] = null;
-        }
-        effectedBlocks.Add(obj);
-      }
-    }
+    moves.Dispose();
   }
 
   void ArrangeAt(
@@ -178,132 +184,8 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  void TouchControlling(DirectionBlockControl directionBlock)
-  {
-    if (directionBlock == null) return;
-
-    var seq = DOTween.Sequence();
-    var startDuration = 0.0f;
-
-    var firstRowMatched = FindFirstRowMatchWith(directionBlock.GetColorValue());
-    if (firstRowMatched.Count == 0)
-    {
-      var emptyWaitingSlotIndex = FindEmptySlotIndex(_waitingSlots);
-      MoveTo(
-        emptyWaitingSlotIndex, directionBlock, _waitingSlots, _waitingPositions,
-        out DirectionBlockControl needMovingObj1,
-        out Vector3[] destinations1
-      );
-      // Move to waiting animation
-      needMovingObj1.transform
-        .DOPath(destinations1, destinations1.Length * .1f)
-        .SetEase(Ease.InQuad)
-        .OnComplete(() => { });
-      return;
-    }
-
-    var emptyFiringSlotIndex = FindEmptySlotIndex(_firingSlots);
-    if (emptyFiringSlotIndex == -1 || emptyFiringSlotIndex > _firingSlots.Length - 1) return;
-
-    MoveTo(
-      emptyFiringSlotIndex, directionBlock, _firingSlots, _firingPositions,
-      out DirectionBlockControl needMovingObj2,
-      out Vector3[] destinations2
-    );
-
-    // Move to firing position animation
-    var moveDuration = destinations2.Length * .1f;
-    seq.Insert(
-      startDuration,
-      needMovingObj2.transform
-        .DOPath(destinations2, moveDuration)
-        .SetEase(Ease.InQuad)
-        .OnComplete(() => { })
-    );
-    startDuration += moveDuration + Time.deltaTime;
-
-    FireTo(firstRowMatched, directionBlock, out var effectedBlocks);
-    // Fire animation
-    var fireDeltaDuration = .2f;
-    var fireDuration = fireDeltaDuration * effectedBlocks.Count;
-    for (int x = 0; x < effectedBlocks.Count; ++x)
-    {
-      var block = effectedBlocks[x];
-
-      seq.InsertCallback(
-        startDuration + x * fireDeltaDuration,
-        () =>
-        {
-          directionBlock.InvokeFireAnimationAt(Vector3.up, fireDeltaDuration);
-        }
-      );
-
-      if (block.IsDead())
-      {
-        seq.InsertCallback(
-          startDuration + x * fireDeltaDuration,
-          () =>
-          {
-            Destroy(block.gameObject);
-          }
-        );
-      }
-    }
-    startDuration += fireDuration + Time.deltaTime;
-
-    if (directionBlock.GetAmmunition() == 0)
-    {
-      seq.InsertCallback(startDuration, () => SelfDestruct(directionBlock));
-    }
-  }
-
-  const string KEY_SELF_DESTRUCT = "self_destruct_";
-  void SelfDestruct(DirectionBlockControl directionBlock)
-  {
-    if (
-     _runningAnimations.ContainsKey(KEY_SELF_DESTRUCT + directionBlock.GetInstanceID())
-     && _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()]
-   ) return;
-
-    _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()] = true;
-
-    var seq = DOTween.Sequence();
-    var startDuration = 0.0f;
-    var selfDestructDuration = .3f;
-
-    var firingSlotIdx = -1;
-    for (int i = 0; i < _firingSlots.Length; ++i)
-    {
-      if (_firingSlots[i] != null
-         && _firingSlots[i].GetIndex() != directionBlock.GetIndex()
-       )
-        continue;
-      firingSlotIdx = i;
-      break;
-    }
-    _firingSlots[firingSlotIdx] = null;
-    _colorBlocks[directionBlock.GetIndex()] = null;
-
-    seq.Insert(
-      startDuration,
-      directionBlock.transform
-        .DOScale(new float3(1.3f, 1.3f, 1.3f), selfDestructDuration / 2f)
-        .SetLoops(2, LoopType.Yoyo)
-    );
-    startDuration += selfDestructDuration + Time.deltaTime;
-
-    seq.InsertCallback(
-      startDuration,
-      () =>
-      {
-        Destroy(directionBlock.gameObject);
-        _runningAnimations[KEY_SELF_DESTRUCT + directionBlock.GetInstanceID()] = false;
-      }
-    );
-  }
-
   const string KEY_ARRANGE_COLLUMN = "arrange_collumn_";
-  void RearrangeTopGrid()
+  void RearrangeTopGridUpdate()
   {
     var needArrangeCollumn = FindNeedArrangeCollumn();
     if (needArrangeCollumn == -1)
@@ -329,6 +211,7 @@ public partial class LevelManager : MonoBehaviour
     for (int i = 0; i < needMovingObjs3.Count; ++i)
     {
       var block = needMovingObjs3[i];
+      if (block == null) continue;
       var des = destinations3[i];
 
       seq.Insert(
@@ -345,5 +228,94 @@ public partial class LevelManager : MonoBehaviour
         _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn] = false;
       }
     );
+  }
+
+  void ReArrangeTopGridUpdate()
+  {
+    var needArrangeCollumn = FindNeedArrangeCollumn();
+    if (needArrangeCollumn == -1)
+    {
+      return;
+    }
+    for (int y = 0; y < topGrid.GridSize.y; ++y)
+    {
+      var grid = new int2(needArrangeCollumn, y);
+      var currentIndex = topGrid.ConvertGridPosToIndex(grid);
+      var colorBlock = _colorBlocks[currentIndex];
+      if (colorBlock == null) continue;
+
+      var downGrid = grid + new int2(0, -1);
+      var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
+      var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
+      if (targetIndex < 0 || targetIndex > _colorBlocks.Length - 1) continue;
+      if (_colorBlocks[targetIndex] != null) continue;
+
+      colorBlock.transform.position += 1 * Time.deltaTime * new Vector3(0, -1, 0);
+      var currentPos = colorBlock.transform.position;
+      var distance = ((Vector3)targetPos - currentPos).magnitude;
+
+      if (distance > .1f) continue;
+
+      _colorBlocks[colorBlock.GetIndex()] = null;
+      _colorBlocks[targetIndex] = colorBlock;
+      colorBlock.SetIndex(targetIndex);
+    }
+  }
+
+  void LockAndFireUpddate()
+  {
+    for (int i = 0; i < _firingSlots.Length; ++i)
+    {
+      if (_firingSlots[i] == null) continue;
+
+      var directionBlock = _firingSlots[i];
+      if (!directionBlock.TryGetComponent<IGun>(out var gun)) continue;
+
+      if (directionBlock.GetAmmunition() <= 0)
+      {
+        var idx = FindSlotIndex(directionBlock, _firingSlots);
+        _firingSlots[idx] = null;
+        Destroy(directionBlock.gameObject);
+        continue;
+      }
+
+      var colorBlock = FindFirstBlockMatchedWith(directionBlock.GetColorValue());
+      if (colorBlock == null)
+      {
+        // go to waiting slot
+        continue;
+      }
+
+      if (!colorBlock.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != directionBlock) continue;
+
+      damageable.SetWhoPicked(directionBlock); // picking this target to prevent other interfere
+      var rotSpeed = 5;
+      var dirToTarget = colorBlock.transform.position - directionBlock.transform.position;
+      var targetRad = math.acos(
+        math.dot(dirToTarget.normalized, directionBlock.transform.up)
+      );
+      if (math.abs(targetRad) > .1f)
+      {
+        var sign = math.sign(
+          math.cross(directionBlock.transform.up, dirToTarget).z
+        );
+        var deltaTargetRad = sign * Time.deltaTime * rotSpeed * targetRad;
+        var deltaQuad = new Quaternion(
+          0, 0, math.sin(deltaTargetRad / 2f), math.cos(deltaTargetRad / 2f)
+        );
+        directionBlock.transform.rotation *= deltaQuad;
+        continue;
+      }
+      if (damageable.GetWhoLocked() == directionBlock) continue;
+
+      damageable.SetWhoLocked(directionBlock); // locking target
+      directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
+      SpawnBulletAt(
+        directionBlock.transform.position,
+        colorBlock.transform.position - directionBlock.transform.position,
+        1
+      );
+    }
   }
 }

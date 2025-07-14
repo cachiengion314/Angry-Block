@@ -4,6 +4,7 @@ using UnityEngine;
 public partial class LevelManager : MonoBehaviour
 {
   [Header("Prefs")]
+  [SerializeField] BulletControl bulletPref;
   [SerializeField] ColorBlockControl colorBlockPref;
   [SerializeField] DirectionBlockControl directionBlockPref;
 
@@ -27,5 +28,14 @@ public partial class LevelManager : MonoBehaviour
     var obj = Instantiate(directionBlockPref, parent);
     obj.transform.position = pos;
     return obj;
+  }
+
+  public BulletControl SpawnBulletAt(float3 pos, float3 velocity, int _damage = 1)
+  {
+    var bullet = _bulletsPool.Get();
+    bullet.transform.position = pos;
+    bullet.SetVelocity(velocity);
+    bullet.SetDamage(_damage);
+    return bullet;
   }
 }

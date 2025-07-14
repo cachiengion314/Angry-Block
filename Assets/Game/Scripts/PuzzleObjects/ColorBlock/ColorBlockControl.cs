@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ColorBlockControl : MonoBehaviour
@@ -11,6 +12,8 @@ public class ColorBlockControl : MonoBehaviour
   int _initHealth;
   int _currentHealth;
   int _colorValue;
+  DirectionBlockControl _whoLocked;
+  DirectionBlockControl _whoPicked;
 
   public int GetColorValue()
   {
@@ -46,7 +49,7 @@ public class ColorBlockControl : MonoBehaviour
 
   public void SetHealth(int health)
   {
-    _currentHealth = health;
+    _currentHealth = math.max(0, health);
   }
 
   public bool IsDead()
@@ -57,5 +60,25 @@ public class ColorBlockControl : MonoBehaviour
   public bool IsDamage()
   {
     return _currentHealth == _initHealth;
+  }
+
+  public DirectionBlockControl GetWhoLocked()
+  {
+    return _whoLocked;
+  }
+
+  public void SetWhoLocked(DirectionBlockControl block)
+  {
+    _whoLocked = block;
+  }
+
+  public DirectionBlockControl GetWhoPicked()
+  {
+    return _whoPicked;
+  }
+
+  public void SetWhoPicked(DirectionBlockControl block)
+  {
+    _whoPicked = block;
   }
 }
