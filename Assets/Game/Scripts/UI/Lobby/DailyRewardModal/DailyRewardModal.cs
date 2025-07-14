@@ -29,22 +29,22 @@ public class DailyRewardModal : MonoBehaviour
 
   private void Awake()
   {
-    if (Instance == null)
-    {
-      Instance = this;
-    }
-    else
-    {
-      Destroy(gameObject);
-    }
+    // if (Instance == null)
+    // {
+    //   Instance = this;
+    // }
+    // else
+    // {
+    //   Destroy(gameObject);
+    // }
 
-    LoadData();
-    CheckSelectedDaysChain();
-    InitUIBeginState();
-    for (int i = 0; i < dayBlocks.Length; ++i)
-    {
-      dayBlocks[i].InjectRewardImg(dailyRewardSprites[i]);
-    }
+    // LoadData();
+    // CheckSelectedDaysChain();
+    // InitUIBeginState();
+    // for (int i = 0; i < dayBlocks.Length; ++i)
+    // {
+    //   dayBlocks[i].InjectRewardImg(dailyRewardSprites[i]);
+    // }
   }
 
   public bool CheckDayilyReward()
