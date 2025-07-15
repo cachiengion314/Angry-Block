@@ -248,13 +248,12 @@ public partial class LevelManager : MonoBehaviour
       var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
       var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
       if (targetIndex < 0 || targetIndex > _colorBlocks.Length - 1) continue;
-      if (_colorBlocks[targetIndex] != null) continue;
 
-      colorBlock.transform.position += 1 * Time.deltaTime * new Vector3(0, -1, 0);
+      colorBlock.transform.position += 2.5f * Time.deltaTime * new Vector3(0, -1, 0);
       var currentPos = colorBlock.transform.position;
       var distance = ((Vector3)targetPos - currentPos).magnitude;
 
-      if (distance > .1f) continue;
+      if (distance > .05f) continue;
 
       _colorBlocks[colorBlock.GetIndex()] = null;
       _colorBlocks[targetIndex] = colorBlock;
@@ -313,7 +312,7 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
       SpawnBulletAt(
         directionBlock.transform.position,
-        colorBlock.transform.position - directionBlock.transform.position,
+        2.5f * (colorBlock.transform.position - directionBlock.transform.position).normalized,
         1
       );
     }

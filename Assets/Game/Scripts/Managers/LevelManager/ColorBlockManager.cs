@@ -54,7 +54,7 @@ public partial class LevelManager : MonoBehaviour
 
   int FindNeedArrangeCollumn()
   {
-    for (int y = 0; y < topGrid.GridSize.y; ++y)
+    for (int y = 0; y < 1; ++y)
     {
       for (int x = 0; x < topGrid.GridSize.x; ++x)
       {
@@ -67,7 +67,6 @@ public partial class LevelManager : MonoBehaviour
         return x;
       }
     }
-
     return -1;
   }
 }
