@@ -189,7 +189,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 26290814}
-  - component: {fileID: 26290815}
   m_Layer: 5
   m_Name: Booster3
   m_TagString: Untagged
@@ -218,18 +217,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &26290815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26290813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d611c331646a4b929612c2c1f959169, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &33592310
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,6 +667,7 @@ GameObject:
   - component: {fileID: 74468658}
   - component: {fileID: 74468657}
   - component: {fileID: 74468656}
+  - component: {fileID: 74468659}
   m_Layer: 5
   m_Name: Booster1
   m_TagString: Untagged
@@ -791,6 +779,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74468654}
   m_CullTransparentMesh: 1
+--- !u!114 &74468659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74468654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbae7267a18948878c443508df6ebe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountBooster: {fileID: 1072490841}
+  UnlockBooster: {fileID: 1552855481}
+  LockBooster: {fileID: 1644168085}
+  EmptyBooster: {fileID: 1569871323}
 --- !u!1 &84370741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,8 +2444,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341246854}
-        m_TargetAssemblyTypeName: BuyBooster2Panel, Assembly-CSharp
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
         m_MethodName: BuyBooster2
         m_Mode: 1
         m_Arguments:
@@ -2778,7 +2782,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 341246853}
-  - component: {fileID: 341246854}
   m_Layer: 5
   m_Name: Booster2
   m_TagString: Untagged
@@ -2807,18 +2810,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &341246854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341246852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73d8f87743ad4493eb1f7e580bf28292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &350058046
 GameObject:
   m_ObjectHideFlags: 0
@@ -5909,6 +5900,7 @@ GameObject:
   - component: {fileID: 783623877}
   - component: {fileID: 783623876}
   - component: {fileID: 783623875}
+  - component: {fileID: 783623878}
   m_Layer: 5
   m_Name: Booster2
   m_TagString: Untagged
@@ -6020,6 +6012,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783623873}
   m_CullTransparentMesh: 1
+--- !u!114 &783623878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783623873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbae7267a18948878c443508df6ebe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountBooster: {fileID: 983479050}
+  UnlockBooster: {fileID: 1635573525}
+  LockBooster: {fileID: 1108086764}
+  EmptyBooster: {fileID: 407878786}
 --- !u!1 &809134727
 GameObject:
   m_ObjectHideFlags: 0
@@ -7832,8 +7840,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963163471}
-        m_TargetAssemblyTypeName: BuyBooster1Panel, Assembly-CSharp
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
         m_MethodName: BuyBooster1
         m_Mode: 1
         m_Arguments:
@@ -11076,6 +11084,7 @@ GameObject:
   - component: {fileID: 1439786214}
   - component: {fileID: 1439786213}
   - component: {fileID: 1439786212}
+  - component: {fileID: 1439786215}
   m_Layer: 5
   m_Name: Booster3
   m_TagString: Untagged
@@ -11187,6 +11196,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439786210}
   m_CullTransparentMesh: 1
+--- !u!114 &1439786215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439786210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbae7267a18948878c443508df6ebe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountBooster: {fileID: 1595328181}
+  UnlockBooster: {fileID: 1016798876}
+  LockBooster: {fileID: 611662680}
+  EmptyBooster: {fileID: 1387563078}
 --- !u!1 &1440334818
 GameObject:
   m_ObjectHideFlags: 0
@@ -12786,8 +12811,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 26290815}
-        m_TargetAssemblyTypeName: BuyBooster3Panel, Assembly-CSharp
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
         m_MethodName: BuyBooster3
         m_Mode: 1
         m_Arguments:
@@ -14317,7 +14342,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1963163470}
-  - component: {fileID: 1963163471}
   m_Layer: 5
   m_Name: Booster1
   m_TagString: Untagged
@@ -14346,18 +14370,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1963163471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963163469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fbc0c2f0a7a344808a046d36767a47d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1963842217
 GameObject:
   m_ObjectHideFlags: 0
@@ -21115,6 +21127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbd3fb40f13149ffb242e3a13495c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  booster1Ctrl: {fileID: 74468659}
+  booster2Ctrl: {fileID: 783623878}
+  booster3Ctrl: {fileID: 1439786215}
   SettingModal: {fileID: 639691833}
   LevelCompleteModal: {fileID: 1648465724324486548}
   LevelFiailedModal: {fileID: 996567153}

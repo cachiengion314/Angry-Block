@@ -23,6 +23,15 @@ public partial class GameplayPanel : MonoBehaviour
       Destroy(gameObject);
     }
   }
+  private void Start()
+  {
+    InitBooster();
+  }
+  private void OnDestroy()
+  {
+    UnsubscribeBoosterEvent();
+  }
+  
   void OpenModal(Transform panel)
   {
     panel.gameObject.SetActive(true);
