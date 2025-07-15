@@ -1,13 +1,17 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BulletControl : MonoBehaviour, IBullet
+public class BulletControl : MonoBehaviour
+  , IBullet
+  , IMoveable
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
   [Header("Datas")]
   int _damage;
   float3 _velocity;
+  float3 _lockedPosition;
+  float _lifeDuration;
 
   public void SetVelocity(float3 velocity)
   {
@@ -27,5 +31,25 @@ public class BulletControl : MonoBehaviour, IBullet
   public void SetDamage(int damage)
   {
     _damage = damage;
+  }
+
+  public void SetLockedPosition(float3 lockedPosition)
+  {
+    _lockedPosition = lockedPosition;
+  }
+
+  public float3 GetLockedPosition()
+  {
+    return _lockedPosition;
+  }
+
+  public float GetLifeDuration()
+  {
+    return _lifeDuration;
+  }
+
+  public void SetLifeDuration(float duration)
+  {
+    _lifeDuration = duration;
   }
 }

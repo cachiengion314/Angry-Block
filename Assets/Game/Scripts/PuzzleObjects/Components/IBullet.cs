@@ -6,4 +6,6 @@ public interface IBullet
   public float3 GetVelocity();
   public int GetDamage();
   public void SetDamage(int damage);
+  public float GetLifeDuration();
+  public void SetLifeDuration(float duration);
 }

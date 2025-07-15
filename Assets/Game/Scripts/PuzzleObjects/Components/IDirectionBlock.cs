@@ -1,6 +1,4 @@
-using Unity.Mathematics;
-
-public interface IDirectionBlock : IColorBlock
+public interface IDirectionBlock
 {
   public void SetDirectionValue(DirectionValue direction);
   public DirectionValue GetDirectionValue();

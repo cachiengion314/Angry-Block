@@ -127,7 +127,7 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 10
+            "Ammunition": 3
         },
         {
             "ColorValue": 1,
@@ -142,7 +142,7 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 10
+            "Ammunition": 4
         },
         {
             "ColorValue": 0,

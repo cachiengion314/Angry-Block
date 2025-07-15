@@ -4,6 +4,7 @@ using UnityEngine;
 public class ColorBlockControl : MonoBehaviour
   , IColorBlock
   , IDamageable
+  , IMoveable
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
@@ -80,5 +81,15 @@ public class ColorBlockControl : MonoBehaviour
   public void SetWhoPicked(DirectionBlockControl block)
   {
     _whoPicked = block;
+  }
+
+  public void SetLockedPosition(float3 lockedPosition)
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public float3 GetLockedPosition()
+  {
+    throw new System.NotImplementedException();
   }
 }

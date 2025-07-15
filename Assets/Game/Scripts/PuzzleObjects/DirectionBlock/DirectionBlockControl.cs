@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DirectionBlockControl : MonoBehaviour
   , IDirectionBlock
+  , IColorBlock
+  , IMoveable
   , IGun
 {
   [Header("Dependencies")]
@@ -14,6 +16,7 @@ public class DirectionBlockControl : MonoBehaviour
   int _colorValue;
   public int2 Direction { get; private set; }
   DirectionValue _directionValue;
+  float3 _lockedPosition;
 
   public int GetColorValue()
   {
@@ -79,5 +82,15 @@ public class DirectionBlockControl : MonoBehaviour
   public DirectionValue GetDirectionValue()
   {
     return _directionValue;
+  }
+
+  public void SetLockedPosition(float3 lockedPosition)
+  {
+    _lockedPosition = lockedPosition;
+  }
+
+  public float3 GetLockedPosition()
+  {
+    return _lockedPosition;
   }
 }

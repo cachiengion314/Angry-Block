@@ -1,4 +1,6 @@
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class LevelManager : MonoBehaviour
 {
@@ -29,9 +31,10 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
+    WaitAndFindMatchedUpdate();
     ReArrangeTopGridUpdate();
     BulletPositionsUpdate();
-    LockAndFireUpddate();
+    LockAndFireTargetUpddate();
   }
 
   void OnDestroy()
@@ -98,5 +101,30 @@ public partial class LevelManager : MonoBehaviour
       }
     }
     return default;
+  }
+
+  float InterpolateMoveUpdate(Transform needMovingObj, float3 startPos, float3 targetPos)
+  {
+    var currentPos = needMovingObj.position;
+    var distanceFromStart = (currentPos - (Vector3)startPos).magnitude;
+    var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
+    var t = distanceFromStart / totalDistance + 4.8f * Time.deltaTime;
+    var nextPos = math.lerp(startPos, targetPos, t);
+    needMovingObj.position = nextPos;
+
+    return t;
+  }
+
+  bool IsPosOccupiedAt(float3 pos)
+  {
+    if (bottomGrid.IsPosOutsideAt(pos)) return true;
+    var idx = bottomGrid.ConvertWorldPosToIndex(pos);
+    if (_directionBlocks[idx] != null) return true;
+    return false;
+  }
+
+  public void RestartLevel()
+  {
+    SceneManager.LoadScene(KeyString.NAME_SCENE_GAMEPLAY);
   }
 }

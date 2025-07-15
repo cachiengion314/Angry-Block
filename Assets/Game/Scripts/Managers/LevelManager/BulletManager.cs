@@ -32,6 +32,8 @@ public partial class LevelManager : MonoBehaviour
   void OnTake(BulletControl obj)
   {
     obj.gameObject.SetActive(true);
+    if (obj.TryGetComponent<IBullet>(out var bullet))
+      bullet.SetLifeDuration(0);
     _activeBullets.Add(obj);
   }
 
@@ -51,6 +53,26 @@ public partial class LevelManager : MonoBehaviour
     for (int i = 0; i < _activeBullets.Count; ++i)
     {
       var bullet = _activeBullets[i];
+      if (!bullet.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!bullet.TryGetComponent<IBullet>(out var bulletComp)) continue;
+      if (bulletComp.GetLifeDuration() > 1.9f)
+      {
+        var lockedPos = moveable.GetLockedPosition();
+        var lockedIdx = topGrid.ConvertWorldPosToIndex(lockedPos);
+        var block = _colorBlocks[lockedIdx];
+        if (block != null && block.TryGetComponent<IDamageable>(out var damageable1))
+        {
+          damageable1.SetWhoLocked(null);
+        }
+        if (bullet.gameObject.activeSelf)
+        {
+          _bulletsPool.Release(bullet);
+        }
+        continue;
+      }
+      bulletComp.SetLifeDuration(
+        bulletComp.GetLifeDuration() + Time.deltaTime
+      );
       bullet.transform.position += Time.deltaTime * (Vector3)bullet.GetVelocity();
 
       var currentPos = bullet.transform.position;
@@ -61,9 +83,14 @@ public partial class LevelManager : MonoBehaviour
 
       var colorBlock = _colorBlocks[idx];
       if (!colorBlock.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.IsDead()) continue;
+      if (damageable.IsDead())
+      {
+        damageable.SetWhoLocked(null);
+        continue;
+      }
 
       damageable.SetHealth(damageable.GetHealth() - bullet.GetDamage());
+      damageable.SetWhoLocked(null);
       if (!damageable.IsDead()) continue;
 
       _colorBlocks[colorBlock.GetIndex()] = null;

@@ -11,7 +11,7 @@ public partial class LevelManager : MonoBehaviour
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
 
-  ColorBlockControl FindFirstBlockMatchedWith(in int colorValue)
+  ColorBlockControl FindFirstBlockMatchedFor(DirectionBlockControl directionBlock)
   {
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
@@ -20,8 +20,12 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
       if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.GetWhoLocked() != null) continue;
-      if (colorBlock.GetColorValue() == colorValue) return obj;
+      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != directionBlock)
+        continue;
+      if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
+      if (!directionBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+
+      if (colorBlock.GetColorValue() == dirColor.GetColorValue()) return obj;
     }
     return null;
   }
@@ -68,5 +72,38 @@ public partial class LevelManager : MonoBehaviour
       }
     }
     return -1;
+  }
+
+  void ReArrangeTopGridUpdate()
+  {
+    var needArrangeCollumn = FindNeedArrangeCollumn();
+    if (needArrangeCollumn == -1)
+    {
+      return;
+    }
+    for (int y = 0; y < topGrid.GridSize.y; ++y)
+    {
+      var grid = new int2(needArrangeCollumn, y);
+      var currentIndex = topGrid.ConvertGridPosToIndex(grid);
+      var colorBlock = _colorBlocks[currentIndex];
+      if (colorBlock == null) continue;
+      if (!colorBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+
+      var downGrid = grid + new int2(0, -1);
+      var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
+      var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
+      if (topGrid.IsPosOutsideAt(targetPos)) continue;
+
+      var t = InterpolateMoveUpdate(
+        colorBlock.transform,
+        topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
+        targetPos
+      );
+      if (t < 1) continue;
+
+      _colorBlocks[colorBlock.GetIndex()] = null;
+      _colorBlocks[targetIndex] = colorBlock;
+      colorBlock.SetIndex(targetIndex);
+    }
   }
 }

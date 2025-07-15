@@ -1,0 +1,112 @@
+using System.Collections.Generic;
+using DG.Tweening;
+using Unity.Mathematics;
+using UnityEngine;
+
+public partial class LevelManager : MonoBehaviour
+{
+  [SerializeField] int waitingSlotAMount = 7;
+  float3[] _waitingPositions;
+  DirectionBlockControl[] _waitingSlots;
+  readonly Dictionary<int, float> _waitingTimers = new();
+  readonly float _NOT_FOUND_MATCHED_DURATION = 1.2f;
+  readonly float _FOUND_MATCHED_DURATION = .7f;
+
+  void InitWaitingPositions()
+  {
+    _waitingPositions = new float3[waitingSlotAMount];
+    _waitingSlots = new DirectionBlockControl[waitingSlotAMount];
+
+    var y = bottomGrid.GridSize.y - 1 - 1;
+    var startX = 1;
+    for (int x = startX; x < startX + waitingSlotAMount; ++x)
+    {
+      if (x > bottomGrid.GridSize.x - 1) break;
+      var pos = bottomGrid.ConvertGridPosToWorldPos(new int2(x, y));
+      _waitingPositions[x - startX] = pos;
+    }
+  }
+
+  void ShouldGoWaitingUpdate(DirectionBlockControl tmpNotFoundMatchedDirBlock)
+  {
+    if (!_waitingTimers.ContainsKey(tmpNotFoundMatchedDirBlock.GetInstanceID()))
+      _waitingTimers.Add(tmpNotFoundMatchedDirBlock.GetInstanceID(), 0f);
+    _waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] += Time.deltaTime;
+    if (_waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] < _NOT_FOUND_MATCHED_DURATION)
+      return;
+
+    _waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] = 0f;
+    // move to waiting slot
+    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
+    if (emptyWaitingSlot < 0 || emptyWaitingSlot > _waitingSlots.Length - 1)
+    {
+      // gameover should be here
+      return;
+    }
+
+    var firingIdx = FindSlotIndexFor(tmpNotFoundMatchedDirBlock, _firingSlots);
+    if (firingIdx < 0 || firingIdx > _firingSlots.Length - 1) return;
+
+    _firingSlots[firingIdx] = null;
+    _waitingSlots[emptyWaitingSlot] = tmpNotFoundMatchedDirBlock;
+
+    var targetPos = _waitingPositions[emptyWaitingSlot];
+    var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
+    _directionBlocks[tmpNotFoundMatchedDirBlock.GetIndex()] = null;
+    _directionBlocks[targetIdx] = tmpNotFoundMatchedDirBlock;
+    tmpNotFoundMatchedDirBlock.SetIndex(targetIdx);
+
+    tmpNotFoundMatchedDirBlock.SetLockedPosition(targetPos);
+    tmpNotFoundMatchedDirBlock.transform.DOMove(targetPos, .5f)
+      .OnComplete(() =>
+      {
+        tmpNotFoundMatchedDirBlock.SetLockedPosition(0);
+      });
+  }
+
+  void WaitAndFindMatchedUpdate()
+  {
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      if (_waitingSlots[i] == null) continue;
+      var waitingBlock = _waitingSlots[i];
+      if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!moveable.GetLockedPosition().Equals(0)) continue;
+      if (!waitingBlock.TryGetComponent<IGun>(out var gun)) continue;
+      if (gun.GetAmmunition() <= 0) continue;
+      if (!waitingBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+      var colorBlock = FindFirstBlockMatchedFor(waitingBlock);
+      if (colorBlock == null) continue;
+
+      if (!_waitingTimers.ContainsKey(waitingBlock.GetInstanceID()))
+        _waitingTimers.Add(waitingBlock.GetInstanceID(), 0f);
+      _waitingTimers[waitingBlock.GetInstanceID()] += Time.deltaTime;
+      if (_waitingTimers[waitingBlock.GetInstanceID()] < _FOUND_MATCHED_DURATION)
+        return;
+
+      _waitingTimers[waitingBlock.GetInstanceID()] = 0f;
+      /// move to firing slot
+      var emptyFiringSlot = FindEmptySlotFrom(_firingSlots);
+      if (emptyFiringSlot < 0 || emptyFiringSlot > _firingSlots.Length - 1) return;
+
+      var waitingIdx = FindSlotIndexFor(waitingBlock, _waitingSlots);
+      if (waitingIdx < 0 || waitingIdx > _waitingSlots.Length - 1) return;
+
+      _waitingSlots[waitingIdx] = null;
+      _firingSlots[emptyFiringSlot] = waitingBlock;
+
+      var targetPos = _firingPositions[emptyFiringSlot];
+      var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
+      _directionBlocks[waitingBlock.GetIndex()] = null;
+      _directionBlocks[targetIdx] = waitingBlock;
+      waitingBlock.SetIndex(targetIdx);
+
+      waitingBlock.SetLockedPosition(targetPos);
+      waitingBlock.transform.DOMove(targetPos, .5f)
+        .OnComplete(() =>
+        {
+          waitingBlock.SetLockedPosition(0);
+        });
+    }
+  }
+}
