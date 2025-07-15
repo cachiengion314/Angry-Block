@@ -24,6 +24,9 @@ public partial class GameManager : MonoBehaviour
   public static Action onBuyUnlockFollowing;
   public static Action onReceivedReward;
   public static Action onNoticeDailyBounsChange;
+  public Action OnBooster1Change;
+  public Action OnBooster2Change;
+  public Action OnBooster3Change;
 
   public static GameManager Instance { get; private set; }
 
@@ -47,6 +50,36 @@ public partial class GameManager : MonoBehaviour
     {
       PlayerPrefs.SetInt(KeyString.KEY_IS_SHOW_NOTICE_DAILYBOUNS, value ? 1 : 0);
       onNoticeDailyBounsChange?.Invoke();
+    }
+  }
+
+  public int Booster1
+  {
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 1);
+    set
+    {
+      PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_1, value);
+      OnBooster1Change?.Invoke();
+    }
+  }
+
+  public int Booster2
+  {
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 1);
+    set
+    {
+      PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_2, value);
+      OnBooster2Change?.Invoke();
+    }
+  }
+
+  public int Booster3
+  {
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 1);
+    set
+    {
+      PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_3, value);
+      OnBooster3Change?.Invoke();
     }
   }
 

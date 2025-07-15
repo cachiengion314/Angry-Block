@@ -24,6 +24,9 @@ public partial class KeyString
   public const string KEY_HIGHEST_SCORE = "KEY_HIGHEST_SCORE";
   public const string KEY_CURRENT_SCORE = "KEY_CURRENT_SCORE";
   public const string KEY_CURRENT_COIN = "KEY_CURRENT_COIN";
+  public const string KEY_CURRENT_BOOSTER_1 = "KEY_CURRENT_BOOSTER_1";
+  public const string KEY_CURRENT_BOOSTER_2 = "KEY_CURRENT_BOOSTER_2";
+  public const string KEY_CURRENT_BOOSTER_3 = "KEY_CURRENT_BOOSTER_3";
 
   public const string KEY_RETRY_COUNT = "KEY_RETRY_COUNT";
   public const string KEY_APP_OPENAD_TODAY_COUNT = "APP_OPENAD_TODAY_COUNT";
