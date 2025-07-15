@@ -33022,7 +33022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30.908506, y: 190.08754}
+  m_AnchoredPosition: {x: 0, y: 286}
   m_SizeDelta: {x: 337.33, y: 51.795}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721762113
@@ -35705,7 +35705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.37001, y: 81}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 631.04004, y: 528.17505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &780165457
@@ -89490,7 +89490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -31.9, y: -304.5}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 187.8, y: 25.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003234932
@@ -93187,7 +93187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -32.369812, y: -104.09}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 212, y: 212}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2107840929
@@ -97039,7 +97039,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -27.96241, y: -9}
+  m_AnchoredPosition: {x: 0, y: 95}
   m_SizeDelta: {x: 559.34, y: 165.7244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &981885471873603821
@@ -107183,9 +107183,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 776017481}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -94, y: -116}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 248.3, y: 260.1}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7039226339377300203

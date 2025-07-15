@@ -4,11 +4,13 @@ public partial class GameplayPanel : MonoBehaviour
 {
   public static GameplayPanel Instance { get; private set; }
 
-  [SerializeField] Transform SettingModal;
-  [SerializeField] Transform LevelCompleteModal;
-  [SerializeField] Transform LevelFiailedModal;
-  [SerializeField] Transform OutOfSpaceModal;
-  [SerializeField] Transform Booster1Modal;
+  public Transform SettingModal;
+  public Transform LevelCompleteModal;
+  public Transform LevelFiailedModal;
+  public Transform OutOfSpaceModal;
+  public Transform Booster1Modal;
+  public Transform Booster2Modal;
+  public Transform Booster3Modal;
 
   private void Awake()
   {
@@ -52,4 +54,89 @@ public partial class GameplayPanel : MonoBehaviour
       CloseModal(SettingModal);
     }
   }
+
+  public void ToggleLevelCompleteModal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!LevelCompleteModal.gameObject.activeSelf)
+    {
+      OpenModal(LevelCompleteModal);
+    }
+    else
+    {
+      CloseModal(LevelCompleteModal);
+    }
+  }
+
+  public void ToggleLevelFailedModal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!LevelFiailedModal.gameObject.activeSelf)
+    {
+      OpenModal(LevelFiailedModal);
+    }
+    else
+    {
+      CloseModal(LevelFiailedModal);
+    }
+  }
+
+  public void ToggleOutOfSpaceModal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!OutOfSpaceModal.gameObject.activeSelf)
+    {
+      OpenModal(OutOfSpaceModal);
+    }
+    else
+    {
+      CloseModal(OutOfSpaceModal);
+    }
+  }
+
+  public void ToggleBooster1Modal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!Booster1Modal.gameObject.activeSelf)
+    {
+      OpenModal(Booster1Modal);
+    }
+    else
+    {
+      CloseModal(Booster1Modal);
+    }
+  }
+
+  public void ToggleBooster2Modal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!Booster2Modal.gameObject.activeSelf)
+    {
+      OpenModal(Booster2Modal);
+    }
+    else
+    {
+      CloseModal(Booster2Modal);
+    }
+  }
+
+  public void ToggleBooster3Modal()
+  {
+    SoundManager.Instance.PlayPressBtnSfx();
+
+    if (!Booster3Modal.gameObject.activeSelf)
+    {
+      OpenModal(Booster3Modal);
+    }
+    else
+    {
+      CloseModal(Booster3Modal);
+    }
+  }
+
 }
