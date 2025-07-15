@@ -66,6 +66,17 @@ public partial class SoundManager : MonoBehaviour
 
   private void Start()
   {
+    OnMusicChange();
+    GameManager.Instance.OnMusicChange += OnMusicChange;
+  }
+
+  void OnDestroy()
+  {
+    GameManager.Instance.OnMusicChange -= OnMusicChange;
+  }
+
+  void OnMusicChange()
+  {
     if (GameManager.Instance.IsMusicOn)
     {
       PlayMainThemeSfx();

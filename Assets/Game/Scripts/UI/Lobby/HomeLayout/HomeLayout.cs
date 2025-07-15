@@ -31,13 +31,6 @@ public class HomeLayout : MonoBehaviour
   public void OpenShopModal()
   {
     if (_currentPage == _pageIDs[0]) return;
-    if (_currentPage == _pageIDs[2])
-    {
-      LobbyPanel.Instance.ClickCloseMissionModal();
-    }
-    _currentPage = _pageIDs[0];
-
-    LobbyPanel.Instance.OpenShopPanel();
     tabShopRect.gameObject.SetActive(true);
     tabHomeRect.gameObject.SetActive(false);
     tabRankingRect.gameObject.SetActive(false);
@@ -46,14 +39,6 @@ public class HomeLayout : MonoBehaviour
   public void HomeTouch()
   {
     if (_currentPage == _pageIDs[1]) return;
-    if (_currentPage == _pageIDs[2])
-    {
-      LobbyPanel.Instance.ClickCloseMissionModal();
-    }
-    _currentPage = _pageIDs[1];
-
-    LobbyPanel.Instance.CloseShopPanel();
-    LobbyPanel.Instance.VisualizeHomeLayout();
 
     tabShopRect.gameObject.SetActive(false);
     tabHomeRect.gameObject.SetActive(true);
@@ -63,13 +48,6 @@ public class HomeLayout : MonoBehaviour
   public void TouchTask()
   {
     if (_currentPage == _pageIDs[2]) return;
-    if (_currentPage == _pageIDs[0])
-    {
-      LobbyPanel.Instance.CloseShopPanel();
-    }
-
-    _currentPage = _pageIDs[2];
-    LobbyPanel.Instance.ClickMissionModal();
 
     tabShopRect.gameObject.SetActive(false);
     tabHomeRect.gameObject.SetActive(false);
