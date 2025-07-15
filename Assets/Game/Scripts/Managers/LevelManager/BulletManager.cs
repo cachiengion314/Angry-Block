@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 
 public partial class LevelManager : MonoBehaviour
 {
+  [Header("Bullet Manager")]
   ObjectPool<BulletControl> _bulletsPool;
   public ObjectPool<BulletControl> BulletsPool { get { return _bulletsPool; } }
   List<BulletControl> _activeBullets;
@@ -50,7 +51,7 @@ public partial class LevelManager : MonoBehaviour
     for (int i = 0; i < _activeBullets.Count; ++i)
     {
       var bullet = _activeBullets[i];
-      bullet.transform.position += 1 * Time.deltaTime * (Vector3)bullet.GetVelocity();
+      bullet.transform.position += Time.deltaTime * (Vector3)bullet.GetVelocity();
 
       var currentPos = bullet.transform.position;
       if (topGrid.IsPosOutsideAt(currentPos)) continue;

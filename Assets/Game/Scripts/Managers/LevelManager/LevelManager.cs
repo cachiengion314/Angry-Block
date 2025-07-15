@@ -4,13 +4,14 @@ using UnityEngine;
 public partial class LevelManager : MonoBehaviour
 {
   public static LevelManager Instance { get; private set; }
-
+  [Header("Level Manager")]
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
-  Dictionary<string, bool> _runningAnimations;
+  [Range(0f, 2f)]
+  [SerializeField] float updateSpeed;
 
   void Start()
   {
@@ -25,8 +26,6 @@ public partial class LevelManager : MonoBehaviour
     InitPool();
     LoadLevelFrom(levelSelected);
     SetupCurrentLevel();
-
-    _runningAnimations = new Dictionary<string, bool>();
   }
 
   void Update()

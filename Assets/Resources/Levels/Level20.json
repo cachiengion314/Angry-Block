@@ -78,83 +78,39 @@
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         }
     ],
@@ -171,32 +127,32 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 4
+            "Ammunition": 10
+        },
+        {
+            "ColorValue": 1,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "ColorValue": 1,
+            "DirectionValue": 0,
+            "Ammunition": 5
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 4
+            "Ammunition": 10
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 4
+            "Ammunition": 5
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 3
-        },
-        {
-            "ColorValue": 0,
-            "DirectionValue": 0,
-            "Ammunition": 3
-        },
-        {
-            "ColorValue": 0,
-            "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 5
         }
     ]
 }

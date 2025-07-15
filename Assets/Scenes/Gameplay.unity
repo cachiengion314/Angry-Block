@@ -1374,6 +1374,7 @@ MonoBehaviour:
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
+  updateSpeed: 2
   bulletPref: {fileID: 9002068626157766107, guid: 4e09141e562244507a2f9975d2a007ac,
     type: 3}
   colorBlockPref: {fileID: 2483085920719488615, guid: 4ade7be3d7156473dbb34f0ed0e3c392,

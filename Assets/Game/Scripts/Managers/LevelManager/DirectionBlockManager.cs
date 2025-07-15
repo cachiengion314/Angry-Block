@@ -184,52 +184,6 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  const string KEY_ARRANGE_COLLUMN = "arrange_collumn_";
-  void RearrangeTopGridUpdate()
-  {
-    var needArrangeCollumn = FindNeedArrangeCollumn();
-    if (needArrangeCollumn == -1)
-    {
-      return;
-    }
-    if (
-      _runningAnimations.ContainsKey(KEY_ARRANGE_COLLUMN + needArrangeCollumn)
-      && _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn]
-    ) return;
-
-    _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn] = true;
-    ArrangeAt(
-      needArrangeCollumn,
-      out List<ColorBlockControl> needMovingObjs3,
-      out List<float3> destinations3
-     );
-
-    var seq = DOTween.Sequence();
-    var startDuration = 0.0f;
-    var rearrangeDuration = .3f;
-
-    for (int i = 0; i < needMovingObjs3.Count; ++i)
-    {
-      var block = needMovingObjs3[i];
-      if (block == null) continue;
-      var des = destinations3[i];
-
-      seq.Insert(
-        startDuration,
-        block.transform
-          .DOMove(des, rearrangeDuration)
-      );
-    }
-    startDuration += rearrangeDuration + Time.deltaTime;
-    seq.InsertCallback(
-      startDuration,
-      () =>
-      {
-        _runningAnimations[KEY_ARRANGE_COLLUMN + needArrangeCollumn] = false;
-      }
-    );
-  }
-
   void ReArrangeTopGridUpdate()
   {
     var needArrangeCollumn = FindNeedArrangeCollumn();
@@ -247,9 +201,10 @@ public partial class LevelManager : MonoBehaviour
       var downGrid = grid + new int2(0, -1);
       var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
       var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
-      if (targetIndex < 0 || targetIndex > _colorBlocks.Length - 1) continue;
+      if (topGrid.IsPosOutsideAt(targetPos)) continue;
 
-      colorBlock.transform.position += 2.5f * Time.deltaTime * new Vector3(0, -1, 0);
+      colorBlock.transform.position
+        += updateSpeed * 4.5f * Time.deltaTime * new Vector3(0, -1, 0);
       var currentPos = colorBlock.transform.position;
       var distance = ((Vector3)targetPos - currentPos).magnitude;
 
@@ -289,7 +244,7 @@ public partial class LevelManager : MonoBehaviour
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != directionBlock) continue;
 
       damageable.SetWhoPicked(directionBlock); // picking this target to prevent other interfere
-      var rotSpeed = 5;
+      var rotSpeed = updateSpeed * 4.5f;
       var dirToTarget = colorBlock.transform.position - directionBlock.transform.position;
       var targetRad = math.acos(
         math.dot(dirToTarget.normalized, directionBlock.transform.up)
@@ -312,7 +267,9 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
       SpawnBulletAt(
         directionBlock.transform.position,
-        2.5f * (colorBlock.transform.position - directionBlock.transform.position).normalized,
+        updateSpeed * 4.5f * (
+          colorBlock.transform.position - directionBlock.transform.position
+        ).normalized,
         1
       );
     }
