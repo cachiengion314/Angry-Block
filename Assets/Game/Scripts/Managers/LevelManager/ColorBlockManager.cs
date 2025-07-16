@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -28,20 +27,6 @@ public partial class LevelManager : MonoBehaviour
       if (colorBlock.GetColorValue() == dirColor.GetColorValue()) return obj;
     }
     return null;
-  }
-
-  List<ColorBlockControl> FindFirstRowMatchedWith(in int colorValue)
-  {
-    var firstLineMatched = new List<ColorBlockControl>();
-    for (int x = 0; x < topGrid.GridSize.x; ++x)
-    {
-      var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
-      var obj = _colorBlocks[idx];
-      if (obj == null) continue;
-      if (obj.GetColorValue() == colorValue)
-        firstLineMatched.Add(obj);
-    }
-    return firstLineMatched;
   }
 
   bool IsColmunEmptyAt(int x)

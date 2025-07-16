@@ -10,6 +10,7 @@ public partial class LevelManager : MonoBehaviour
   float3[] _waitingPositions;
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
+  readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
   readonly float _DURATION_NOT_FOUND_MATCHED = 1.2f;
   readonly float _DURATION_FOUND_MATCHED = .7f;
 
@@ -67,6 +68,20 @@ public partial class LevelManager : MonoBehaviour
       });
   }
 
+  void ShouldMergeUpdate(GameObject waitingBlock)
+  {
+    if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
+    if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
+
+    if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
+      _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
+    _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
+    if (_mergeSlots[colorBlock.GetColorValue()].Count == 3)
+    {
+      print("Should merge invoke");
+    }
+  }
+
   void WaitAndFindMatchedUpdate()
   {
     for (int i = 0; i < _waitingSlots.Length; ++i)
@@ -75,6 +90,8 @@ public partial class LevelManager : MonoBehaviour
       var waitingBlock = _waitingSlots[i];
       if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
+      ShouldMergeUpdate(waitingBlock);
+
       if (!waitingBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0) continue;
       if (!waitingBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
