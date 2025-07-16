@@ -19,7 +19,7 @@ public class AnimationManager : MonoBehaviour
   public MMF_Player RendererFeedback;
 
   [Header("Settings")]
-  public DragAndDrop CurrentBeingDragged;
+  // public DragAndDrop CurrentBeingDragged;
   [Range(0, 100)]
   [SerializeField] float tweenSlowFactor;
 

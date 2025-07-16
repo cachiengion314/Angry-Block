@@ -9,7 +9,7 @@ public class LoadingCanvas : MonoBehaviour
 
   private void Start()
   {
-    LoadLevel("Gameplay");
+    LoadLevel(KeyString.NAME_SCENE_LOBBY);
   }
 
   public void LoadLevel(string levelToLoad)

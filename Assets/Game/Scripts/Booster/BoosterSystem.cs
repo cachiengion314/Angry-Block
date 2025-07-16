@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class BoosterSystem : MonoBehaviour
+public partial class GameplayPanel
 {
     [SerializeField] BoosterCtrl booster1Ctrl;
     [SerializeField] BoosterCtrl booster2Ctrl;
     [SerializeField] BoosterCtrl booster3Ctrl;
-    void Start()
+    void InitBooster()
     {
         VisualeTriggerBooster1();
         VisualeTriggerBooster2();
@@ -15,7 +15,7 @@ public class BoosterSystem : MonoBehaviour
         GameManager.Instance.OnBooster3Change += VisualeTriggerBooster3;
     }
 
-    void Oestroy()
+    void UnsubscribeBoosterEvent()
     {
         GameManager.Instance.OnBooster1Change -= VisualeTriggerBooster1;
         GameManager.Instance.OnBooster2Change -= VisualeTriggerBooster2;
@@ -28,7 +28,7 @@ public class BoosterSystem : MonoBehaviour
         {
             if (GameManager.Instance.Booster1 <= 0)
             {
-                GameplayPanel.Instance.ToggleBooster1Modal();
+                ToggleBooster1Modal();
             }
             else
             {
@@ -43,7 +43,7 @@ public class BoosterSystem : MonoBehaviour
         {
             if (GameManager.Instance.Booster2 <= 0)
             {
-                GameplayPanel.Instance.ToggleBooster2Modal();
+                ToggleBooster2Modal();
             }
             else
             {
@@ -58,7 +58,7 @@ public class BoosterSystem : MonoBehaviour
         {
             if (GameManager.Instance.Booster3 <= 0)
             {
-                GameplayPanel.Instance.ToggleBooster3Modal();
+                ToggleBooster3Modal();
             }
             else
             {
@@ -75,10 +75,14 @@ public class BoosterSystem : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance.Booster1 <= 0)
+            var amount = GameManager.Instance.Booster1;
+            if (amount <= 0)
                 booster1Ctrl.Empty();
             else
+            {
                 booster1Ctrl.Unlock();
+                booster1Ctrl.SetAmountBooster(amount);
+            }
         }
     }
 
@@ -90,10 +94,14 @@ public class BoosterSystem : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance.Booster2 <= 0)
+            var amount = GameManager.Instance.Booster2;
+            if (amount <= 0)
                 booster2Ctrl.Empty();
             else
+            {
                 booster2Ctrl.Unlock();
+                booster2Ctrl.SetAmountBooster(amount);
+            }
         }
     }
 
@@ -105,10 +113,54 @@ public class BoosterSystem : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance.Booster3 <= 0)
+            var amount = GameManager.Instance.Booster3;
+            if (amount <= 0)
                 booster3Ctrl.Empty();
             else
+            {
                 booster3Ctrl.Unlock();
+                booster3Ctrl.SetAmountBooster(amount);
+            }
+        }
+    }
+
+    public void BuyBooster1()
+    {
+        int price = 100;
+        if (GameManager.Instance.CurrentCoin >= price)
+        {
+            GameManager.Instance.CurrentCoin -= price;
+            GameManager.Instance.Booster1++;
+        }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
+        }
+    }
+    public void BuyBooster2()
+    {
+        int price = 100;
+        if (GameManager.Instance.CurrentCoin >= price)
+        {
+            GameManager.Instance.CurrentCoin -= price;
+            GameManager.Instance.Booster2++;
+        }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
+        }
+    }
+    public void BuyBooster3()
+    {
+        int price = 100;
+        if (GameManager.Instance.CurrentCoin >= price)
+        {
+            GameManager.Instance.CurrentCoin -= price;
+            GameManager.Instance.Booster3++;
+        }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
         }
     }
 }
