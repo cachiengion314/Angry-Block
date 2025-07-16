@@ -46,6 +46,7 @@ public partial class GameplayPanel
             ToggleBooster2Modal();
         else
         {
+            LevelManager.Instance.OnTriggerBooster2();
             //visualize trigger booster
         }
     }
