@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
@@ -76,10 +77,39 @@ public partial class LevelManager : MonoBehaviour
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
       _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
     _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
-    if (_mergeSlots[colorBlock.GetColorValue()].Count == 3)
+    if (_mergeSlots[colorBlock.GetColorValue()].Count < 3) return;
+
+    var mergeableBlocks = _mergeSlots[colorBlock.GetColorValue()].ToArray();
+    var totalAmmunition = 0;
+    for (int i = 0; i < mergeableBlocks.Length; ++i)
+      totalAmmunition += mergeableBlocks[i].GetComponent<DirectionBlockControl>().GetAmmunition();
+    for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
-      print("Should merge invoke");
+      var mergeableBlock = mergeableBlocks[i];
+      var idx = FindSlotFor(mergeableBlock, _waitingSlots);
+      if (idx == -1 || idx > _waitingSlots.Length - 1) continue;
+
+      _waitingSlots[idx] = null;
+      Destroy(mergeableBlock);
+
+      if (i == 1)
+      {
+        var blastPos = _waitingPositions[idx];
+        var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
+        if (blast.TryGetComponent<IColorBlock>(out var blastColor))
+        {
+          blastColor.SetColorValue(
+            mergeableBlock.GetComponent<IColorBlock>().GetColorValue()
+          );
+        }
+        if (blast.TryGetComponent<IGun>(out var blastGun))
+        {
+          blastGun.SetAmmunition(totalAmmunition);
+        }
+        _waitingSlots[idx] = blast.gameObject;
+      }
     }
+    _mergeSlots[colorBlock.GetColorValue()] = new HashSet<GameObject>();
   }
 
   void WaitAndFindMatchedUpdate()

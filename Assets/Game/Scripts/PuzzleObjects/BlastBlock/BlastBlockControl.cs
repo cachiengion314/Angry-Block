@@ -12,6 +12,8 @@ public class BlastBlockControl : MonoBehaviour
   int _index;
   int _colorValue;
   int _ammunition;
+  float3 _lockedPosition;
+  Transform _lockedTarget;
 
   public int GetColorValue()
   {
@@ -36,22 +38,22 @@ public class BlastBlockControl : MonoBehaviour
 
   public void SetLockedPosition(float3 lockedPosition)
   {
-    throw new System.NotImplementedException();
+    _lockedPosition = lockedPosition;
   }
 
   public float3 GetLockedPosition()
   {
-    throw new System.NotImplementedException();
+    return _lockedPosition;
   }
 
   public Transform GetLockedTarget()
   {
-    throw new System.NotImplementedException();
+    return _lockedTarget;
   }
 
   public void SetLockedTarget(Transform lockedTarget)
   {
-    throw new System.NotImplementedException();
+    _lockedTarget = lockedTarget;
   }
 
   public void SetAmmunition(int ammunition)

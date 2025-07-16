@@ -10,7 +10,7 @@ public partial class LevelManager : MonoBehaviour
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
 
-  ColorBlockControl FindFirstBlockMatchedFor(GameObject directionBlock)
+  ColorBlockControl FindFirstBlockMatchedFor(GameObject blastBlock)
   {
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
@@ -19,10 +19,10 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
       if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != directionBlock)
+      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
       if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
-      if (!directionBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+      if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
 
       if (colorBlock.GetColorValue() == dirColor.GetColorValue()) return obj;
     }

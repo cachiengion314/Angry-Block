@@ -40,9 +40,10 @@ public partial class LevelManager : MonoBehaviour
     return bullet;
   }
 
-  public BlastBlockControl SpawnBlastBlockAt(float3 pos)
+  public BlastBlockControl SpawnBlastBlockAt(float3 pos, Transform parent)
   {
-    var obj = Instantiate(blastBlockPref, pos, blastBlockPref.transform.rotation);
+    var obj = Instantiate(blastBlockPref, parent);
+    obj.transform.position = pos;
     return obj;
   }
 }

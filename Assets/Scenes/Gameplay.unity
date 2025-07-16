@@ -2254,6 +2254,8 @@ MonoBehaviour:
     type: 3}
   directionBlockPref: {fileID: 1633368844517106154, guid: 0ed673403e7704f4bafe0c85a4a7670d,
     type: 3}
+  blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
+    type: 3}
   waitingSlotAmount: 7
 --- !u!4 &229877049
 Transform:
