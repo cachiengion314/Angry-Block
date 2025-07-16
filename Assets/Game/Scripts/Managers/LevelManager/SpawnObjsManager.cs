@@ -7,6 +7,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] BulletControl bulletPref;
   [SerializeField] ColorBlockControl colorBlockPref;
   [SerializeField] DirectionBlockControl directionBlockPref;
+  [SerializeField] BlastBlockControl blastBlockPref;
 
   public ColorBlockControl SpawnColorBlockAt(float3 pos)
   {
@@ -37,5 +38,11 @@ public partial class LevelManager : MonoBehaviour
     bullet.SetVelocity(velocity);
     bullet.SetDamage(_damage);
     return bullet;
+  }
+
+  public BlastBlockControl SpawnBlastBlockAt(float3 pos)
+  {
+    var obj = Instantiate(blastBlockPref, pos, blastBlockPref.transform.rotation);
+    return obj;
   }
 }
