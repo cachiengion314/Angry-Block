@@ -28,25 +28,6 @@ public partial class LevelManager : MonoBehaviour
     return colorBlock.GetGameObject();
   }
 
-  int FindSlotFor(GameObject block, GameObject[] slots)
-  {
-    for (int i = 0; i < slots.Length; ++i)
-    {
-      if (slots[i] == null) continue;
-      if (slots[i] == block) return i;
-    }
-    return -1;
-  }
-
-  int FindEmptySlotFrom(GameObject[] slots)
-  {
-    for (int i = 0; i < slots.Length; ++i)
-    {
-      if (slots[i] == null) return i;
-    }
-    return -1;
-  }
-
   void MoveTo(
     int slotIndex,
     GameObject directionBlock,

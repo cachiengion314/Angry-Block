@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  [Range(1, 10)]
   [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
