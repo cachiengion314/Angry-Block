@@ -11,7 +11,8 @@ public partial class LevelManager : MonoBehaviour
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
-  [Range(0f, 1f)]
+  public GridWorld BottomGrid => bottomGrid;
+  [Range(0f, 2f)]
   [SerializeField] float updateSpeed;
 
   void Start()
@@ -82,6 +83,13 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
+
+      if (initDirectionBlocks[i].IsHidden)
+      {
+        var woodenBlocks = directionBlock.gameObject.AddComponent<WoodenBlockControl>();
+        woodenBlocks.InitWoodenBlock();
+        woodenBlocks.ShowHidden();
+      }
 
       _directionBlocks[i] = directionBlock.gameObject;
     }

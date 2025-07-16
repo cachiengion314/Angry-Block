@@ -6,7 +6,31 @@
     },
     "InitColorBlocks": [
         {
-            "ColorValue": 1,
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
             "Health": 1
         },
         {
@@ -42,63 +66,11 @@
             "Health": 1
         },
         {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
             "ColorValue": 1,
             "Health": 1
         },
         {
             "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
             "Health": 1
         },
         {
@@ -174,72 +146,86 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 10
+            "Ammunition": 3,
+            "IsHidden": true
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 10
+            "Ammunition": 4,
+            "IsHidden": false
         },
         {
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 2
+            "Ammunition": 2,
+            "IsHidden": true
         },
         {
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 3,
+            "IsHidden": false
         },
         {
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 5,
+            "IsHidden": false
         },
         {
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 3,
+            "IsHidden": false
         },
         {
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 3,
+            "IsHidden": false
         },
         {
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 3,
+            "IsHidden": false
         },
         {
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 3,
+            "IsHidden": false
         }
     ]
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4218465155173473445}
-  - component: {fileID: 7831254172702931429}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -33,80 +32,6 @@ Transform:
   - {fileID: 5209088891325751682}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7831254172702931429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2522049812772075322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8b90b65a9a14ad1bf0967ac7b84355, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decalPrefab: {fileID: 5560834494221834339, guid: 0970b1a68e8b6408a97f1d81cf9e3a8b,
-    type: 3}
-  arcanSparkEfx: {fileID: 2691878318767050071, guid: dcddb7e4db91146f3aeeb612703fa3f2,
-    type: 3}
-  eggSplashPref: {fileID: 4536135597264501832, guid: 1fa1b67f6242246908d741ce1a5d5bcb,
-    type: 3}
-  powerUpEfx: {fileID: 849354722944061836, guid: a55a5558589d54e47a237ccc5934acc6,
-    type: 3}
-  healBigEfx: {fileID: 671925707537765788, guid: ab5effad3656a404cab68a85c8177fed,
-    type: 3}
-  lidPref: {fileID: 5936262863461125220, guid: a7b02d11c12d843f1b4955409cb16bcb, type: 3}
-  packingAnimator: {fileID: 7922828323467847170, guid: 2b267ac31b5884b1d96e5727473297b4,
-    type: 3}
-  boomEfx: {fileID: 741812101435778215, guid: 2df908930f6604a4aa8704b61db89400, type: 3}
-  woodSplashEfx: {fileID: 7242358878332998378, guid: 714ef329d2b5543dcae8137d4eb1113d,
-    type: 3}
-  iceSplashEfx: {fileID: 7242358878332998378, guid: 714ef329d2b5543dcae8137d4eb1113d,
-    type: 3}
-  goldSplashEfx: {fileID: 5815970732861090095, guid: 5ec217309b79c493ebfa9f532f842688,
-    type: 3}
-  waterSplashEfx: {fileID: 8685273923961119315, guid: 9646e4ae6951943dba803bb8d569d7f6,
-    type: 3}
-  coffeeSplashEfx: {fileID: 1722064558224785391, guid: b5ceb6a9706fe4583867cae486df2205,
-    type: 3}
-  cupBreakSplashEfx: {fileID: 1722064558224785391, guid: 9400840a2c0c341508f94596f024644d,
-    type: 3}
-  coinPsPrefab: {fileID: 3383568378186257148, guid: 28c1532402bc74e3ea933f871e168dad,
-    type: 3}
-  hammerExplosiveEfx: {fileID: 7242358878332998378, guid: 714ef329d2b5543dcae8137d4eb1113d,
-    type: 3}
-  trayShadowPref: {fileID: 8009178843555133418, guid: a055f42e97ba444bfaabed96bec49d3b,
-    type: 3}
-  rectanglePref: {fileID: 8009178843555133418, guid: eacab80100a7848cb9b64e1cfb6abf6c,
-    type: 3}
-  arrowPref: {fileID: 5936262863461125220, guid: 78590644e88114fa7a25a44dc5835f3a,
-    type: 3}
-  darkImg: {fileID: 8380827636149621951}
-  trailLightPref: {fileID: 5993578289546082609, guid: b5e14b9d1053a4308acfb0c67642f9d8,
-    type: 3}
-  hammerSkePref: {fileID: 5463759966771195697, guid: cacf991a021e14aa795a0c6cd41baee8,
-    type: 3}
-  rocketSkePref: {fileID: 917452972758882885, guid: d256f0b57ad414de5942d98a93b59558,
-    type: 3}
-  tableDepotImg: {fileID: 0}
-  coinsPrefab: {fileID: 4300648123190166050, guid: 347b8cc1a40924a73b741b3daa55e0a1,
-    type: 3}
-  ticketPrefab: {fileID: 4300648123190166050, guid: 56652b2a55e2b4e539af8819336686f9,
-    type: 3}
-  unlockedReversePrefab: {fileID: 4300648123190166050, guid: aaf152f80da06494ba23abeec2d9ec01,
-    type: 3}
-  unlockedHammerPrefab: {fileID: 4300648123190166050, guid: 7a5668b8cc57444728e69c6ff1b35d67,
-    type: 3}
-  unlockedRocketPrefab: {fileID: 4300648123190166050, guid: fed9a872e9c47440f80034a33fa35df2,
-    type: 3}
-  unlockedSwapPrefab: {fileID: 4300648123190166050, guid: 36677e454dfd44019817040e398c69bd,
-    type: 3}
-  flashPrefab: {fileID: 0}
-  IsDarkImgOn: 0
-  shadowIntensitive: 0.5
-  changeTime: 0.5
-  particleCoins: {fileID: 1599039797258500885, guid: 0a203638185c2404ca57cf51b7b98655,
-    type: 3}
 --- !u!1 &5213705742436544357
 GameObject:
   m_ObjectHideFlags: 0

@@ -2231,45 +2231,59 @@ MonoBehaviour:
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 1
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 4
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 2
+      IsHidden: 1
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   firingSlotAmount: 5
