@@ -6,7 +6,7 @@
     },
     "InitColorBlocks": [
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
@@ -38,7 +38,7 @@
             "Health": 1
         },
         {
-            "ColorValue": 0,
+            "ColorValue": 1,
             "Health": 1
         },
         {
@@ -70,7 +70,39 @@
             "Health": 1
         },
         {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
             "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
             "Health": 1
         },
         {
@@ -127,7 +159,7 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 3
+            "Ammunition": 10
         },
         {
             "ColorValue": 1,
@@ -142,7 +174,7 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
-            "Ammunition": 4
+            "Ammunition": 10
         },
         {
             "ColorValue": 0,
@@ -152,6 +184,11 @@
         {
             "ColorValue": 0,
             "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "ColorValue": 0,
+            "DirectionValue": 2,
             "Ammunition": 5
         }
     ]
