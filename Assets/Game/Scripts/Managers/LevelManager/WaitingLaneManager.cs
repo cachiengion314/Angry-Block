@@ -14,17 +14,9 @@ public partial class LevelManager : MonoBehaviour
   readonly float _DURATION_NOT_FOUND_MATCHED = .82f;
   readonly float _DURATION_FOUND_MATCHED = .45f;
 
-  void InitWaitingPositions()
+  void InitWaitingSlots()
   {
     _waitingSlots = new GameObject[waitingPositions.childCount];
-
-    var y = bottomGrid.GridSize.y - 1 - 1;
-    var startX = 1;
-    for (int x = startX; x < startX + waitingPositions.childCount; ++x)
-    {
-      if (x > bottomGrid.GridSize.x - 1) break;
-      var pos = bottomGrid.ConvertGridPosToWorldPos(new int2(x, y));
-    }
   }
 
   void ShouldGoWaitingUpdate(GameObject tmpNotFoundMatchedDirBlock)

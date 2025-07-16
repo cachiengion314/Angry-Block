@@ -87,7 +87,7 @@ public partial class LevelManager : MonoBehaviour
     }
 
     InitFiringPositions();
-    InitWaitingPositions();
+    InitWaitingSlots();
   }
 
   public T FindObjIn<T>(Collider2D[] cols)
