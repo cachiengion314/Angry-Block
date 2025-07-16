@@ -9,8 +9,8 @@ public partial class LevelManager : MonoBehaviour
   float3[] _waitingPositions;
   DirectionBlockControl[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
-  readonly float _NOT_FOUND_MATCHED_DURATION = 1.2f;
-  readonly float _FOUND_MATCHED_DURATION = .7f;
+  readonly float _DURATION_NOT_FOUND_MATCHED = 1.2f;
+  readonly float _DURATION_FOUND_MATCHED = .7f;
 
   void InitWaitingPositions()
   {
@@ -32,7 +32,9 @@ public partial class LevelManager : MonoBehaviour
     if (!_waitingTimers.ContainsKey(tmpNotFoundMatchedDirBlock.GetInstanceID()))
       _waitingTimers.Add(tmpNotFoundMatchedDirBlock.GetInstanceID(), 0f);
     _waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] += Time.deltaTime;
-    if (_waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] < _NOT_FOUND_MATCHED_DURATION)
+    if (
+      _waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] < _DURATION_NOT_FOUND_MATCHED
+    )
       return;
 
     _waitingTimers[tmpNotFoundMatchedDirBlock.GetInstanceID()] = 0f;
@@ -81,7 +83,7 @@ public partial class LevelManager : MonoBehaviour
       if (!_waitingTimers.ContainsKey(waitingBlock.GetInstanceID()))
         _waitingTimers.Add(waitingBlock.GetInstanceID(), 0f);
       _waitingTimers[waitingBlock.GetInstanceID()] += Time.deltaTime;
-      if (_waitingTimers[waitingBlock.GetInstanceID()] < _FOUND_MATCHED_DURATION)
+      if (_waitingTimers[waitingBlock.GetInstanceID()] < _DURATION_FOUND_MATCHED)
         return;
 
       _waitingTimers[waitingBlock.GetInstanceID()] = 0f;

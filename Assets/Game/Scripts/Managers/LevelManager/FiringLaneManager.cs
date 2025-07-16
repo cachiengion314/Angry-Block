@@ -89,6 +89,7 @@ public partial class LevelManager : MonoBehaviour
       if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
       {
         moveableBullet.SetLockedPosition(colorBlock.transform.position);
+        moveableBullet.SetLockedTarget(colorBlock.transform);
       }
       if (_waitingTimers.ContainsKey(directionBlock.GetInstanceID()))
         _waitingTimers[directionBlock.GetInstanceID()] = 0f;

@@ -93,4 +93,14 @@ public class DirectionBlockControl : MonoBehaviour
   {
     return _lockedPosition;
   }
+
+  public Transform GetLockedTarget()
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public void SetLockedTarget(Transform lockedTarget)
+  {
+    throw new System.NotImplementedException();
+  }
 }

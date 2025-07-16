@@ -92,4 +92,14 @@ public class ColorBlockControl : MonoBehaviour
   {
     throw new System.NotImplementedException();
   }
+
+  public Transform GetLockedTarget()
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public void SetLockedTarget(Transform lockedTarget)
+  {
+    throw new System.NotImplementedException();
+  }
 }

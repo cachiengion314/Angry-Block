@@ -8,6 +8,7 @@ public partial class LevelManager : MonoBehaviour
   ObjectPool<BulletControl> _bulletsPool;
   public ObjectPool<BulletControl> BulletsPool { get { return _bulletsPool; } }
   List<BulletControl> _activeBullets;
+  readonly float _DURATION_BULLET_LIFE = 1.9f;
 
   void InitPool()
   {
@@ -48,26 +49,33 @@ public partial class LevelManager : MonoBehaviour
     Destroy(obj);
   }
 
+  void CleanReleaseFor(BulletControl bullet)
+  {
+    if (!bullet.TryGetComponent<IMoveable>(out var bullMoveable)) return;
+    var lockedTarget = bullMoveable.GetLockedTarget();
+    if (
+      lockedTarget != null
+      && lockedTarget.TryGetComponent<IDamageable>(out var lockedDamageable)
+    )
+    {
+      lockedDamageable.SetWhoLocked(null);
+    }
+    if (bullet.gameObject.activeSelf)
+    {
+      _bulletsPool.Release(bullet);
+    }
+  }
+
   void BulletPositionsUpdate()
   {
     for (int i = 0; i < _activeBullets.Count; ++i)
     {
       var bullet = _activeBullets[i];
-      if (!bullet.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!bullet.TryGetComponent<IMoveable>(out var bullMoveable)) continue;
       if (!bullet.TryGetComponent<IBullet>(out var bulletComp)) continue;
-      if (bulletComp.GetLifeDuration() > 1.9f)
+      if (bulletComp.GetLifeDuration() > _DURATION_BULLET_LIFE)
       {
-        var lockedPos = moveable.GetLockedPosition();
-        var lockedIdx = topGrid.ConvertWorldPosToIndex(lockedPos);
-        var block = _colorBlocks[lockedIdx];
-        if (block != null && block.TryGetComponent<IDamageable>(out var damageable1))
-        {
-          damageable1.SetWhoLocked(null);
-        }
-        if (bullet.gameObject.activeSelf)
-        {
-          _bulletsPool.Release(bullet);
-        }
+        CleanReleaseFor(bullet);
         continue;
       }
       bulletComp.SetLifeDuration(
@@ -82,24 +90,16 @@ public partial class LevelManager : MonoBehaviour
       if (_colorBlocks[idx] == null) continue;
 
       var colorBlock = _colorBlocks[idx];
-      if (!colorBlock.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.IsDead())
-      {
-        damageable.SetWhoLocked(null);
-        continue;
-      }
+      if (!colorBlock.TryGetComponent<IDamageable>(out var colorBlockDamageable)) continue;
 
-      damageable.SetHealth(damageable.GetHealth() - bullet.GetDamage());
-      damageable.SetWhoLocked(null);
-      if (!damageable.IsDead()) continue;
+      colorBlockDamageable.SetHealth(colorBlockDamageable.GetHealth() - bullet.GetDamage());
+      colorBlockDamageable.SetWhoLocked(null);
+      if (!colorBlockDamageable.IsDead()) continue;
 
       _colorBlocks[colorBlock.GetIndex()] = null;
       Destroy(colorBlock.gameObject);
 
-      if (bullet.gameObject.activeSelf)
-      {
-        _bulletsPool.Release(bullet);
-      }
+      CleanReleaseFor(bullet);
     }
   }
 }
