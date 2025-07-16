@@ -2155,60 +2155,90 @@ MonoBehaviour:
       Health: 1
     - ColorValue: 0
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 1
       Health: 1
-    - ColorValue: 0
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
+      Health: 1
+    - ColorValue: 2
       Health: 1
     DirectionBlocksGridSize:
-      x: 9
-      y: 11
+      x: 10
+      y: 10
     InitDirectionBlocks:
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
     - ColorValue: 0
       DirectionValue: 0
-      Ammunition: 10
+      Ammunition: 3
+    - ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
+    - ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
+    - ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 4
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
-    - ColorValue: 0
+    - ColorValue: 1
       DirectionValue: 0
-      Ammunition: 10
-    - ColorValue: 0
+      Ammunition: 2
+    - ColorValue: 1
+      DirectionValue: 0
+      Ammunition: 3
+    - ColorValue: 2
       DirectionValue: 0
       Ammunition: 5
-    - ColorValue: 0
+    - ColorValue: 2
       DirectionValue: 0
-      Ammunition: 5
-    - ColorValue: 0
-      DirectionValue: 2
-      Ammunition: 5
+      Ammunition: 3
+    - ColorValue: 2
+      DirectionValue: 0
+      Ammunition: 3
+    - ColorValue: 2
+      DirectionValue: 0
+      Ammunition: 3
+    - ColorValue: 2
+      DirectionValue: 0
+      Ammunition: 3
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   firingSlotAmount: 4
@@ -2224,7 +2254,7 @@ MonoBehaviour:
     type: 3}
   directionBlockPref: {fileID: 1633368844517106154, guid: 0ed673403e7704f4bafe0c85a4a7670d,
     type: 3}
-  waitingSlotAMount: 7
+  waitingSlotAmount: 7
 --- !u!4 &229877049
 Transform:
   m_ObjectHideFlags: 0
@@ -2843,7 +2873,7 @@ Transform:
   m_GameObject: {fileID: 313449924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.13, z: 0}
+  m_LocalPosition: {x: 0, y: -5.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2866,11 +2896,11 @@ MonoBehaviour:
   colorIndex: 2
   degAroundX: 0
   gridSize:
-    x: 9
-    y: 11
+    x: 10
+    y: 10
   scale:
-    x: 1.3
-    y: 1.3
+    x: 1.2
+    y: 1.2
 --- !u!1 &325920867
 GameObject:
   m_ObjectHideFlags: 0
@@ -5741,7 +5771,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 129176591499187209, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
+    - {fileID: 3392381627869134536, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
+    - {fileID: 6036334647288523605, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
+    - {fileID: 49202133566436763, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

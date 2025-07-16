@@ -71,7 +71,7 @@ public partial class LevelManager : MonoBehaviour
       _colorBlocks[i] = colorBlock;
     }
 
-    _directionBlocks = new DirectionBlockControl[bottomGrid.Grid.Length];
+    _directionBlocks = new GameObject[bottomGrid.Grid.Length];
     for (int i = 0; i < bottomGrid.Grid.Length; ++i)
     {
       if (i > initDirectionBlocks.Length - 1) break;
@@ -83,7 +83,7 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
 
-      _directionBlocks[i] = directionBlock;
+      _directionBlocks[i] = directionBlock.gameObject;
     }
 
     InitFiringPositions();
