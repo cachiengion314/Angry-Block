@@ -909,7 +909,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 74468657}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
+        m_MethodName: OnTriggerBooster1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &74468657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2235,6 +2247,7 @@ MonoBehaviour:
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
   updateSpeed: 2
+  IsTriggerBooster1: 0
   bulletPref: {fileID: 9002068626157766107, guid: 4e09141e562244507a2f9975d2a007ac,
     type: 3}
   colorBlockPref: {fileID: 2483085920719488615, guid: 4ade7be3d7156473dbb34f0ed0e3c392,
@@ -6533,7 +6546,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 783623876}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
+        m_MethodName: OnTriggerBooster2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &783623876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11908,7 +11933,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1439786213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8204037914367808213}
+        m_TargetAssemblyTypeName: GameplayPanel, Assembly-CSharp
+        m_MethodName: OnTriggerBooster3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1439786213
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster1
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 1);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 999);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_1, value);
