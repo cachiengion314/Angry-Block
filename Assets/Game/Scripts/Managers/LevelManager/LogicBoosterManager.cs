@@ -33,6 +33,9 @@ public partial class LevelManager
       print("Slots is not available");
       return;
     }
+    // Trigger WoodenBlock
+    HideHiddenWoodenBlockNeighborAt(directionBlock);
+
     var duration = 0.3f;
     var endPos = positions.GetChild(slotIndex).position;
 

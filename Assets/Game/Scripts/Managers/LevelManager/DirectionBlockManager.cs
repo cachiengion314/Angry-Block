@@ -77,6 +77,8 @@ public partial class LevelManager : MonoBehaviour
     //   moves.Dispose();
     //   return;
     // }
+    // Trigger WoodenBlock
+    HideHiddenWoodenBlockNeighborAt(directionBlock);
 
     // logic
     _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
