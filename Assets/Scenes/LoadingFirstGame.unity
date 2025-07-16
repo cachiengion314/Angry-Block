@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loading: {fileID: 1577750563}
-  delay: 1
+  delay: 0.1
 --- !u!1001 &1816043861
 PrefabInstance:
   m_ObjectHideFlags: 0

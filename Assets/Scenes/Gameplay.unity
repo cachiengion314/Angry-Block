@@ -2200,45 +2200,59 @@ MonoBehaviour:
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 1
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 0
       DirectionValue: 0
       Ammunition: 4
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 2
+      IsHidden: 1
     - ColorValue: 1
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 5
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
     - ColorValue: 2
       DirectionValue: 0
       Ammunition: 3
+      IsHidden: 0
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   firingSlotAmount: 4
@@ -2254,6 +2268,7 @@ MonoBehaviour:
     type: 3}
   directionBlockPref: {fileID: 1633368844517106154, guid: 0ed673403e7704f4bafe0c85a4a7670d,
     type: 3}
+  blastBlockPref: {fileID: 0}
   waitingSlotAmount: 7
 --- !u!4 &229877049
 Transform:
