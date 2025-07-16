@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
 using DG.Tweening;
-using Firebase.Analytics;
-using Spine.Unity;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public partial class LobbyPanel : MonoBehaviour
 {
@@ -13,11 +9,14 @@ public partial class LobbyPanel : MonoBehaviour
   [SerializeField] RectTransform settingModal;
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
+  [SerializeField] TextMeshProUGUI levelText;
 
   private void Start()
   {
     if (Instance == null) Instance = this;
     else Destroy(gameObject);
+
+    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevel + 1}";
   }
 
   private void OnDestroy()

@@ -3,7 +3,8 @@ using UnityEngine;
 public partial class GameplayPanel : MonoBehaviour
 {
   public static GameplayPanel Instance { get; private set; }
-
+  [SerializeField] RectTransform goalCompletedNotify;
+  [SerializeField] RectTransform showCanvas;
   public Transform SettingModal;
   public Transform LevelCompleteModal;
   public Transform LevelFiailedModal;
@@ -31,7 +32,32 @@ public partial class GameplayPanel : MonoBehaviour
   {
     UnsubscribeBoosterEvent();
   }
-  
+
+  bool IsShowingNotify = false;
+
+  void OpenNotify(RectTransform panel)
+  {
+    if (IsShowingNotify) return;
+    IsShowingNotify = true;
+    panel.gameObject.SetActive(true);
+    panel.GetComponentInChildren<Animator>().Play("OpenNotify");
+
+    var m_CurrentClipInfo = panel.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0);
+    var m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
+    LeanTween.delayedCall(gameObject, m_CurrentClipLength, () =>
+    {
+      IsShowingNotify = false;
+      Destroy(panel.gameObject);
+    });
+  }
+
+  public void ShowNotifyWith(string content)
+  {
+    var _goalCompletedNotify = Instantiate(goalCompletedNotify, showCanvas);
+    _goalCompletedNotify.GetComponent<GoalCompletedNotify>().ShowNotify(content);
+    OpenNotify(_goalCompletedNotify);
+  }
+
   void OpenModal(Transform panel)
   {
     panel.gameObject.SetActive(true);

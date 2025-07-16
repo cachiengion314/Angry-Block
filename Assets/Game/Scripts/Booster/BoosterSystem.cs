@@ -132,6 +132,10 @@ public partial class GameplayPanel
             GameManager.Instance.CurrentCoin -= price;
             GameManager.Instance.Booster1++;
         }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
+        }
     }
     public void BuyBooster2()
     {
@@ -141,6 +145,10 @@ public partial class GameplayPanel
             GameManager.Instance.CurrentCoin -= price;
             GameManager.Instance.Booster2++;
         }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
+        }
     }
     public void BuyBooster3()
     {
@@ -149,6 +157,10 @@ public partial class GameplayPanel
         {
             GameManager.Instance.CurrentCoin -= price;
             GameManager.Instance.Booster3++;
+        }
+        else
+        {
+            ShowNotifyWith("NOT ENOUGH COINS");
         }
     }
 }

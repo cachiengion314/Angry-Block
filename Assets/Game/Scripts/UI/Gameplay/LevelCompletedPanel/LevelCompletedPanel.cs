@@ -17,41 +17,4 @@ public class LevelCompletedPanel : MonoBehaviour
     GameManager.Instance.CurrentLevel++;
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);
   }
-
-  public void NextBtn()
-  {
-    if (GameManager.Instance.CurrentLevel < 4)
-    {
-      NextLevel();
-      return;
-    }
-
-    // LevelPlayAds.Instance.ShowInterstitialAd(
-    //   (info) =>
-    //   {
-
-    //   },
-    //   "NextLevel",
-    //   (info) =>
-    //   {
-    //     NextLevel();
-    //   },
-    //   () =>
-    //   {
-    //     NextLevel();
-    //   }
-    // );
-  }
-
-  public void RewardX2Btn()
-  {
-    // LevelPlayAds.Instance.ShowRewardedAd(() =>
-    // {
-    //   NextLevel();
-    // },
-    // "GoToNextLevelWithAds",
-    // () =>
-    // {
-    // });
-  }
 }
