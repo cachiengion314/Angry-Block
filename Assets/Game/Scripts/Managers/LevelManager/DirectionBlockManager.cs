@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
@@ -18,7 +17,14 @@ public partial class LevelManager : MonoBehaviour
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
-    MoveTo(emptyWaitingSlot, directionBlock, _waitingSlots, waitingPositions);
+    _waitingSlots[emptyWaitingSlot] = directionBlock;
+    AutoSortingWaitingSlots();
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      var block = _waitingSlots[i];
+      if (block == null) continue;
+      MoveTo(i, block, _waitingSlots, waitingPositions);
+    }
   }
 
   GameObject FindDirectionBlockIn(Collider2D[] cols)
@@ -43,14 +49,14 @@ public partial class LevelManager : MonoBehaviour
     }
 
     var endPos = positions.GetChild(slotIndex).position;
-    var startGridPos = bottomGrid.ConvertWorldPosToGridPos(directionBlock.transform.position);
-    var nextGridPos = startGridPos + directionBlock.GetComponent<IDirectionBlock>().GetDirection();
-    var nextPos = bottomGrid.ConvertGridPosToWorldPos(nextGridPos);
-    if (IsPosOccupiedAt(nextPos))
-    {
-      print("Cannot move due to occupied position");
-      return;
-    }
+    // var startGridPos = bottomGrid.ConvertWorldPosToGridPos(directionBlock.transform.position);
+    // var nextGridPos = startGridPos + directionBlock.GetComponent<IDirectionBlock>().GetDirection();
+    // var nextPos = bottomGrid.ConvertGridPosToWorldPos(nextGridPos);
+    // if (IsPosOccupiedAt(nextPos))
+    // {
+    //   print("Cannot move due to occupied position");
+    //   return;
+    // }
     // var moves = bottomGrid.PathFindingTo(endPos, nextPos, new int2[0]);
     // if (moves.Length == 0)
     // {
@@ -76,7 +82,7 @@ public partial class LevelManager : MonoBehaviour
     // }
 
     moveable.SetLockedPosition(endPos);
-    directionBlock.transform.DOMove(endPos, 1)
+    directionBlock.transform.DOMove(endPos, .5f)
       .OnComplete(() =>
       {
         moveable.SetLockedPosition(0);
