@@ -18,7 +18,7 @@ public partial class LevelManager : MonoBehaviour
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
-    MoveTo(emptyWaitingSlot, directionBlock, _waitingSlots, _waitingPositions);
+    MoveTo(emptyWaitingSlot, directionBlock, _waitingSlots, waitingPositions);
   }
 
   GameObject FindDirectionBlockIn(Collider2D[] cols)
@@ -51,17 +51,17 @@ public partial class LevelManager : MonoBehaviour
     int slotIndex,
     GameObject directionBlock,
     GameObject[] slots,
-    in float3[] positions
+    Transform positions
   )
   {
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
-    if (slotIndex > positions.Length - 1 || slotIndex < 0)
+    if (slotIndex > positions.childCount - 1 || slotIndex < 0)
     {
       print("Slots is not available");
       return;
     }
 
-    var endPos = positions[slotIndex];
+    var endPos = positions.GetChild(slotIndex).position;
     var startGridPos = bottomGrid.ConvertWorldPosToGridPos(directionBlock.transform.position);
     var nextGridPos = startGridPos + directionBlock.GetComponent<IDirectionBlock>().GetDirection();
     var nextPos = bottomGrid.ConvertGridPosToWorldPos(nextGridPos);
@@ -70,35 +70,35 @@ public partial class LevelManager : MonoBehaviour
       print("Cannot move due to occupied position");
       return;
     }
-    var moves = bottomGrid.PathFindingTo(endPos, nextPos, new int2[0]);
-    if (moves.Length == 0)
-    {
-      print("Cannot move due to no available moves");
-      moves.Dispose();
-      return;
-    }
+    // var moves = bottomGrid.PathFindingTo(endPos, nextPos, new int2[0]);
+    // if (moves.Length == 0)
+    // {
+    //   print("Cannot move due to no available moves");
+    //   moves.Dispose();
+    //   return;
+    // }
 
     // logic
     _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
-    var index = bottomGrid.ConvertWorldPosToIndex(endPos);
-    directionBlock.GetComponent<IColorBlock>().SetIndex(index);
-    _directionBlocks[index] = directionBlock;
+    // var index = bottomGrid.ConvertWorldPosToIndex(endPos);
+    // directionBlock.GetComponent<IColorBlock>().SetIndex(index);
+    // _directionBlocks[index] = directionBlock;
     slots[slotIndex] = directionBlock;
     /// animation
-    var _moves = new Vector3[moves.Length];
-    for (int i = 0; i < moves.Length; ++i)
-    {
-      var movePos = bottomGrid.ConvertGridPosToWorldPos(moves[i]);
-      _moves[i] = movePos;
-    }
+    // var _moves = new Vector3[moves.Length];
+    // for (int i = 0; i < moves.Length; ++i)
+    // {
+    //   var movePos = bottomGrid.ConvertGridPosToWorldPos(moves[i]);
+    //   _moves[i] = movePos;
+    // }
 
-    moveable.SetLockedPosition(_moves[^1]);
-    directionBlock.transform.DOPath(_moves, 1)
+    moveable.SetLockedPosition(endPos);
+    directionBlock.transform.DOMove(endPos, 1)
       .OnComplete(() =>
       {
         moveable.SetLockedPosition(0);
       });
 
-    moves.Dispose();
+    // moves.Dispose();
   }
 }

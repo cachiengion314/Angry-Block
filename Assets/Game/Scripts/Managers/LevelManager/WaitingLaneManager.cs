@@ -7,8 +7,7 @@ using UnityEngine;
 public partial class LevelManager : MonoBehaviour
 {
   [Range(1, 10)]
-  [SerializeField] int waitingSlotAmount = 7;
-  float3[] _waitingPositions;
+  [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
@@ -17,16 +16,14 @@ public partial class LevelManager : MonoBehaviour
 
   void InitWaitingPositions()
   {
-    _waitingPositions = new float3[waitingSlotAmount];
-    _waitingSlots = new GameObject[waitingSlotAmount];
+    _waitingSlots = new GameObject[waitingPositions.childCount];
 
     var y = bottomGrid.GridSize.y - 1 - 1;
     var startX = 1;
-    for (int x = startX; x < startX + waitingSlotAmount; ++x)
+    for (int x = startX; x < startX + waitingPositions.childCount; ++x)
     {
       if (x > bottomGrid.GridSize.x - 1) break;
       var pos = bottomGrid.ConvertGridPosToWorldPos(new int2(x, y));
-      _waitingPositions[x - startX] = pos;
     }
   }
 
@@ -55,7 +52,7 @@ public partial class LevelManager : MonoBehaviour
     _firingSlots[firingIdx] = null;
     _waitingSlots[emptyWaitingSlot] = tmpNotFoundMatchedDirBlock;
 
-    var targetPos = _waitingPositions[emptyWaitingSlot];
+    var targetPos = waitingPositions.GetChild(emptyWaitingSlot).position;
     var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
     _directionBlocks[tmpNotFoundMatchedDirBlock.GetComponent<IColorBlock>().GetIndex()] = null;
     _directionBlocks[targetIdx] = tmpNotFoundMatchedDirBlock;
@@ -94,7 +91,7 @@ public partial class LevelManager : MonoBehaviour
 
       if (i == 1)
       {
-        var blastPos = _waitingPositions[idx];
+        var blastPos = waitingPositions.GetChild(idx).position;
         var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {

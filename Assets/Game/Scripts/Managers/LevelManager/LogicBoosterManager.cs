@@ -16,23 +16,23 @@ public partial class LevelManager
         IsTriggerBooster1 = false;
         GameManager.Instance.Booster1--;
 
-        MoveToSlots(emptyWaitingSlot, directionBlock, _waitingSlots, _waitingPositions);
+        MoveToSlots(emptyWaitingSlot, directionBlock, _waitingSlots, waitingPositions);
     }
     void MoveToSlots(
     int slotIndex,
     GameObject directionBlock,
     GameObject[] slots,
-    in float3[] positions
+    Transform positions
   )
     {
         if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
-        if (slotIndex > positions.Length - 1 || slotIndex < 0)
+        if (slotIndex > positions.childCount - 1 || slotIndex < 0)
         {
             print("Slots is not available");
             return;
         }
         var duration = 0.3f;
-        var endPos = positions[slotIndex];
+        var endPos = positions.GetChild(slotIndex).position;
 
         // logic
         if (!directionBlock.TryGetComponent(out IColorBlock colorBlock)) return;
@@ -54,7 +54,7 @@ public partial class LevelManager
         for (int i = newDirectionBlocks.Length - 1; i >= 0; i--)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
-            SwapAt(newDirectionBlocks[i],newDirectionBlocks[j]);
+            SwapAt(newDirectionBlocks[i], newDirectionBlocks[j]);
         }
     }
 
