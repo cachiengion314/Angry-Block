@@ -55,7 +55,7 @@ public partial class LevelManager
 
   public void OnTriggerBooster2()
   {
-    var directionBlockAvailables = DirectionBlocksAvailable();
+    var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
     for (int i = directionBlockAvailables.Length - 1; i >= 0; i--)
     {
       int j = UnityEngine.Random.Range(0, i + 1);
