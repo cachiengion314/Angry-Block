@@ -12,8 +12,8 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
-  readonly float _DURATION_NOT_FOUND_MATCHED = 1.2f;
-  readonly float _DURATION_FOUND_MATCHED = .7f;
+  readonly float _DURATION_NOT_FOUND_MATCHED = .82f;
+  readonly float _DURATION_FOUND_MATCHED = .45f;
 
   void InitWaitingPositions()
   {
@@ -120,6 +120,7 @@ public partial class LevelManager : MonoBehaviour
       var waitingBlock = _waitingSlots[i];
       if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
+
       ShouldMergeUpdate(waitingBlock);
 
       if (!waitingBlock.TryGetComponent<IGun>(out var gun)) continue;

@@ -2241,12 +2241,13 @@ MonoBehaviour:
       Ammunition: 3
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
-  firingSlotAmount: 4
-  rotationSpeed: 3.5
+  firingSlotAmount: 5
+  rotationSpeed: 5
+  bulletSpeed: 16
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
-  updateSpeed: 2
+  updateSpeed: 1
   IsTriggerBooster1: 0
   bulletPref: {fileID: 9002068626157766107, guid: 4e09141e562244507a2f9975d2a007ac,
     type: 3}

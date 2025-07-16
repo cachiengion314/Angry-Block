@@ -9,6 +9,8 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _firingSlots;
   [Range(1f, 10f)]
   [SerializeField] float rotationSpeed = 3.5f;
+  [Range(1f, 30)]
+  [SerializeField] float bulletSpeed = 10.0f;
 
   void InitFiringPositions()
   {
@@ -41,7 +43,7 @@ public partial class LevelManager : MonoBehaviour
         if (idx < 0 || idx > _firingSlots.Length - 1) continue;
 
         _firingSlots[idx] = null;
-        Destroy(directionBlock.gameObject);
+        Destroy(directionBlock);
         continue;
       }
 
@@ -84,7 +86,7 @@ public partial class LevelManager : MonoBehaviour
       );
       var bullet = SpawnBulletAt(
         directionBlock.transform.position,
-        updateSpeed * 6.2f * (
+        updateSpeed * bulletSpeed * (
           colorBlock.transform.position - directionBlock.transform.position
         ).normalized,
         1

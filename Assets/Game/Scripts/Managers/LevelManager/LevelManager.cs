@@ -11,7 +11,7 @@ public partial class LevelManager : MonoBehaviour
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
-  [Range(0f, 2f)]
+  [Range(0f, 1f)]
   [SerializeField] float updateSpeed;
 
   void Start()
