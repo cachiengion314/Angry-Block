@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IDamageable
 {
   public void SetInitHealth(int health);
@@ -5,8 +7,8 @@ public interface IDamageable
   public void SetHealth(int health);
   public bool IsDead();
   public bool IsDamage();
-  public DirectionBlockControl GetWhoLocked();
-  public DirectionBlockControl GetWhoPicked();
-  public void SetWhoLocked(DirectionBlockControl block);
-  public void SetWhoPicked(DirectionBlockControl block);
+  public GameObject GetWhoLocked();
+  public GameObject GetWhoPicked();
+  public void SetWhoLocked(GameObject block);
+  public void SetWhoPicked(GameObject block);
 }

@@ -11,7 +11,7 @@ public partial class LevelManager : MonoBehaviour
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
 
-  ColorBlockControl FindFirstBlockMatchedFor(DirectionBlockControl directionBlock)
+  ColorBlockControl FindFirstBlockMatchedFor(GameObject directionBlock)
   {
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {

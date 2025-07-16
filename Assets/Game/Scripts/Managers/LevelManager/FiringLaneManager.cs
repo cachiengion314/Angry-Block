@@ -3,16 +3,17 @@ using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
+  [Range(1, 10)]
   [SerializeField] int firingSlotAmount = 4;
   float3[] _firingPositions;
-  DirectionBlockControl[] _firingSlots;
+  GameObject[] _firingSlots;
   [Range(1f, 10f)]
   [SerializeField] float rotationSpeed = 3.5f;
 
   void InitFiringPositions()
   {
     _firingPositions = new float3[firingSlotAmount];
-    _firingSlots = new DirectionBlockControl[firingSlotAmount];
+    _firingSlots = new GameObject[firingSlotAmount];
 
     var y = bottomGrid.GridSize.y - 1;
     var startX = 2;
@@ -36,7 +37,7 @@ public partial class LevelManager : MonoBehaviour
       if (!directionBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        var idx = FindSlotIndexFor(directionBlock, _firingSlots);
+        var idx = FindSlotFor(directionBlock, _firingSlots);
         if (idx < 0 || idx > _firingSlots.Length - 1) continue;
 
         _firingSlots[idx] = null;
@@ -78,7 +79,9 @@ public partial class LevelManager : MonoBehaviour
       if (damageable.GetWhoLocked() == directionBlock) continue;
       damageable.SetWhoLocked(directionBlock);
       // standing to fire to target
-      directionBlock.SetAmmunition(directionBlock.GetAmmunition() - 1);
+      directionBlock.GetComponent<IGun>().SetAmmunition(
+        directionBlock.GetComponent<IGun>().GetAmmunition() - 1
+      );
       var bullet = SpawnBulletAt(
         directionBlock.transform.position,
         updateSpeed * 6.2f * (

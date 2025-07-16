@@ -1,20 +1,17 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class ColorBlockControl : MonoBehaviour
+public class BlastBlockControl : MonoBehaviour
   , IColorBlock
-  , IDamageable
   , IMoveable
+  , IGun
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
   [Header("Datas")]
   int _index;
-  int _initHealth;
-  int _currentHealth;
   int _colorValue;
-  GameObject _whoLocked;
-  GameObject _whoPicked;
+  int _ammunition;
 
   public int GetColorValue()
   {
@@ -37,52 +34,6 @@ public class ColorBlockControl : MonoBehaviour
     return _index;
   }
 
-  public void SetInitHealth(int health)
-  {
-    _initHealth = health;
-    SetHealth(health);
-  }
-
-  public int GetHealth()
-  {
-    return _currentHealth;
-  }
-
-  public void SetHealth(int health)
-  {
-    _currentHealth = math.max(0, health);
-  }
-
-  public bool IsDead()
-  {
-    return _currentHealth <= 0;
-  }
-
-  public bool IsDamage()
-  {
-    return _currentHealth == _initHealth;
-  }
-
-  public GameObject GetWhoLocked()
-  {
-    return _whoLocked;
-  }
-
-  public void SetWhoLocked(GameObject block)
-  {
-    _whoLocked = block;
-  }
-
-  public GameObject GetWhoPicked()
-  {
-    return _whoPicked;
-  }
-
-  public void SetWhoPicked(GameObject block)
-  {
-    _whoPicked = block;
-  }
-
   public void SetLockedPosition(float3 lockedPosition)
   {
     throw new System.NotImplementedException();
@@ -101,5 +52,15 @@ public class ColorBlockControl : MonoBehaviour
   public void SetLockedTarget(Transform lockedTarget)
   {
     throw new System.NotImplementedException();
+  }
+
+  public void SetAmmunition(int ammunition)
+  {
+    _ammunition = ammunition;
+  }
+
+  public int GetAmmunition()
+  {
+    return _ammunition;
   }
 }

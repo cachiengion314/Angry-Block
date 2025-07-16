@@ -5,6 +5,7 @@ public class DirectionBlockControl : MonoBehaviour
   , IDirectionBlock
   , IColorBlock
   , IMoveable
+  , IMergeable
   , IGun
 {
   [Header("Dependencies")]
@@ -102,5 +103,15 @@ public class DirectionBlockControl : MonoBehaviour
   public void SetLockedTarget(Transform lockedTarget)
   {
     throw new System.NotImplementedException();
+  }
+
+  public int2 GetDirection()
+  {
+    return Direction;
+  }
+
+  public GameObject GetGameObject()
+  {
+    return gameObject;
   }
 }

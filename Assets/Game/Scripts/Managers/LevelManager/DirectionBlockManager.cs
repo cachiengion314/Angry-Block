@@ -8,38 +8,27 @@ public partial class LevelManager : MonoBehaviour
   /// <summary>
   /// Manager all direction blocks
   /// </summary>
-  DirectionBlockControl[] _directionBlocks;
-  public DirectionBlockControl[] DirectionBlocks { get { return _directionBlocks; } }
+  GameObject[] _directionBlocks;
+  public GameObject[] DirectionBlocks { get { return _directionBlocks; } }
 
-  void TouchControlling(DirectionBlockControl directionBlock)
+  void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
 
-    var firstRowMatched = FindFirstRowMatchedWith(directionBlock.GetColorValue());
-    if (firstRowMatched.Count == 0)
-    {
-      var emptyWaitingSlotIndex = FindEmptySlotFrom(_waitingSlots);
-      MoveTo(
-        emptyWaitingSlotIndex, directionBlock, _waitingSlots, _waitingPositions
-      );
-      return;
-    }
+    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
+    if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
-    var emptyFiringSlotIndex = FindEmptySlotFrom(_firingSlots);
-    if (emptyFiringSlotIndex == -1 || emptyFiringSlotIndex > _firingSlots.Length - 1) return;
-
-    MoveTo(
-      emptyFiringSlotIndex, directionBlock, _firingSlots, _firingPositions
-    );
+    MoveTo(emptyWaitingSlot, directionBlock, _waitingSlots, _waitingPositions);
   }
 
-  DirectionBlockControl FindDirectionBlockIn(Collider2D[] cols)
+  GameObject FindDirectionBlockIn(Collider2D[] cols)
   {
-    var colorBlock = FindObjIn<DirectionBlockControl>(cols);
-    return colorBlock;
+    var colorBlock = FindObjIn<IDirectionBlock>(cols);
+    if (colorBlock == null) return null;
+    return colorBlock.GetGameObject();
   }
 
-  int FindSlotIndexFor(DirectionBlockControl block, DirectionBlockControl[] slots)
+  int FindSlotFor(GameObject block, GameObject[] slots)
   {
     for (int i = 0; i < slots.Length; ++i)
     {
@@ -49,7 +38,7 @@ public partial class LevelManager : MonoBehaviour
     return -1;
   }
 
-  int FindEmptySlotFrom(DirectionBlockControl[] slots)
+  int FindEmptySlotFrom(GameObject[] slots)
   {
     for (int i = 0; i < slots.Length; ++i)
     {
@@ -60,8 +49,8 @@ public partial class LevelManager : MonoBehaviour
 
   void MoveTo(
     int slotIndex,
-    DirectionBlockControl directionBlock,
-    DirectionBlockControl[] slots,
+    GameObject directionBlock,
+    GameObject[] slots,
     in float3[] positions
   )
   {
@@ -74,7 +63,7 @@ public partial class LevelManager : MonoBehaviour
 
     var endPos = positions[slotIndex];
     var startGridPos = bottomGrid.ConvertWorldPosToGridPos(directionBlock.transform.position);
-    var nextGridPos = startGridPos + directionBlock.Direction;
+    var nextGridPos = startGridPos + directionBlock.GetComponent<IDirectionBlock>().GetDirection();
     var nextPos = bottomGrid.ConvertGridPosToWorldPos(nextGridPos);
     if (IsPosOccupiedAt(nextPos))
     {
@@ -90,9 +79,9 @@ public partial class LevelManager : MonoBehaviour
     }
 
     // logic
-    _directionBlocks[directionBlock.GetIndex()] = null;
+    _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
     var index = bottomGrid.ConvertWorldPosToIndex(endPos);
-    directionBlock.SetIndex(index);
+    directionBlock.GetComponent<IColorBlock>().SetIndex(index);
     _directionBlocks[index] = directionBlock;
     slots[slotIndex] = directionBlock;
     /// animation

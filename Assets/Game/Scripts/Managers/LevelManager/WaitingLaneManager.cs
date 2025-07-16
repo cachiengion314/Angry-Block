@@ -5,21 +5,22 @@ using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  [SerializeField] int waitingSlotAMount = 7;
+  [Range(1, 10)]
+  [SerializeField] int waitingSlotAmount = 7;
   float3[] _waitingPositions;
-  DirectionBlockControl[] _waitingSlots;
+  GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly float _DURATION_NOT_FOUND_MATCHED = 1.2f;
   readonly float _DURATION_FOUND_MATCHED = .7f;
 
   void InitWaitingPositions()
   {
-    _waitingPositions = new float3[waitingSlotAMount];
-    _waitingSlots = new DirectionBlockControl[waitingSlotAMount];
+    _waitingPositions = new float3[waitingSlotAmount];
+    _waitingSlots = new GameObject[waitingSlotAmount];
 
     var y = bottomGrid.GridSize.y - 1 - 1;
     var startX = 1;
-    for (int x = startX; x < startX + waitingSlotAMount; ++x)
+    for (int x = startX; x < startX + waitingSlotAmount; ++x)
     {
       if (x > bottomGrid.GridSize.x - 1) break;
       var pos = bottomGrid.ConvertGridPosToWorldPos(new int2(x, y));
@@ -27,7 +28,7 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  void ShouldGoWaitingUpdate(DirectionBlockControl tmpNotFoundMatchedDirBlock)
+  void ShouldGoWaitingUpdate(GameObject tmpNotFoundMatchedDirBlock)
   {
     if (!_waitingTimers.ContainsKey(tmpNotFoundMatchedDirBlock.GetInstanceID()))
       _waitingTimers.Add(tmpNotFoundMatchedDirBlock.GetInstanceID(), 0f);
@@ -46,7 +47,7 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
 
-    var firingIdx = FindSlotIndexFor(tmpNotFoundMatchedDirBlock, _firingSlots);
+    var firingIdx = FindSlotFor(tmpNotFoundMatchedDirBlock, _firingSlots);
     if (firingIdx < 0 || firingIdx > _firingSlots.Length - 1) return;
 
     _firingSlots[firingIdx] = null;
@@ -54,15 +55,15 @@ public partial class LevelManager : MonoBehaviour
 
     var targetPos = _waitingPositions[emptyWaitingSlot];
     var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
-    _directionBlocks[tmpNotFoundMatchedDirBlock.GetIndex()] = null;
+    _directionBlocks[tmpNotFoundMatchedDirBlock.GetComponent<IColorBlock>().GetIndex()] = null;
     _directionBlocks[targetIdx] = tmpNotFoundMatchedDirBlock;
-    tmpNotFoundMatchedDirBlock.SetIndex(targetIdx);
+    tmpNotFoundMatchedDirBlock.GetComponent<IColorBlock>().SetIndex(targetIdx);
 
-    tmpNotFoundMatchedDirBlock.SetLockedPosition(targetPos);
+    tmpNotFoundMatchedDirBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
     tmpNotFoundMatchedDirBlock.transform.DOMove(targetPos, .5f)
       .OnComplete(() =>
       {
-        tmpNotFoundMatchedDirBlock.SetLockedPosition(0);
+        tmpNotFoundMatchedDirBlock.GetComponent<IMoveable>().SetLockedPosition(0);
       });
   }
 
@@ -91,7 +92,7 @@ public partial class LevelManager : MonoBehaviour
       var emptyFiringSlot = FindEmptySlotFrom(_firingSlots);
       if (emptyFiringSlot < 0 || emptyFiringSlot > _firingSlots.Length - 1) return;
 
-      var waitingIdx = FindSlotIndexFor(waitingBlock, _waitingSlots);
+      var waitingIdx = FindSlotFor(waitingBlock, _waitingSlots);
       if (waitingIdx < 0 || waitingIdx > _waitingSlots.Length - 1) return;
 
       _waitingSlots[waitingIdx] = null;
@@ -99,15 +100,15 @@ public partial class LevelManager : MonoBehaviour
 
       var targetPos = _firingPositions[emptyFiringSlot];
       var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
-      _directionBlocks[waitingBlock.GetIndex()] = null;
+      _directionBlocks[waitingBlock.GetComponent<IColorBlock>().GetIndex()] = null;
       _directionBlocks[targetIdx] = waitingBlock;
-      waitingBlock.SetIndex(targetIdx);
+      waitingBlock.GetComponent<IColorBlock>().SetIndex(targetIdx);
 
-      waitingBlock.SetLockedPosition(targetPos);
+      waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
       waitingBlock.transform.DOMove(targetPos, .5f)
         .OnComplete(() =>
         {
-          waitingBlock.SetLockedPosition(0);
+          waitingBlock.GetComponent<IMoveable>().SetLockedPosition(0);
         });
     }
   }
