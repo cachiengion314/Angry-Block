@@ -131,6 +131,25 @@ public partial class LevelManager : MonoBehaviour
     return false;
   }
 
+  int FindSlotFor(GameObject block, GameObject[] slots)
+  {
+    for (int i = 0; i < slots.Length; ++i)
+    {
+      if (slots[i] == null) continue;
+      if (slots[i] == block) return i;
+    }
+    return -1;
+  }
+
+  int FindEmptySlotFrom(GameObject[] slots)
+  {
+    for (int i = 0; i < slots.Length; ++i)
+    {
+      if (slots[i] == null) return i;
+    }
+    return -1;
+  }
+
   public void RestartLevel()
   {
     SceneManager.LoadScene(KeyString.NAME_SCENE_GAMEPLAY);

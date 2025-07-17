@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  [Range(1, 10)]
   [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
@@ -17,6 +15,36 @@ public partial class LevelManager : MonoBehaviour
   void InitWaitingSlots()
   {
     _waitingSlots = new GameObject[waitingPositions.childCount];
+  }
+
+  void AutoSortingWaitingSlots()
+  {
+    var hashtable = new Dictionary<int, HashSet<GameObject>>();
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      var block = _waitingSlots[i];
+      if (block == null) continue;
+      if (!block.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+      if (!hashtable.ContainsKey(colorBlock.GetColorValue()))
+        hashtable.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
+      hashtable[colorBlock.GetColorValue()].Add(block);
+    }
+    var hashArr = hashtable.ToArray();
+    var list = new List<GameObject>();
+    for (int i = 0; i < hashArr.Length; ++i)
+    {
+      var gameObjSet = hashArr[i].Value.ToArray();
+      for (int j = 0; j < gameObjSet.Length; ++j)
+      {
+        list.Add(gameObjSet[j]);
+      }
+    }
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      _waitingSlots[i] = null;
+      if (i > list.Count - 1) continue;
+      _waitingSlots[i] = list[i];
+    }
   }
 
   void ShouldGoWaitingUpdate(GameObject tmpNotFoundMatchedDirBlock)
@@ -58,8 +86,22 @@ public partial class LevelManager : MonoBehaviour
       });
   }
 
+  bool IsWaitingSlotsMMoving()
+  {
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      var block = _waitingSlots[i];
+      if (block == null) continue;
+      if (!block.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!moveable.GetLockedPosition().Equals(0)) return true;
+    }
+    return false;
+  }
+
   void ShouldMergeUpdate(GameObject waitingBlock)
   {
+    if (IsWaitingSlotsMMoving()) return;
+
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
     if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
 
