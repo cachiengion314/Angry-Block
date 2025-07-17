@@ -75,6 +75,17 @@ public partial class LevelManager
     return setDirectionBlocks.ToArray();
   }
 
+  GameObject[] FindDirectionBlocksNotNullAt(List<GameObject> directionBlocks)
+  {
+    List<GameObject> listDirectionBlock = new();
+    foreach (var directionBlock in directionBlocks)
+    {
+      if (directionBlock == null) continue;
+      listDirectionBlock.Add(directionBlock);
+    }
+    return listDirectionBlock.ToArray();
+  }
+
   GameObject[] FindDirectionBlocksNotNullAt(GameObject[] directionBlocks)
   {
     List<GameObject> listDirectionBlock = new();

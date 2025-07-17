@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -94,7 +95,7 @@ public partial class LevelManager : MonoBehaviour
       _directionBlocks[i] = directionBlock.gameObject;
     }
 
-    InitFiringPositions();
+    InitFiringSlots();
     InitWaitingSlots();
   }
 
@@ -111,12 +112,14 @@ public partial class LevelManager : MonoBehaviour
     return default;
   }
 
-  float InterpolateMoveUpdate(Transform needMovingObj, float3 startPos, float3 targetPos)
+  float InterpolateMoveUpdate(
+    Transform needMovingObj, float3 startPos, float3 targetPos, float _speed = 5.0f
+  )
   {
     var currentPos = needMovingObj.position;
     var distanceFromStart = (currentPos - (Vector3)startPos).magnitude;
     var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
-    var t = distanceFromStart / totalDistance + 4.8f * Time.deltaTime;
+    var t = distanceFromStart / totalDistance + _speed * Time.deltaTime;
     var nextPos = math.lerp(startPos, targetPos, t);
     needMovingObj.position = nextPos;
 
@@ -141,6 +144,16 @@ public partial class LevelManager : MonoBehaviour
     return -1;
   }
 
+  int FindSlotFor(GameObject block, List<GameObject> slots)
+  {
+    for (int i = 0; i < slots.Count; ++i)
+    {
+      if (slots[i] == null) continue;
+      if (slots[i] == block) return i;
+    }
+    return -1;
+  }
+
   int FindEmptySlotFrom(GameObject[] slots)
   {
     for (int i = 0; i < slots.Length; ++i)
@@ -148,6 +161,15 @@ public partial class LevelManager : MonoBehaviour
       if (slots[i] == null) return i;
     }
     return -1;
+  }
+
+  int FindEmptySlotFrom(List<GameObject> slots)
+  {
+    for (int i = 0; i < slots.Count; ++i)
+    {
+      if (slots[i] == null) return i;
+    }
+    return slots.Count;
   }
 
   public void RestartLevel()

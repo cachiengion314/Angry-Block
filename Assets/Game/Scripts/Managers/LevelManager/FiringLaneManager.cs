@@ -1,93 +1,101 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  [Range(1, 10)]
-  [SerializeField] int firingSlotAmount = 4;
-  float3[] _firingPositions;
-  GameObject[] _firingSlots;
+  readonly Dictionary<int, int> _firingPositionIndexes = new();
+  [SerializeField] Transform _firingPositions;
+  readonly List<GameObject> _firingSlots = new();
   [Range(1f, 10f)]
   [SerializeField] float rotationSpeed = 3.5f;
   [Range(1f, 30)]
   [SerializeField] float bulletSpeed = 10.0f;
 
-  void InitFiringPositions()
+  void InitFiringSlots()
   {
-    _firingPositions = new float3[firingSlotAmount];
-    _firingSlots = new GameObject[firingSlotAmount];
 
-    var y = bottomGrid.GridSize.y - 1;
-    var startX = 2;
-    for (int x = startX; x < startX + firingSlotAmount; ++x)
-    {
-      if (x > bottomGrid.GridSize.x - 1) break;
-      var pos = bottomGrid.ConvertGridPosToWorldPos(new int2(x, y));
-      _firingPositions[x - startX] = pos;
-    }
+  }
+
+  void WanderingAroundUpdate(GameObject blastBlock)
+  {
+    if (!_firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID()))
+      _firingPositionIndexes.Add(blastBlock.GetInstanceID(), 0);
+    var idx = _firingPositionIndexes[blastBlock.GetInstanceID()];
+
+    var currentPos = _firingPositions.GetChild(idx).position;
+    var targetIdx = (idx + 1) % _firingPositions.childCount;
+    var targetPos = _firingPositions.GetChild(targetIdx).position;
+
+    var t = InterpolateMoveUpdate(blastBlock.transform, currentPos, targetPos, .25f);
+    if (t < 1) return;
+
+    _firingPositionIndexes[blastBlock.GetInstanceID()] = idx + 1;
   }
 
   void LockAndFireTargetUpddate()
   {
-    for (int i = 0; i < _firingSlots.Length; ++i)
+    for (int i = 0; i < _firingSlots.Count; ++i)
     {
       if (_firingSlots[i] == null) continue;
 
-      var directionBlock = _firingSlots[i];
-      if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+      var blastBlock = _firingSlots[i];
+      if (!blastBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
-      if (!directionBlock.TryGetComponent<IGun>(out var gun)) continue;
+      if (!blastBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        var idx = FindSlotFor(directionBlock, _firingSlots);
-        if (idx < 0 || idx > _firingSlots.Length - 1) continue;
+        var idx = FindSlotFor(blastBlock, _firingSlots);
+        if (idx < 0 || idx > _firingSlots.Count - 1) continue;
 
         _firingSlots[idx] = null;
-        Destroy(directionBlock);
+        Destroy(blastBlock);
         continue;
       }
 
-      if (!directionBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
-      var colorBlock = FindFirstBlockMatchedFor(directionBlock);
+      WanderingAroundUpdate(blastBlock);
+
+      if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+      var colorBlock = FindFirstBlockMatchedFor(blastBlock);
       if (colorBlock == null)
       {
-        // cannot find any targets so this directionBlock should go to the waiting slot
-        ShouldGoWaitingUpdate(directionBlock);
+        // cannot find any targets so this blastBlock should go to the waiting slot
+        ShouldGoWaitingUpdate(blastBlock);
         continue;
       }
 
       if (!colorBlock.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != directionBlock)
+      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
 
-      damageable.SetWhoPicked(directionBlock); // picking this target to prevent other interfere
-      var dirToTarget = colorBlock.transform.position - directionBlock.transform.position;
+      damageable.SetWhoPicked(blastBlock); // picking this target to prevent other interfere
+      var dirToTarget = colorBlock.transform.position - blastBlock.transform.position;
       var targetRad = math.acos(
-        math.dot(dirToTarget.normalized, directionBlock.transform.up)
+        math.dot(dirToTarget.normalized, blastBlock.transform.up)
       );
       if (math.abs(targetRad) > .1f)
       {
         var sign = math.sign(
-          math.cross(directionBlock.transform.up, dirToTarget).z
+          math.cross(blastBlock.transform.up, dirToTarget).z
         );
         var deltaTargetRad = sign * Time.deltaTime * rotationSpeed * targetRad;
         var deltaQuad = new Quaternion(
           0, 0, math.sin(deltaTargetRad / 2f), math.cos(deltaTargetRad / 2f)
         );
-        directionBlock.transform.rotation *= deltaQuad;
+        blastBlock.transform.rotation *= deltaQuad;
         continue;
       }
       damageable.SetWhoPicked(null);
-      if (damageable.GetWhoLocked() == directionBlock) continue;
-      damageable.SetWhoLocked(directionBlock);
+      if (damageable.GetWhoLocked() == blastBlock) continue;
+      damageable.SetWhoLocked(blastBlock);
       // standing to fire to target
-      directionBlock.GetComponent<IGun>().SetAmmunition(
-        directionBlock.GetComponent<IGun>().GetAmmunition() - 1
+      blastBlock.GetComponent<IGun>().SetAmmunition(
+        blastBlock.GetComponent<IGun>().GetAmmunition() - 1
       );
       var bullet = SpawnBulletAt(
-        directionBlock.transform.position,
+        blastBlock.transform.position,
         updateSpeed * bulletSpeed * (
-          colorBlock.transform.position - directionBlock.transform.position
+          colorBlock.transform.position - blastBlock.transform.position
         ).normalized,
         1
       );
@@ -96,8 +104,8 @@ public partial class LevelManager : MonoBehaviour
         moveableBullet.SetLockedPosition(colorBlock.transform.position);
         moveableBullet.SetLockedTarget(colorBlock.transform);
       }
-      if (_waitingTimers.ContainsKey(directionBlock.GetInstanceID()))
-        _waitingTimers[directionBlock.GetInstanceID()] = 0f;
+      if (_waitingTimers.ContainsKey(blastBlock.GetInstanceID()))
+        _waitingTimers[blastBlock.GetInstanceID()] = 0f;
     }
   }
 }
