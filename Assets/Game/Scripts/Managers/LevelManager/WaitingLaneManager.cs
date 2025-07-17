@@ -10,7 +10,7 @@ public partial class LevelManager : MonoBehaviour
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
   readonly float _DURATION_NOT_FOUND_MATCHED = 5.82f;
-  readonly float _DURATION_FOUND_MATCHED = .45f;
+  readonly float _DURATION_FOUND_MATCHED = .4f;
 
   void InitWaitingSlots()
   {

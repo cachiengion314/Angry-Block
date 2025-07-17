@@ -9,6 +9,8 @@ public partial class LevelManager : MonoBehaviour
   /// </summary>
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
+  [Range(1f, 10f)]
+  [SerializeField] float arrangeSpeed = 5.5f;
 
   ColorBlockControl FindFirstBlockMatchedFor(GameObject blastBlock)
   {
@@ -83,7 +85,7 @@ public partial class LevelManager : MonoBehaviour
         colorBlock.transform.position,
         topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
         targetPos,
-        5,
+        updateSpeed * arrangeSpeed,
         out var t,
         out var nextPos
       );

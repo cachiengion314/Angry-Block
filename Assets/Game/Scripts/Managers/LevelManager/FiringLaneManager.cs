@@ -11,6 +11,8 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] float rotationSpeed = 3.5f;
   [Range(1f, 30)]
   [SerializeField] float bulletSpeed = 10.0f;
+  [Range(1f, 30)]
+  [SerializeField] float wanderingSpeed = 1.0f;
 
   void WanderingAroundUpdate(GameObject blastBlock)
   {
@@ -26,7 +28,7 @@ public partial class LevelManager : MonoBehaviour
       blastBlock.transform.position,
       startPos,
       targetPos,
-      1.25f,
+      updateSpeed * wanderingSpeed,
       out var t,
       out var nextPos
     );
@@ -63,7 +65,7 @@ public partial class LevelManager : MonoBehaviour
       if (colorBlock == null)
       {
         // cannot find any targets so this blastBlock should go to the waiting slot
-        ShouldGoWaitingUpdate(blastBlock);
+        // ShouldGoWaitingUpdate(blastBlock);
         continue;
       }
 
@@ -90,6 +92,11 @@ public partial class LevelManager : MonoBehaviour
       }
       damageable.SetWhoPicked(null);
       if (damageable.GetWhoLocked() == blastBlock) continue;
+      if (
+       _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
+        && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
+      ) continue; // if block is not standing at firing zone its should not permitted for firing
+
       damageable.SetWhoLocked(blastBlock);
       // standing to fire to target
       blastBlock.GetComponent<IGun>().SetAmmunition(

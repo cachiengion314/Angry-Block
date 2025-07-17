@@ -119,6 +119,11 @@ public partial class LevelManager : MonoBehaviour
     return default;
   }
 
+  float3 Lerp(float3 start, float3 end, float t)
+  {
+    return (1 - t) * start + t * end;
+  }
+
   void InterpolateMoveUpdate(
     in float3 currentPos,
     in float3 startPos,
@@ -131,7 +136,7 @@ public partial class LevelManager : MonoBehaviour
     var distanceFromStart = math.length(currentPos - startPos);
     var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
     t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
-    nextPos = math.lerp(startPos, targetPos, t);
+    nextPos = Lerp(startPos, targetPos, t);
   }
 
   bool IsPosOccupiedAt(float3 pos)
