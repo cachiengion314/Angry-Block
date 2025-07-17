@@ -22,12 +22,12 @@ public partial class LevelManager : MonoBehaviour
     if (!_firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID()))
       _firingPositionIndexes.Add(blastBlock.GetInstanceID(), 0);
     var idx = _firingPositionIndexes[blastBlock.GetInstanceID()];
-
-    var currentPos = _firingPositions.GetChild(idx).position;
+    var currentIdx = idx % _firingPositions.childCount;
+    var currentPos = _firingPositions.GetChild(currentIdx).position;
     var targetIdx = (idx + 1) % _firingPositions.childCount;
     var targetPos = _firingPositions.GetChild(targetIdx).position;
 
-    var t = InterpolateMoveUpdate(blastBlock.transform, currentPos, targetPos, .25f);
+    var t = InterpolateMoveUpdate(blastBlock.transform, currentPos, targetPos, 1.25f);
     if (t < 1) return;
 
     _firingPositionIndexes[blastBlock.GetInstanceID()] = idx + 1;

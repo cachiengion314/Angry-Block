@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 1142099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.33, z: 0}
+  m_LocalPosition: {x: 0, y: 3.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2319,18 +2319,7 @@ MonoBehaviour:
       DirectionValue: 0
       Ammunition: 3
       IsHidden: 0
-    InitTunnels:
-    - directionBlockDatas:
-      - ColorValue: 0
-        DirectionValue: 0
-        Ammunition: 6
-        IsHidden: 0
-      - ColorValue: 0
-        DirectionValue: 0
-        Ammunition: 7
-        IsHidden: 0
-      DirectionValue: 3
-      Index: 14
+    InitTunnels: []
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   _firingPositions: {fileID: 1142100}
@@ -16767,7 +16756,7 @@ Transform:
   m_GameObject: {fileID: 2103059039}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.39, z: 0}
+  m_LocalPosition: {x: 0, y: 1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
