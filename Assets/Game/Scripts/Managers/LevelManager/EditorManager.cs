@@ -30,6 +30,14 @@ public class DirectionBlockData
 }
 
 [Serializable]
+public class TunnelData
+{
+  public DirectionBlockData[] directionBlockDatas;
+  public DirectionValue DirectionValue;
+  public int Index;
+}
+
+[Serializable]
 public class LevelInformation
 {
   [ViewOnly]
@@ -42,6 +50,7 @@ public class LevelInformation
   public ColorBlockData[] InitColorBlocks;
   public int2 DirectionBlocksGridSize;
   public DirectionBlockData[] InitDirectionBlocks;
+  public TunnelData[] InitTunnels;
 }
 
 public partial class LevelManager : MonoBehaviour
@@ -60,6 +69,7 @@ public partial class LevelManager : MonoBehaviour
     levelInformation.InitColorBlocks = new ColorBlockData[0];
     levelInformation.DirectionBlocksGridSize = new int2();
     levelInformation.InitDirectionBlocks = new DirectionBlockData[0];
+    levelInformation.InitTunnels = new TunnelData[0];
   }
 
   [NaughtyAttributes.Button]

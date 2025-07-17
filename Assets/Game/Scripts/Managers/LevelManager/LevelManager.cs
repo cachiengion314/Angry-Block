@@ -8,6 +8,7 @@ public partial class LevelManager : MonoBehaviour
   [Header("Level Manager")]
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
+  public Transform SpawnedParent => spawnedParent;
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
@@ -57,6 +58,7 @@ public partial class LevelManager : MonoBehaviour
 
     var initColorBlocks = levelInformation.InitColorBlocks;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;
+    var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
     for (int i = 0; i < topGrid.Grid.Length; ++i)
@@ -90,6 +92,14 @@ public partial class LevelManager : MonoBehaviour
         
       if (directionBlock.TryGetComponent(out IInitialize initBlock))
         initBlock.Initialize(0);
+    }
+
+    for (int i = 0; i < initTunnels.Length; i++)
+    {
+      var tunnelData = initTunnels[i];
+      var tunnel = SpawnTunnelAt(tunnelData.Index, spawnedParent);
+      tunnel.Initialize(tunnelData);
+      _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 
     InitFiringPositions();

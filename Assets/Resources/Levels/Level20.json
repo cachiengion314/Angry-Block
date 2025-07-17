@@ -187,7 +187,7 @@
         },
         {
             "ColorValue": 1,
-            "DirectionValue": 0,
+            "DirectionValue": 3,
             "Ammunition": 2,
             "IsHidden": true
         },
@@ -226,6 +226,26 @@
             "DirectionValue": 0,
             "Ammunition": 3,
             "IsHidden": false
+        }
+    ],
+    "InitTunnels": [
+        {
+            "directionBlockDatas": [
+                {
+                    "ColorValue": 0,
+                    "DirectionValue": 0,
+                    "Ammunition": 6,
+                    "IsHidden": false
+                },
+                {
+                    "ColorValue": 0,
+                    "DirectionValue": 0,
+                    "Ammunition": 7,
+                    "IsHidden": false
+                }
+            ],
+            "DirectionValue": 3,
+            "Index": 14
         }
     ]
 }

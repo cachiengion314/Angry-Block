@@ -8,6 +8,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] ColorBlockControl colorBlockPref;
   [SerializeField] DirectionBlockControl directionBlockPref;
   [SerializeField] BlastBlockControl blastBlockPref;
+  [SerializeField] TunnelControl tunnelControlPref;
 
   public ColorBlockControl SpawnColorBlockAt(float3 pos)
   {
@@ -43,6 +44,14 @@ public partial class LevelManager : MonoBehaviour
   public BlastBlockControl SpawnBlastBlockAt(float3 pos, Transform parent)
   {
     var obj = Instantiate(blastBlockPref, parent);
+    obj.transform.position = pos;
+    return obj;
+  }
+
+  public TunnelControl SpawnTunnelAt(int index, Transform parent)
+  {
+    var pos = bottomGrid.ConvertIndexToWorldPos(index);
+    var obj = Instantiate(tunnelControlPref, parent);
     obj.transform.position = pos;
     return obj;
   }

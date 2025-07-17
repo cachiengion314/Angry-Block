@@ -2284,6 +2284,18 @@ MonoBehaviour:
       DirectionValue: 0
       Ammunition: 3
       IsHidden: 0
+    InitTunnels:
+    - directionBlockDatas:
+      - ColorValue: 0
+        DirectionValue: 0
+        Ammunition: 6
+        IsHidden: 0
+      - ColorValue: 0
+        DirectionValue: 0
+        Ammunition: 7
+        IsHidden: 0
+      DirectionValue: 0
+      Index: 16
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   firingSlotAmount: 5
@@ -2302,7 +2314,8 @@ MonoBehaviour:
     type: 3}
   blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
     type: 3}
-  waitingSlotAmount: 7
+  tunnelControlPref: {fileID: 1185800365850832064, guid: 9fef60b5c4ecf457c909ea25f6f91324,
+    type: 3}
   waitingPositions: {fileID: 2103059040}
 --- !u!4 &229877049
 Transform:
