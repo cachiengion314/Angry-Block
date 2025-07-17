@@ -119,18 +119,19 @@ public partial class LevelManager : MonoBehaviour
     return default;
   }
 
-  float InterpolateMoveUpdate(
-    Transform needMovingObj, float3 startPos, float3 targetPos, float _speed = 1.0f
+  void InterpolateMoveUpdate(
+    in float3 currentPos,
+    in float3 startPos,
+    in float3 targetPos,
+    in float speed,
+    out float t,
+    out float3 nextPos
   )
   {
-    var currentPos = needMovingObj.position;
-    var distanceFromStart = (currentPos - (Vector3)startPos).magnitude;
+    var distanceFromStart = math.length(currentPos - startPos);
     var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
-    var t = distanceFromStart / totalDistance + _speed * 1 / totalDistance * Time.deltaTime;
-    var nextPos = math.lerp(startPos, targetPos, t);
-    needMovingObj.position = nextPos;
-
-    return t;
+    t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
+    nextPos = math.lerp(startPos, targetPos, t);
   }
 
   bool IsPosOccupiedAt(float3 pos)

@@ -18,11 +18,19 @@ public partial class LevelManager : MonoBehaviour
       _firingPositionIndexes.Add(blastBlock.GetInstanceID(), 0);
     var idx = _firingPositionIndexes[blastBlock.GetInstanceID()];
     var currentIdx = idx % _firingPositions.childCount;
-    var currentPos = _firingPositions.GetChild(currentIdx).position;
+    var startPos = _firingPositions.GetChild(currentIdx).position;
     var targetIdx = (idx + 1) % _firingPositions.childCount;
     var targetPos = _firingPositions.GetChild(targetIdx).position;
 
-    var t = InterpolateMoveUpdate(blastBlock.transform, currentPos, targetPos, 1.25f);
+    InterpolateMoveUpdate(
+      blastBlock.transform.position,
+      startPos,
+      targetPos,
+      1.25f,
+      out var t,
+      out var nextPos
+    );
+    blastBlock.transform.position = nextPos;
     if (t < 1) return;
 
     _firingPositionIndexes[blastBlock.GetInstanceID()] = idx + 1;

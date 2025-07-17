@@ -79,12 +79,15 @@ public partial class LevelManager : MonoBehaviour
       var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
       if (topGrid.IsPosOutsideAt(targetPos)) continue;
 
-      var t = InterpolateMoveUpdate(
-        colorBlock.transform,
+      InterpolateMoveUpdate(
+        colorBlock.transform.position,
         topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
         targetPos,
-        5
+        5,
+        out var t,
+        out var nextPos
       );
+      colorBlock.transform.position = nextPos;
       if (t < 1) continue;
 
       _colorBlocks[colorBlock.GetIndex()] = null;
