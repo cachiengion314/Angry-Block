@@ -2257,7 +2257,7 @@ MonoBehaviour:
       Ammunition: 5
       IsHidden: 0
     - ColorValue: 1
-      DirectionValue: 0
+      DirectionValue: 3
       Ammunition: 2
       IsHidden: 1
     - ColorValue: 1
@@ -2294,8 +2294,8 @@ MonoBehaviour:
         DirectionValue: 0
         Ammunition: 7
         IsHidden: 0
-      DirectionValue: 0
-      Index: 16
+      DirectionValue: 3
+      Index: 14
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   firingSlotAmount: 5
