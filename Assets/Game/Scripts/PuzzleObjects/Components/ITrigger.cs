@@ -1,5 +1,5 @@
 
 public interface ITrigger
 {
-    public void OnTrigger();
+    public void OnTrigger<T>(T data);
 }

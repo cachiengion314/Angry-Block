@@ -83,15 +83,13 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
+      _directionBlocks[i] = directionBlock.gameObject;
 
       if (initDirectionBlocks[i].IsHidden)
-      {
-        var woodenBlocks = directionBlock.gameObject.AddComponent<WoodenBlockControl>();
-        woodenBlocks.InitWoodenBlock();
-        woodenBlocks.ShowHidden();
-      }
-
-      _directionBlocks[i] = directionBlock.gameObject;
+        directionBlock.gameObject.AddComponent<WoodenBlockControl>();
+        
+      if (directionBlock.TryGetComponent(out IInitialize initBlock))
+        initBlock.Initialize(0);
     }
 
     InitFiringPositions();

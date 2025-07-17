@@ -34,7 +34,7 @@ public partial class LevelManager
       return;
     }
     // Trigger WoodenBlock
-    HideHiddenWoodenBlockNeighborAt(directionBlock);
+    OnTriggerNeighborAt(directionBlock);
 
     var duration = 0.3f;
     var endPos = positions.GetChild(slotIndex).position;
