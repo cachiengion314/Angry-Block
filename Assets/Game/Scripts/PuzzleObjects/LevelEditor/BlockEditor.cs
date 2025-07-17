@@ -18,8 +18,7 @@ public class BlockEditor : MonoBehaviour
             spriteRenderer.color = Color.blue;
     }
     [Header("Data")]
-    public int ColorValue;
-    public DirectionValue DirectionValue;
-    [Range(1, 20)]
-    public int Ammunition = 5;
+
+    public DirectionBlockData directionBlockData;
+    public TunnelData tunnelData;
 }

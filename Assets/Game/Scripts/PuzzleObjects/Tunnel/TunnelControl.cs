@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class TunnelControl : MonoBehaviour, IInitialize, ITrigger, IDirectionBlock, IColorBlock
+public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlock
 {
     [SerializeField] SpriteRenderer bodyRenderer;
     [SerializeField] Transform blockParent;
@@ -34,27 +34,21 @@ public class TunnelControl : MonoBehaviour, IInitialize, ITrigger, IDirectionBlo
         return Index;
     }
 
-    public void Initialize<T>(T data)
+    public void Initialize(DirectionBlockData[] directionBlockDatas)
     {
-        if (data is TunnelData tunnelData)
+        var tunnelGird = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(Index);
+        var blockGird = tunnelGird + Direction;
+        var blockIndex = LevelManager.Instance.BottomGrid.ConvertGridPosToIndex(blockGird);
+
+        for (int i = 0; i < directionBlockDatas.Length; i++)
         {
-            SetDirectionValue(tunnelData.DirectionValue);
-            Index = tunnelData.Index;
-
-            var tunnelGird = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(Index);
-            var blockGird = tunnelGird + Direction;
-            var blockIndex = LevelManager.Instance.BottomGrid.ConvertGridPosToIndex(blockGird);
-
-            for (int i = 0; i < tunnelData.directionBlockDatas.Length; i++)
-            {
-                var directionBlockData = tunnelData.directionBlockDatas[i];
-                var directionBlock = LevelManager.Instance.SpawnDirectionBlockAt(blockIndex, blockParent);
-                directionBlock.SetIndex(blockIndex);
-                directionBlock.SetColorValue(directionBlockData.ColorValue);
-                directionBlock.SetDirectionValue(directionBlockData.DirectionValue);
-                directionBlock.SetAmmunition(directionBlockData.Ammunition);
-                directionBlock.gameObject.SetActive(false);
-            }
+            var directionBlockData = directionBlockDatas[i];
+            var directionBlock = LevelManager.Instance.SpawnDirectionBlockAt(blockIndex, blockParent);
+            directionBlock.SetIndex(blockIndex);
+            directionBlock.SetColorValue(directionBlockData.ColorValue);
+            directionBlock.SetDirectionValue(directionBlockData.DirectionValue);
+            directionBlock.SetAmmunition(directionBlockData.Ammunition);
+            directionBlock.gameObject.SetActive(false);
         }
     }
 

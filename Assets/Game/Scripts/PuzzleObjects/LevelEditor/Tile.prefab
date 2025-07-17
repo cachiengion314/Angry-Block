@@ -103,6 +103,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 4277714975765025242}
   blockType: 0
-  ColorValue: 0
-  DirectionValue: 0
-  Ammunition: 5
+  directionBlockData:
+    Index: 0
+    ColorValue: 0
+    DirectionValue: 0
+    Ammunition: 5
+  tunnelData:
+    Index: 0
+    directionBlockDatas: []
+    DirectionValue: 0

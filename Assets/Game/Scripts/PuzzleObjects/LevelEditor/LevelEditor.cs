@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -41,32 +42,74 @@ public class LevelEditor : MonoBehaviour
         var DirectionBlockDatas = levelInformation.InitDirectionBlocks;
         for (int i = 0; i < DirectionBlockDatas.Length; i++)
         {
-            if(DirectionBlockDatas[i] == null) continue;
-
-            var tile = tiles[i];
+            var tile = tiles[DirectionBlockDatas[i].Index];
             tile.blockType = BlockType.DirectionBlock;
-            tile.ColorValue = DirectionBlockDatas[i].ColorValue;
-            tile.DirectionValue = DirectionBlockDatas[i].DirectionValue;
-            tile.Ammunition = DirectionBlockDatas[i].Ammunition;
+            tile.directionBlockData = DirectionBlockDatas[i];
+            tile.OnValidate();
+        }
+    }
+
+    void LoadWoodenBlocks()
+    {
+        var WoondenBlockDatas = levelInformation.InitWoodenBlocks;
+        for (int i = 0; i < WoondenBlockDatas.Length; i++)
+        {
+            var tile = tiles[WoondenBlockDatas[i].Index];
+            tile.blockType = BlockType.WoodenBlock;
+            tile.directionBlockData = WoondenBlockDatas[i];
+            tile.OnValidate();
+        }
+    }
+
+    void LoadTunnel()
+    {
+        var TunnelDatas = levelInformation.InitTunnels;
+        for (int i = 0; i < TunnelDatas.Length; i++)
+        {
+            var tile = tiles[TunnelDatas[i].Index];
+            tile.blockType = BlockType.Tunnel;
+            tile.tunnelData = TunnelDatas[i];
             tile.OnValidate();
         }
     }
 
     void SaveDirectionBlocks()
     {
-        levelInformation.InitDirectionBlocks = new DirectionBlockData[tiles.Length];
-        for (int i = 0; i < levelInformation.InitDirectionBlocks.Length; i++)
+        List<DirectionBlockData> InitDirectionBlocks = new();
+        for (int i = 0; i < tiles.Length; i++)
         {
             var tile = tiles[i];
             if (tile.blockType != BlockType.DirectionBlock) continue;
-            var directionBlockData = new DirectionBlockData()
-            {
-                ColorValue = tile.ColorValue,
-                DirectionValue = tile.DirectionValue,
-                Ammunition = tile.Ammunition,
-            };
-            levelInformation.InitDirectionBlocks[i] = directionBlockData;
+            tile.directionBlockData.Index = i;
+            InitDirectionBlocks.Add(tile.directionBlockData);
         }
+        levelInformation.InitDirectionBlocks = InitDirectionBlocks.ToArray();
+    }
+
+    void SaveWoodenBlocks()
+    {
+        List<DirectionBlockData> InitWoodenBlocks = new();
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            var tile = tiles[i];
+            if (tile.blockType != BlockType.WoodenBlock) continue;
+            tile.directionBlockData.Index = i;
+            InitWoodenBlocks.Add(tile.directionBlockData);
+        }
+        levelInformation.InitWoodenBlocks = InitWoodenBlocks.ToArray();
+    }
+
+    void SaveTunnelBlocks()
+    {
+        List<TunnelData> InitTunnels = new();
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            var tile = tiles[i];
+            if (tile.blockType != BlockType.Tunnel) continue;
+            tile.tunnelData.Index = i;
+            InitTunnels.Add(tile.tunnelData);
+        }
+        levelInformation.InitTunnels = InitTunnels.ToArray();
     }
 
     [NaughtyAttributes.Button]
@@ -93,6 +136,8 @@ public class LevelEditor : MonoBehaviour
         gridWorld.GridSize = levelInformation.DirectionBlocksGridSize;
         CreateGird();
         LoadDirectionBlocks();
+        LoadWoodenBlocks();
+        LoadTunnel();
 
         print("Load level successfully");
     }
@@ -101,7 +146,10 @@ public class LevelEditor : MonoBehaviour
     void SaveLevel()
     {
         levelInformation.Index = levelSelected - 1;
+        levelInformation.DirectionBlocksGridSize = gridWorld.GridSize;
         SaveDirectionBlocks();
+        SaveWoodenBlocks();
+        SaveTunnelBlocks();
 
         HoangNam.SaveSystem.Save(
           levelInformation,
