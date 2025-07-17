@@ -3,6 +3,16 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [Serializable]
+public enum BlockType
+{
+  None,
+  DirectionBlock,
+  WoodenBlock,
+  Tunnel,
+  IceBlock
+}
+
+[Serializable]
 public enum DirectionValue
 {
   Right,
@@ -22,19 +32,19 @@ public class ColorBlockData
 [Serializable]
 public class DirectionBlockData
 {
+  public int Index;
   public int ColorValue;
   public DirectionValue DirectionValue;
   [Range(1, 20)]
   public int Ammunition = 5;
-  public bool IsHidden = false;
 }
 
 [Serializable]
 public class TunnelData
 {
+  public int Index;
   public DirectionBlockData[] directionBlockDatas;
   public DirectionValue DirectionValue;
-  public int Index;
 }
 
 [Serializable]
@@ -50,6 +60,8 @@ public class LevelInformation
   public ColorBlockData[] InitColorBlocks;
   public int2 DirectionBlocksGridSize;
   public DirectionBlockData[] InitDirectionBlocks;
+  public DirectionBlockData[] InitWoodenBlocks;
+  public DirectionBlockData[] InitIceBlocks;
   public TunnelData[] InitTunnels;
 }
 

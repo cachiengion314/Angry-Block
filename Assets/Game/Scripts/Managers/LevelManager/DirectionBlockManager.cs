@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,6 +12,7 @@ public partial class LevelManager : MonoBehaviour
   /// </summary>
   GameObject[] _directionBlocks;
   public GameObject[] DirectionBlocks { get { return _directionBlocks; } }
+  public Action OnDirectionBlockMove;
 
   public void SetDirectionBlocks(int index, GameObject directionBlock)
   {
@@ -96,6 +98,7 @@ public partial class LevelManager : MonoBehaviour
     //   return;
     // }
     // Trigger WoodenBlock
+    OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
 
     // logic

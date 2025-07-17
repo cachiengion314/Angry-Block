@@ -1,31 +1,53 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class WoodenBlockControl : MonoBehaviour, IInitialize, ITrigger
+public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock
 {
-    [Header("Dependencies")]
-    [SerializeField] SpriteRenderer bodyRenderer;
-    [SerializeField] SpriteRenderer directionRenderer;
-
-    public void Initialize<T>(T data)
+    [SerializeField] Transform blockParent;
+    int Index;
+    public int GetColorValue()
     {
-        bodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        directionRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        
-        directionRenderer.gameObject.SetActive(false);
+        throw new System.NotImplementedException();
+    }
+
+    public int GetIndex()
+    {
+        return Index;
+    }
+
+    public void Initialize(DirectionBlockData directionBlockData)
+    {
+        var directionBlock = LevelManager.Instance.SpawnDirectionBlockAt(Index, blockParent);
+        directionBlock.SetIndex(Index);
+        directionBlock.SetColorValue(directionBlockData.ColorValue);
+        directionBlock.SetDirectionValue(directionBlockData.DirectionValue);
+        directionBlock.SetAmmunition(directionBlockData.Ammunition);
+        directionBlock.gameObject.SetActive(false);
     }
 
     public void OnTrigger<T>(T data)
     {
         if (data is int2 gridPosBlockAhead)
         {
-            if (!TryGetComponent(out IDirectionBlock directionBlock)) return;
-            if (!TryGetComponent(out IColorBlock colorBlock)) return;
-            var gridPos = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(colorBlock.GetIndex());
+            if (blockParent.childCount <= 0) return;
+            var block = blockParent.GetChild(0);
+            if (!block.TryGetComponent(out IDirectionBlock directionBlock)) return;
+            var gridPos = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(Index);
             if (!gridPosBlockAhead.Equals(gridPos + directionBlock.GetDirection())) return;
-
-            directionRenderer.gameObject.SetActive(true);
-            Destroy(this);
+            block.gameObject.SetActive(true);
+            LevelManager.Instance.SetDirectionBlocks(Index, block.gameObject);
+            block.SetParent(LevelManager.Instance.SpawnedParent);
+            Destroy(gameObject);
         }
+    }
+
+    public void SetColorValue(int colorValue)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetIndex(int index)
+    {
+        Index = index;
     }
 }
