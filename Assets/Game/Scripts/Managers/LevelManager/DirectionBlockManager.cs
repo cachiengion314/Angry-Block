@@ -10,6 +10,11 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _directionBlocks;
   public GameObject[] DirectionBlocks { get { return _directionBlocks; } }
 
+  public void SetDirectionBlocks(int index, GameObject directionBlock)
+  {
+    _directionBlocks[index] = directionBlock;
+  }
+
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
@@ -65,7 +70,7 @@ public partial class LevelManager : MonoBehaviour
     //   return;
     // }
     // Trigger WoodenBlock
-    HideHiddenWoodenBlockNeighborAt(directionBlock);
+    OnTriggerNeighborAt(directionBlock);
 
     // logic
     _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;

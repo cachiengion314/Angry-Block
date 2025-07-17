@@ -9,6 +9,7 @@ public partial class LevelManager : MonoBehaviour
   [Header("Level Manager")]
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
+  public Transform SpawnedParent => spawnedParent;
   [Header("Grids")]
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
@@ -58,6 +59,7 @@ public partial class LevelManager : MonoBehaviour
 
     var initColorBlocks = levelInformation.InitColorBlocks;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;
+    var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
     for (int i = 0; i < topGrid.Grid.Length; ++i)
@@ -84,15 +86,21 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
+      _directionBlocks[i] = directionBlock.gameObject;
 
       if (initDirectionBlocks[i].IsHidden)
-      {
-        var woodenBlocks = directionBlock.gameObject.AddComponent<WoodenBlockControl>();
-        woodenBlocks.InitWoodenBlock();
-        woodenBlocks.ShowHidden();
-      }
+        directionBlock.gameObject.AddComponent<WoodenBlockControl>();
+        
+      if (directionBlock.TryGetComponent(out IInitialize initBlock))
+        initBlock.Initialize(0);
+    }
 
-      _directionBlocks[i] = directionBlock.gameObject;
+    for (int i = 0; i < initTunnels.Length; i++)
+    {
+      var tunnelData = initTunnels[i];
+      var tunnel = SpawnTunnelAt(tunnelData.Index, spawnedParent);
+      tunnel.Initialize(tunnelData);
+      _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 
     InitFiringSlots();

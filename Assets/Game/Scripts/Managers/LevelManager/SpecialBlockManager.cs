@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class LevelManager
 {
-    void HideHiddenWoodenBlockNeighborAt(GameObject directionBlock)
+    void OnTriggerNeighborAt(GameObject directionBlock)
     {
         if (!directionBlock.TryGetComponent(out IColorBlock colorBlock)) return;
         var blockPos = bottomGrid.ConvertIndexToWorldPos(colorBlock.GetIndex());
@@ -14,10 +14,8 @@ public partial class LevelManager
             var neighborIndex = bottomGrid.ConvertWorldPosToIndex(neighbor);
             var neighborBlock = _directionBlocks[neighborIndex];
             if (neighborBlock == null) continue;
-            if (!neighborBlock.TryGetComponent(out WoodenBlockControl woodenBlock)) continue;
-            if (!woodenBlock.IsHideHidden(blockGrid)) continue;
-            woodenBlock.HideHidden();
-            Destroy(woodenBlock);
+            if (!neighborBlock.TryGetComponent(out ITrigger triggerComponent)) continue;
+            triggerComponent.OnTrigger(blockGrid);
         }
     }
 }

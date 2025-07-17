@@ -34,7 +34,7 @@ public partial class LevelManager
       return;
     }
     // Trigger WoodenBlock
-    HideHiddenWoodenBlockNeighborAt(directionBlock);
+    OnTriggerNeighborAt(directionBlock);
 
     var duration = 0.3f;
     var endPos = positions.GetChild(slotIndex).position;
@@ -55,7 +55,7 @@ public partial class LevelManager
 
   public void OnTriggerBooster2()
   {
-    var directionBlockAvailables = DirectionBlocksAvailable();
+    var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
     for (int i = directionBlockAvailables.Length - 1; i >= 0; i--)
     {
       int j = UnityEngine.Random.Range(0, i + 1);

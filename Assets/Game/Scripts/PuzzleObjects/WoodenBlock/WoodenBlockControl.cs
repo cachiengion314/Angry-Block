@@ -1,31 +1,31 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class WoodenBlockControl : MonoBehaviour
+public class WoodenBlockControl : MonoBehaviour, IInitialize, ITrigger
 {
     [Header("Dependencies")]
     [SerializeField] SpriteRenderer bodyRenderer;
     [SerializeField] SpriteRenderer directionRenderer;
-    [Header("Datas")]
-    [SerializeField] int2 gridPosBlockAhead;
-    public bool IsHideHidden(int2 gridPosBlockAhead) => this.gridPosBlockAhead.Equals(gridPosBlockAhead);
-    public void InitWoodenBlock()
+
+    public void Initialize<T>(T data)
     {
         bodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         directionRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        if (!TryGetComponent(out IDirectionBlock directionBlock)) return;
-        if (!TryGetComponent(out IColorBlock colorBlock)) return;
-        var gridPos = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(colorBlock.GetIndex());
-        gridPosBlockAhead = gridPos + directionBlock.GetDirection();
-    }
-    public void ShowHidden()
-    {
+        
         directionRenderer.gameObject.SetActive(false);
     }
 
-    public void HideHidden()
+    public void OnTrigger<T>(T data)
     {
-        directionRenderer.gameObject.SetActive(true);
-    }
+        if (data is int2 gridPosBlockAhead)
+        {
+            if (!TryGetComponent(out IDirectionBlock directionBlock)) return;
+            if (!TryGetComponent(out IColorBlock colorBlock)) return;
+            var gridPos = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(colorBlock.GetIndex());
+            if (!gridPosBlockAhead.Equals(gridPos + directionBlock.GetDirection())) return;
 
+            directionRenderer.gameObject.SetActive(true);
+            Destroy(this);
+        }
+    }
 }
