@@ -61,6 +61,18 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+    void LoadIceBlocks()
+    {
+        var IceBlockDatas = levelInformation.InitIceBlocks;
+        for (int i = 0; i < IceBlockDatas.Length; i++)
+        {
+            var tile = tiles[IceBlockDatas[i].Index];
+            tile.blockType = BlockType.IceBlock;
+            tile.directionBlockData = IceBlockDatas[i];
+            tile.OnValidate();
+        }
+    }
+
     void LoadTunnel()
     {
         var TunnelDatas = levelInformation.InitTunnels;
@@ -97,6 +109,19 @@ public class LevelEditor : MonoBehaviour
             InitWoodenBlocks.Add(tile.directionBlockData);
         }
         levelInformation.InitWoodenBlocks = InitWoodenBlocks.ToArray();
+    }
+
+    void SaveIceBlocks()
+    {
+        List<DirectionBlockData> InitIceBlocks = new();
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            var tile = tiles[i];
+            if (tile.blockType != BlockType.IceBlock) continue;
+            tile.directionBlockData.Index = i;
+            InitIceBlocks.Add(tile.directionBlockData);
+        }
+        levelInformation.InitIceBlocks = InitIceBlocks.ToArray();
     }
 
     void SaveTunnelBlocks()
@@ -137,6 +162,7 @@ public class LevelEditor : MonoBehaviour
         CreateGird();
         LoadDirectionBlocks();
         LoadWoodenBlocks();
+        LoadIceBlocks();
         LoadTunnel();
 
         print("Load level successfully");
@@ -145,10 +171,12 @@ public class LevelEditor : MonoBehaviour
     [NaughtyAttributes.Button]
     void SaveLevel()
     {
+        levelInformation = new();
         levelInformation.Index = levelSelected - 1;
         levelInformation.DirectionBlocksGridSize = gridWorld.GridSize;
         SaveDirectionBlocks();
         SaveWoodenBlocks();
+        SaveIceBlocks();
         SaveTunnelBlocks();
 
         HoangNam.SaveSystem.Save(

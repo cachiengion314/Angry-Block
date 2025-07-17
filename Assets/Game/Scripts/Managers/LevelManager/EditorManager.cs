@@ -61,6 +61,7 @@ public class LevelInformation
   public int2 DirectionBlocksGridSize;
   public DirectionBlockData[] InitDirectionBlocks;
   public DirectionBlockData[] InitWoodenBlocks;
+  public DirectionBlockData[] InitIceBlocks;
   public TunnelData[] InitTunnels;
 }
 

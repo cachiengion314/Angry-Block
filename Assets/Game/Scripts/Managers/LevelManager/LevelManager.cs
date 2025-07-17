@@ -60,6 +60,7 @@ public partial class LevelManager : MonoBehaviour
     var initColorBlocks = levelInformation.InitColorBlocks;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;
     var initWoodenBlocks = levelInformation.InitWoodenBlocks;
+    var initIceBlock = levelInformation.InitIceBlocks;
     var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
@@ -95,11 +96,20 @@ public partial class LevelManager : MonoBehaviour
       if (woodenData == null) continue;
 
       var woodenBlock = SpawnWoondenBlockAt(woodenData.Index, spawnedParent);
-      woodenBlock.DirectionBlock.SetIndex(woodenData.Index);
-      woodenBlock.DirectionBlock.SetColorValue(woodenData.ColorValue);
-      woodenBlock.DirectionBlock.SetDirectionValue(woodenData.DirectionValue);
-      woodenBlock.DirectionBlock.SetAmmunition(woodenData.Ammunition);
+      woodenBlock.SetIndex(woodenData.Index);
+      woodenBlock.Initialize(woodenData);
       _directionBlocks[woodenData.Index] = woodenBlock.gameObject;
+    }
+
+    for (int i = 0; i < initIceBlock.Length; ++i)
+    {
+      var iceData = initIceBlock[i];
+      if (iceData == null) continue;
+
+      var iceBlock = SpawnIceBlockAt(iceData.Index, spawnedParent);
+      iceBlock.SetIndex(iceData.Index);
+      iceBlock.Initialize(iceData);
+      _directionBlocks[iceData.Index] = iceBlock.gameObject;
     }
 
     for (int i = 0; i < initTunnels.Length; i++)

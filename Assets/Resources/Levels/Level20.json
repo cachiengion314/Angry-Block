@@ -142,13 +142,21 @@
             "Ammunition": 5
         }
     ],
+    "InitIceBlocks": [
+        {
+            "Index": 9,
+            "ColorValue": 0,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        }
+    ],
     "InitTunnels": [
         {
             "Index": 18,
             "directionBlockDatas": [
                 {
                     "Index": 0,
-                    "ColorValue": 1,
+                    "ColorValue": 0,
                     "DirectionValue": 0,
                     "Ammunition": 0
                 },

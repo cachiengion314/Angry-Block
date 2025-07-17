@@ -2236,25 +2236,45 @@ MonoBehaviour:
       y: 5
     InitColorBlocks:
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
     - ColorValue: 0
-      Health: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
+    - ColorValue: 0
+      Health: 1
     DirectionBlocksGridSize:
       x: 5
       y: 5
@@ -2267,6 +2287,22 @@ MonoBehaviour:
       ColorValue: 0
       DirectionValue: 1
       Ammunition: 5
+    - Index: 3
+      ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
+    - Index: 7
+      ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
+    - Index: 11
+      ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
+    - Index: 15
+      ColorValue: 0
+      DirectionValue: 0
+      Ammunition: 5
     - Index: 17
       ColorValue: 1
       DirectionValue: 0
@@ -2276,11 +2312,12 @@ MonoBehaviour:
       ColorValue: 1
       DirectionValue: 2
       Ammunition: 5
+    InitIceBlocks: []
     InitTunnels:
     - Index: 18
       directionBlockDatas:
       - Index: 0
-        ColorValue: 1
+        ColorValue: 0
         DirectionValue: 0
         Ammunition: 0
       - Index: 0
@@ -2306,6 +2343,8 @@ MonoBehaviour:
   directionBlockPref: {fileID: 1633368844517106154, guid: 0ed673403e7704f4bafe0c85a4a7670d,
     type: 3}
   woodenBlockControlPref: {fileID: 8065321804541392809, guid: 189a43fc5ee2d455aa6c6ddcec94659d,
+    type: 3}
+  iceBlockControlPref: {fileID: 2576252914827878522, guid: b8474b73b33ef4b9c93c7ca098d4b285,
     type: 3}
   blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
     type: 3}
@@ -14594,6 +14633,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1214976014, guid: dfb75feb680034648a142042ad4a327f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301354897, guid: dfb75feb680034648a142042ad4a327f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301354897, guid: dfb75feb680034648a142042ad4a327f, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1383700192, guid: dfb75feb680034648a142042ad4a327f, type: 3}
