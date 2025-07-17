@@ -12,11 +12,6 @@ public partial class LevelManager : MonoBehaviour
   [Range(1f, 30)]
   [SerializeField] float bulletSpeed = 10.0f;
 
-  void InitFiringSlots()
-  {
-
-  }
-
   void WanderingAroundUpdate(GameObject blastBlock)
   {
     if (!_firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID()))

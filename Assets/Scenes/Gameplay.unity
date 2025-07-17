@@ -2324,7 +2324,7 @@ MonoBehaviour:
   isSelectedMatchedCurrentLevel: 1
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 5
-  bulletSpeed: 16
+  bulletSpeed: 21
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}

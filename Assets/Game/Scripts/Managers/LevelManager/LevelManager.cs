@@ -90,7 +90,7 @@ public partial class LevelManager : MonoBehaviour
 
       if (initDirectionBlocks[i].IsHidden)
         directionBlock.gameObject.AddComponent<WoodenBlockControl>();
-        
+
       if (directionBlock.TryGetComponent(out IInitialize initBlock))
         initBlock.Initialize(0);
     }
@@ -103,7 +103,6 @@ public partial class LevelManager : MonoBehaviour
       _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 
-    InitFiringSlots();
     InitWaitingSlots();
   }
 
@@ -121,13 +120,13 @@ public partial class LevelManager : MonoBehaviour
   }
 
   float InterpolateMoveUpdate(
-    Transform needMovingObj, float3 startPos, float3 targetPos, float _speed = 5.0f
+    Transform needMovingObj, float3 startPos, float3 targetPos, float _speed = 1.0f
   )
   {
     var currentPos = needMovingObj.position;
     var distanceFromStart = (currentPos - (Vector3)startPos).magnitude;
     var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
-    var t = distanceFromStart / totalDistance + _speed * Time.deltaTime;
+    var t = distanceFromStart / totalDistance + _speed * 1 / totalDistance * Time.deltaTime;
     var nextPos = math.lerp(startPos, targetPos, t);
     needMovingObj.position = nextPos;
 

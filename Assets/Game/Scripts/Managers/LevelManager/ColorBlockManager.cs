@@ -82,7 +82,8 @@ public partial class LevelManager : MonoBehaviour
       var t = InterpolateMoveUpdate(
         colorBlock.transform,
         topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
-        targetPos
+        targetPos,
+        5
       );
       if (t < 1) continue;
 
