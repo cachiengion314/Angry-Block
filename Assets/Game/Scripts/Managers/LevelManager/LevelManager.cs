@@ -129,14 +129,15 @@ public partial class LevelManager : MonoBehaviour
     in float3 startPos,
     in float3 targetPos,
     in float speed,
-    out float t,
+    out float _t,
     out float3 nextPos
   )
   {
     var distanceFromStart = math.length(currentPos - startPos);
     var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
-    t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
-    nextPos = Lerp(startPos, targetPos, t);
+    var t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
+    _t = math.min(t, 1);
+    nextPos = Lerp(startPos, targetPos, _t);
   }
 
   bool IsPosOccupiedAt(float3 pos)

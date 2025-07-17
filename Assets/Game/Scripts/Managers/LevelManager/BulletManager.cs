@@ -8,7 +8,7 @@ public partial class LevelManager : MonoBehaviour
   ObjectPool<BulletControl> _bulletsPool;
   public ObjectPool<BulletControl> BulletsPool { get { return _bulletsPool; } }
   List<BulletControl> _activeBullets;
-  readonly float _DURATION_BULLET_LIFE = 1.9f;
+  readonly float KEY_BULLET_LIFE_DURATION = 1.9f;
 
   void InitPool()
   {
@@ -73,7 +73,7 @@ public partial class LevelManager : MonoBehaviour
       var bullet = _activeBullets[i];
       if (!bullet.TryGetComponent<IMoveable>(out var bullMoveable)) continue;
       if (!bullet.TryGetComponent<IBullet>(out var bulletComp)) continue;
-      if (bulletComp.GetLifeDuration() > _DURATION_BULLET_LIFE)
+      if (bulletComp.GetLifeDuration() > KEY_BULLET_LIFE_DURATION)
       {
         CleanReleaseFor(bullet);
         continue;

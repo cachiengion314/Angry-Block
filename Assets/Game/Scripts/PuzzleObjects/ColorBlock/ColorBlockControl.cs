@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class ColorBlockControl : MonoBehaviour
+  , IGameObj
   , IColorBlock
   , IDamageable
   , IMoveable
@@ -101,5 +102,10 @@ public class ColorBlockControl : MonoBehaviour
   public void SetLockedTarget(Transform lockedTarget)
   {
     throw new System.NotImplementedException();
+  }
+
+  public GameObject GetGameObject()
+  {
+    return gameObject;
   }
 }

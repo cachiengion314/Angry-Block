@@ -9,8 +9,8 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
-  readonly float _DURATION_NOT_FOUND_MATCHED = 5.82f;
-  readonly float _DURATION_FOUND_MATCHED = .4f;
+  readonly float KEY_NOT_FOUND_MATCHED_DURATION = 5.82f;
+  readonly float KEY_FOUND_MATCHED_DURATION = .4f;
 
   void InitWaitingSlots()
   {
@@ -53,7 +53,7 @@ public partial class LevelManager : MonoBehaviour
       _waitingTimers.Add(tmpNotFoundMatchedBlastBlock.GetInstanceID(), 0f);
     _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] += Time.deltaTime;
     if (
-      _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] < _DURATION_NOT_FOUND_MATCHED
+      _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] < KEY_NOT_FOUND_MATCHED_DURATION
     )
       return;
 
@@ -163,7 +163,7 @@ public partial class LevelManager : MonoBehaviour
       if (!_waitingTimers.ContainsKey(waitingBlock.GetInstanceID()))
         _waitingTimers.Add(waitingBlock.GetInstanceID(), 0f);
       _waitingTimers[waitingBlock.GetInstanceID()] += Time.deltaTime;
-      if (_waitingTimers[waitingBlock.GetInstanceID()] < _DURATION_FOUND_MATCHED)
+      if (_waitingTimers[waitingBlock.GetInstanceID()] < KEY_FOUND_MATCHED_DURATION)
         return;
 
       _waitingTimers[waitingBlock.GetInstanceID()] = 0f;

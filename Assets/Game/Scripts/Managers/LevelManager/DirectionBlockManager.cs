@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
@@ -37,6 +39,30 @@ public partial class LevelManager : MonoBehaviour
     var colorBlock = FindObjIn<IDirectionBlock>(cols);
     if (colorBlock == null) return null;
     return colorBlock.GetGameObject();
+  }
+
+  List<GameObject> FindMoveableDirectionBlocks()
+  {
+    var list = new List<GameObject>();
+    for (int x = 0; x < bottomGrid.GridSize.x; ++x)
+    {
+      for (int y = 0; y < bottomGrid.GridSize.y; ++y)
+      {
+        var gridPos = new int2(x, y);
+        var currentIndex = bottomGrid.ConvertGridPosToIndex(gridPos);
+        var dirBlock = _directionBlocks[currentIndex];
+        if (dirBlock == null) continue;
+        if (dirBlock.TryGetComponent<IDirectionBlock>(out var directionBlock)) continue;
+
+        var nextGridPos = gridPos + directionBlock.GetDirection();
+        var nextIdx = bottomGrid.ConvertGridPosToIndex(nextGridPos);
+        var nextBlock = _directionBlocks[nextIdx];
+        if (nextBlock != null) continue;
+
+        list.Add(nextBlock);
+      }
+    }
+    return list;
   }
 
   void MoveTo(
