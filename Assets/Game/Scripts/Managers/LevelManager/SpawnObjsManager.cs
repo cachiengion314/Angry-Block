@@ -7,6 +7,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] BulletControl bulletPref;
   [SerializeField] ColorBlockControl colorBlockPref;
   [SerializeField] DirectionBlockControl directionBlockPref;
+  [SerializeField] WoodenBlockControl woodenBlockControlPref;
   [SerializeField] BlastBlockControl blastBlockPref;
   [SerializeField] TunnelControl tunnelControlPref;
 
@@ -28,6 +29,14 @@ public partial class LevelManager : MonoBehaviour
   {
     var pos = bottomGrid.ConvertIndexToWorldPos(index);
     var obj = Instantiate(directionBlockPref, parent);
+    obj.transform.position = pos;
+    return obj;
+  }
+
+  public WoodenBlockControl SpawnWoondenBlockAt(int index, Transform parent)
+  {
+    var pos = bottomGrid.ConvertIndexToWorldPos(index);
+    var obj = Instantiate(woodenBlockControlPref, parent);
     obj.transform.position = pos;
     return obj;
   }

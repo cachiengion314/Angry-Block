@@ -59,6 +59,7 @@ public partial class LevelManager : MonoBehaviour
 
     var initColorBlocks = levelInformation.InitColorBlocks;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;
+    var initWoodenBlocks = levelInformation.InitWoodenBlocks;
     var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
@@ -76,30 +77,40 @@ public partial class LevelManager : MonoBehaviour
     }
 
     _directionBlocks = new GameObject[bottomGrid.Grid.Length];
-    for (int i = 0; i < bottomGrid.Grid.Length; ++i)
+    for (int i = 0; i < initDirectionBlocks.Length; ++i)
     {
-      if (i > initDirectionBlocks.Length - 1) break;
       if (initDirectionBlocks[i] == null) continue;
 
-      var directionBlock = SpawnDirectionBlockAt(i, spawnedParent);
-      directionBlock.SetIndex(i);
+      var directionBlock = SpawnDirectionBlockAt(initDirectionBlocks[i].Index, spawnedParent);
+      directionBlock.SetIndex(initDirectionBlocks[i].Index);
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
-      _directionBlocks[i] = directionBlock.gameObject;
+      _directionBlocks[initDirectionBlocks[i].Index] = directionBlock.gameObject;
+    }
 
-      if (initDirectionBlocks[i].IsHidden)
-        directionBlock.gameObject.AddComponent<WoodenBlockControl>();
+    for (int i = 0; i < initWoodenBlocks.Length; ++i)
+    {
+      var woodenData = initWoodenBlocks[i];
+      if (woodenData == null) continue;
 
-      if (directionBlock.TryGetComponent(out IInitialize initBlock))
-        initBlock.Initialize(0);
+      var woodenBlock = SpawnWoondenBlockAt(woodenData.Index, spawnedParent);
+      woodenBlock.DirectionBlock.SetIndex(woodenData.Index);
+      woodenBlock.DirectionBlock.SetColorValue(woodenData.ColorValue);
+      woodenBlock.DirectionBlock.SetDirectionValue(woodenData.DirectionValue);
+      woodenBlock.DirectionBlock.SetAmmunition(woodenData.Ammunition);
+      _directionBlocks[woodenData.Index] = woodenBlock.gameObject;
     }
 
     for (int i = 0; i < initTunnels.Length; i++)
     {
       var tunnelData = initTunnels[i];
+      if (tunnelData == null) continue;
+
       var tunnel = SpawnTunnelAt(tunnelData.Index, spawnedParent);
-      tunnel.Initialize(tunnelData);
+      tunnel.SetDirectionValue(tunnelData.DirectionValue);
+      tunnel.SetIndex(tunnelData.Index);
+      tunnel.Initialize(tunnelData.directionBlockDatas);
       _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 

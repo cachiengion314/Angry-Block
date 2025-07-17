@@ -2232,136 +2232,62 @@ MonoBehaviour:
   levelInformation:
     Index: 19
     ColorBlocksGridSize:
-      x: 8
-      y: 8
+      x: 5
+      y: 5
     InitColorBlocks:
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
+      Health: 0
     - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 1
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
-    - ColorValue: 2
-      Health: 1
+      Health: 0
     DirectionBlocksGridSize:
-      x: 10
-      y: 10
+      x: 5
+      y: 5
     InitDirectionBlocks:
-    - ColorValue: 0
+    - Index: 0
+      ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 1
-    - ColorValue: 0
+    - Index: 1
+      ColorValue: 0
+      DirectionValue: 1
+      Ammunition: 5
+    - Index: 17
+      ColorValue: 1
       DirectionValue: 0
       Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 0
-      DirectionValue: 0
+    InitWoodenBlocks:
+    - Index: 6
+      ColorValue: 1
+      DirectionValue: 2
       Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 4
-      IsHidden: 0
-    - ColorValue: 1
-      DirectionValue: 0
-      Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 1
-      DirectionValue: 0
-      Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 1
+    InitTunnels:
+    - Index: 18
+      directionBlockDatas:
+      - Index: 0
+        ColorValue: 1
+        DirectionValue: 0
+        Ammunition: 0
+      - Index: 0
+        ColorValue: 0
+        DirectionValue: 2
+        Ammunition: 0
       DirectionValue: 3
-      Ammunition: 2
-      IsHidden: 1
-    - ColorValue: 1
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 0
-    - ColorValue: 2
-      DirectionValue: 0
-      Ammunition: 5
-      IsHidden: 0
-    - ColorValue: 2
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 0
-    - ColorValue: 2
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 0
-    - ColorValue: 2
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 0
-    - ColorValue: 2
-      DirectionValue: 0
-      Ammunition: 3
-      IsHidden: 0
-    InitTunnels: []
   levelSelected: 20
   isSelectedMatchedCurrentLevel: 1
   _firingPositions: {fileID: 1142100}
@@ -2378,6 +2304,8 @@ MonoBehaviour:
   colorBlockPref: {fileID: 2483085920719488615, guid: 4ade7be3d7156473dbb34f0ed0e3c392,
     type: 3}
   directionBlockPref: {fileID: 1633368844517106154, guid: 0ed673403e7704f4bafe0c85a4a7670d,
+    type: 3}
+  woodenBlockControlPref: {fileID: 8065321804541392809, guid: 189a43fc5ee2d455aa6c6ddcec94659d,
     type: 3}
   blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
     type: 3}

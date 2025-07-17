@@ -1,19 +1,13 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class WoodenBlockControl : MonoBehaviour, IInitialize, ITrigger
+public class WoodenBlockControl : MonoBehaviour, ITrigger
 {
     [Header("Dependencies")]
     [SerializeField] SpriteRenderer bodyRenderer;
     [SerializeField] SpriteRenderer directionRenderer;
-
-    public void Initialize<T>(T data)
-    {
-        bodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        directionRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        
-        directionRenderer.gameObject.SetActive(false);
-    }
+    [SerializeField] DirectionBlockControl directionBlock;
+    public DirectionBlockControl DirectionBlock => directionBlock;
 
     public void OnTrigger<T>(T data)
     {
