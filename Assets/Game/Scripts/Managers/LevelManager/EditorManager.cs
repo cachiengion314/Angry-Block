@@ -3,6 +3,16 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [Serializable]
+public enum BlockType
+{
+  None,
+  DirectionBlock,
+  WoodenBlock,
+  Tunnel,
+  IceBlock
+}
+
+[Serializable]
 public enum DirectionValue
 {
   Right,
