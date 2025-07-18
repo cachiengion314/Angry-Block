@@ -116,7 +116,7 @@ public partial class LevelManager : MonoBehaviour
     seq.Insert(atPosition, directionBlock.transform.DOMove(path[0], duration));
     atPosition += duration;
 
-    seq.Insert(atPosition, directionBlock.transform.DOPath(path, duration));
+    seq.Insert(atPosition, directionBlock.transform.DOPath(path, duration,PathType.CatmullRom));
     atPosition += duration;
 
     seq.InsertCallback(atPosition, () =>
@@ -134,16 +134,19 @@ public partial class LevelManager : MonoBehaviour
 
     var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
     var blockDir = direction.GetDirection();
-    var grid1 = (bottomGrid.GridSize - blockGrid) * blockDir + blockGrid;
-    var pos1 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(grid1);
-    var pos2 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, -1));
-    var pos3 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, bottomGrid.GridSize.y));
-    var pos4 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(bottomGrid.GridSize);
-    var pos5 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, -1));
-    if (blockDir.Equals(new int2(0, 1))) Path = new Vector3[2] { pos1, endPos };
-    if (blockDir.Equals(new int2(1, 0))) Path = new Vector3[3] { pos1, pos4, endPos };
-    if (blockDir.Equals(new int2(0, -1))) Path = new Vector3[4] { pos1, pos2, pos3, endPos };
-    if (blockDir.Equals(new int2(-1, 0))) Path = new Vector3[3] { pos1, pos3, endPos };
+    var pos1 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, -1));
+    var pos2 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, bottomGrid.GridSize.y));
+    var pos3 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(bottomGrid.GridSize);
+    var pos4 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, -1));
+    var pos5 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(blockGrid.x, bottomGrid.GridSize.y));
+    var pos6 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x,blockGrid.y));
+    var pos7 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(blockGrid.x,-1));
+    var pos8 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1,blockGrid.y));
+    
+    if (blockDir.Equals(new int2(0, 1))) Path = new Vector3[2] { pos5, endPos };
+    if (blockDir.Equals(new int2(1, 0))) Path = new Vector3[3] { pos6, pos3, endPos };
+    if (blockDir.Equals(new int2(0, -1))) Path = new Vector3[4] { pos7, pos1, pos2, endPos };
+    if (blockDir.Equals(new int2(-1, 0))) Path = new Vector3[3] { pos8, pos2, endPos };
     return Path;
   }
 
