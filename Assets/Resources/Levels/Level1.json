@@ -1,0 +1,134 @@
+{
+    "Index": 0,
+    "ColorBlocksGridSize": {
+        "x": 5,
+        "y": 5
+    },
+    "InitColorBlocks": [
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        },
+        {
+            "ColorValue": 0,
+            "Health": 0
+        }
+    ],
+    "DirectionBlocksGridSize": {
+        "x": 5,
+        "y": 5
+    },
+    "InitDirectionBlocks": [
+        {
+            "Index": 1,
+            "ColorValue": 0,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 3,
+            "ColorValue": 0,
+            "DirectionValue": 2,
+            "Ammunition": 11
+        },
+        {
+            "Index": 6,
+            "ColorValue": 0,
+            "DirectionValue": 1,
+            "Ammunition": 5
+        },
+        {
+            "Index": 11,
+            "ColorValue": 0,
+            "DirectionValue": 1,
+            "Ammunition": 5
+        },
+        {
+            "Index": 16,
+            "ColorValue": 0,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 18,
+            "ColorValue": 0,
+            "DirectionValue": 3,
+            "Ammunition": 13
+        }
+    ],
+    "InitWoodenBlocks": [],
+    "InitIceBlocks": [],
+    "InitTunnels": []
+}

@@ -2229,108 +2229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrangeSpeed: 7.31
-  levelInformation:
-    Index: 19
-    ColorBlocksGridSize:
-      x: 5
-      y: 5
-    InitColorBlocks:
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    - ColorValue: 0
-      Health: 1
-    DirectionBlocksGridSize:
-      x: 5
-      y: 5
-    InitDirectionBlocks:
-    - Index: 0
-      ColorValue: 1
-      DirectionValue: 0
-      Ammunition: 5
-    - Index: 1
-      ColorValue: 0
-      DirectionValue: 1
-      Ammunition: 5
-    - Index: 3
-      ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 5
-    - Index: 7
-      ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 5
-    - Index: 11
-      ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 5
-    - Index: 15
-      ColorValue: 0
-      DirectionValue: 0
-      Ammunition: 5
-    - Index: 17
-      ColorValue: 1
-      DirectionValue: 0
-      Ammunition: 5
-    InitWoodenBlocks:
-    - Index: 6
-      ColorValue: 1
-      DirectionValue: 2
-      Ammunition: 5
-    InitIceBlocks: []
-    InitTunnels:
-    - Index: 18
-      directionBlockDatas:
-      - Index: 0
-        ColorValue: 0
-        DirectionValue: 0
-        Ammunition: 0
-      - Index: 0
-        ColorValue: 0
-        DirectionValue: 2
-        Ammunition: 0
-      DirectionValue: 3
-  levelSelected: 20
-  isSelectedMatchedCurrentLevel: 1
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 5
   bulletSpeed: 21
   wanderingSpeed: 8.6
+  levelSelected: 1
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}

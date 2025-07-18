@@ -96,6 +96,15 @@ public partial class LevelManager : MonoBehaviour
       });
   }
 
+  // Vector3[] PathMove(GameObject directionBlock)
+  // {
+  //   if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return null;
+  //   if (!directionBlock.TryGetComponent(out IColorBlock color)) return null;
+  //   var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
+  //   var blockDir = direction.GetDirection();
+  //   var pos1 = (bottomGrid.GridSize - blockGrid) * blockDir + blockGrid;
+  // }
+
   bool IsBlockMove(GameObject directionBlock)
   {
     if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return false;
