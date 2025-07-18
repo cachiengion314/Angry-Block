@@ -108,4 +108,14 @@ public class ColorBlockControl : MonoBehaviour
   {
     return gameObject;
   }
+
+  public void SetInitPostion(float3 pos)
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public float3 GetInitPostion()
+  {
+    throw new System.NotImplementedException();
+  }
 }

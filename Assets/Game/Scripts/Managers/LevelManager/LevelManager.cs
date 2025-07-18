@@ -223,6 +223,6 @@ public partial class LevelManager : MonoBehaviour
 
     if (levelInfo == null) { print("This level is not existed!"); return; }
     levelInformation = levelInfo;
-    print("Load level successfully");
+    print("Load level " + level + " successfully ");
   }
 }

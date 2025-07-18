@@ -2232,7 +2232,7 @@ MonoBehaviour:
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 5
   bulletSpeed: 21
-  wanderingSpeed: 8.6
+  wanderingSpeed: 7
   levelSelected: 1
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}

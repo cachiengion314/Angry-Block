@@ -81,6 +81,10 @@ public partial class LevelManager : MonoBehaviour
       bulletComp.SetLifeDuration(
         bulletComp.GetLifeDuration() + Time.deltaTime
       );
+      // InterpolateMoveUpdate(
+      //   bullet.transform.position,
+
+      // )
       bullet.transform.position += Time.deltaTime * (Vector3)bullet.GetVelocity();
 
       var currentPos = bullet.transform.position;
