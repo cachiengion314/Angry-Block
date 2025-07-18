@@ -119,9 +119,9 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
 
-    for (int x = 0; x < needArrangeCollumns.Count; ++x)
+    for (int x = 0; x < 1; ++x)
     {
-      var needArrangeCollumn = x;
+      var needArrangeCollumn = needArrangeCollumns[x];
       for (int y = 0; y < topGrid.GridSize.y; ++y)
       {
         var grid = new int2(needArrangeCollumn, y);
