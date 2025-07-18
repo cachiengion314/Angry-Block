@@ -92,6 +92,7 @@ public partial class LevelManager
     foreach (var directionBlock in directionBlocks)
     {
       if (directionBlock == null) continue;
+      if (!directionBlock.TryGetComponent(out DirectionBlockControl directionBlockControl1)) continue;
       listDirectionBlock.Add(directionBlock);
     }
     return listDirectionBlock.ToArray();
