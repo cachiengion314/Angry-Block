@@ -14,43 +14,23 @@ public partial class LevelManager
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
+    _waitingSlots[emptyWaitingSlot] = directionBlock;
+    _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
+
+    AutoSortingWaitingSlots();
+
     IsTriggerBooster1 = false;
     GameManager.Instance.Booster1--;
 
-    MoveToSlots(emptyWaitingSlot, directionBlock, _waitingSlots, waitingPositions);
-  }
-
-  void MoveToSlots(
-    int slotIndex,
-    GameObject directionBlock,
-    GameObject[] slots,
-    Transform positions
-  )
-  {
-    if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
-    if (slotIndex > positions.childCount - 1 || slotIndex < 0)
+    for (int i = 0; i < _waitingSlots.Length; ++i)
     {
-      print("Slots is not available");
-      return;
+      var block = _waitingSlots[i];
+      if (block == null) continue;
+      MoveTo(i, block, _waitingSlots, waitingPositions);
     }
-    // Trigger WoodenBlock
+
+    OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
-
-    var duration = 0.3f;
-    var endPos = positions.GetChild(slotIndex).position;
-
-    // logic
-    if (!directionBlock.TryGetComponent(out IColorBlock colorBlock)) return;
-    _directionBlocks[colorBlock.GetIndex()] = null;
-    // var index = bottomGrid.ConvertWorldPosToIndex(endPos);
-    // colorBlock.SetIndex(index);
-    // _directionBlocks[index] = directionBlock;
-    slots[slotIndex] = directionBlock;
-
-    moveable.SetLockedPosition(endPos);
-    directionBlock.transform.DOMove(endPos, duration)
-    .SetEase(Ease.Linear)
-    .OnComplete(() => moveable.SetLockedPosition(0));
   }
 
   public void OnTriggerBooster2()
@@ -61,29 +41,6 @@ public partial class LevelManager
       int j = UnityEngine.Random.Range(0, i + 1);
       SwapAt(directionBlockAvailables[i], directionBlockAvailables[j]);
     }
-  }
-
-  GameObject[] DirectionBlocksAvailable()
-  {
-    var setDirectionBlocks = new HashSet<GameObject>(FindDirectionBlocksNotNullAt(_directionBlocks));
-    var setWaitingSlots = new HashSet<GameObject>(FindDirectionBlocksNotNullAt(_waitingSlots));
-    var setFiringSlots = new HashSet<GameObject>(FindDirectionBlocksNotNullAt(_firingSlots));
-
-    setDirectionBlocks.ExceptWith(setWaitingSlots);
-    setDirectionBlocks.ExceptWith(setFiringSlots);
-
-    return setDirectionBlocks.ToArray();
-  }
-
-  GameObject[] FindDirectionBlocksNotNullAt(List<GameObject> directionBlocks)
-  {
-    List<GameObject> listDirectionBlock = new();
-    foreach (var directionBlock in directionBlocks)
-    {
-      if (directionBlock == null) continue;
-      listDirectionBlock.Add(directionBlock);
-    }
-    return listDirectionBlock.ToArray();
   }
 
   GameObject[] FindDirectionBlocksNotNullAt(GameObject[] directionBlocks)
