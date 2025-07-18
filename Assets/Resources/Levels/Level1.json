@@ -1,89 +1,289 @@
 {
     "Index": 0,
     "ColorBlocksGridSize": {
-        "x": 5,
-        "y": 5
+        "x": 9,
+        "y": 9
     },
     "InitColorBlocks": [
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
         },
         {
             "ColorValue": 0,
-            "Health": 0
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "ColorValue": 2,
+            "Health": 1
         }
     ],
     "DirectionBlocksGridSize": {
@@ -92,43 +292,142 @@
     },
     "InitDirectionBlocks": [
         {
-            "Index": 1,
-            "ColorValue": 0,
+            "Index": 0,
+            "ColorValue": 2,
             "DirectionValue": 0,
             "Ammunition": 5
         },
         {
-            "Index": 3,
-            "ColorValue": 0,
+            "Index": 1,
+            "ColorValue": 2,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 2,
+            "ColorValue": 1,
             "DirectionValue": 2,
-            "Ammunition": 11
+            "Ammunition": 5
+        },
+        {
+            "Index": 5,
+            "ColorValue": 0,
+            "DirectionValue": 3,
+            "Ammunition": 5
         },
         {
             "Index": 6,
+            "ColorValue": 1,
+            "DirectionValue": 3,
+            "Ammunition": 5
+        },
+        {
+            "Index": 7,
             "ColorValue": 0,
-            "DirectionValue": 1,
+            "DirectionValue": 2,
+            "Ammunition": 5
+        },
+        {
+            "Index": 10,
+            "ColorValue": 1,
+            "DirectionValue": 0,
             "Ammunition": 5
         },
         {
             "Index": 11,
             "ColorValue": 0,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 13,
+            "ColorValue": 2,
             "DirectionValue": 1,
             "Ammunition": 5
         },
         {
+            "Index": 15,
+            "ColorValue": 1,
+            "DirectionValue": 3,
+            "Ammunition": 5
+        },
+        {
             "Index": 16,
-            "ColorValue": 0,
+            "ColorValue": 2,
+            "DirectionValue": 1,
+            "Ammunition": 5
+        },
+        {
+            "Index": 17,
+            "ColorValue": 1,
             "DirectionValue": 0,
             "Ammunition": 5
         },
         {
             "Index": 18,
             "ColorValue": 0,
-            "DirectionValue": 3,
-            "Ammunition": 13
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 20,
+            "ColorValue": 2,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 21,
+            "ColorValue": 2,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 22,
+            "ColorValue": 0,
+            "DirectionValue": 0,
+            "Ammunition": 5
+        },
+        {
+            "Index": 23,
+            "ColorValue": 1,
+            "DirectionValue": 0,
+            "Ammunition": 5
         }
     ],
-    "InitWoodenBlocks": [],
-    "InitIceBlocks": [],
-    "InitTunnels": []
+    "InitWoodenBlocks": [
+        {
+            "Index": 12,
+            "ColorValue": 0,
+            "DirectionValue": 3,
+            "Ammunition": 5
+        }
+    ],
+    "InitIceBlocks": [
+        {
+            "Index": 3,
+            "ColorValue": 0,
+            "DirectionValue": 1,
+            "Ammunition": 5
+        }
+    ],
+    "InitTunnels": [
+        {
+            "Index": 8,
+            "directionBlockDatas": [
+                {
+                    "Index": 0,
+                    "ColorValue": 0,
+                    "DirectionValue": 0,
+                    "Ammunition": 3
+                },
+                {
+                    "Index": 0,
+                    "ColorValue": 0,
+                    "DirectionValue": 1,
+                    "Ammunition": 5
+                }
+            ],
+            "DirectionValue": 0
+        }
+    ]
 }
