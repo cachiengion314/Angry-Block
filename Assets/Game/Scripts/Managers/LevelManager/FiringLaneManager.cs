@@ -7,8 +7,8 @@ public partial class LevelManager : MonoBehaviour
   readonly Dictionary<int, int> _firingPositionIndexes = new();
   [SerializeField] Transform _firingPositions;
   readonly List<GameObject> _firingSlots = new();
-  [Range(1f, 10f)]
-  [SerializeField] float rotationSpeed = 3.5f;
+  [Range(1f, 50f)]
+  [SerializeField] float rotationSpeed = 5f;
   [Range(1f, 200)]
   [SerializeField] float bulletSpeed = 10.0f;
   [Range(1f, 30)]
@@ -90,6 +90,7 @@ public partial class LevelManager : MonoBehaviour
         blastBlock.transform.rotation *= deltaQuad;
         continue;
       }
+
       damageable.SetWhoPicked(null);
       if (damageable.GetWhoLocked() == blastBlock) continue;
       if (

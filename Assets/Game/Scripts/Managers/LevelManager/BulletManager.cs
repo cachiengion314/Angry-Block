@@ -93,6 +93,7 @@ public partial class LevelManager : MonoBehaviour
       if (t < 1) continue;
 
       var targetBlock = bullMoveable.GetLockedTarget();
+      if (targetBlock == null) continue;
       if (!targetBlock.TryGetComponent<IDamageable>(out var colorBlockDamageable)) continue;
 
       colorBlockDamageable.SetHealth(colorBlockDamageable.GetHealth() - bullet.GetDamage());

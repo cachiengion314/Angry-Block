@@ -36,7 +36,7 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
-    FindNeedArrangeCollumn();
+    FindNeedArrangeCollumns();
     SpawnColorBlocksUpdate();
     FindNeedArrangeCollumnAndUpdate();
     WaitAndFindMatchedUpdate();
