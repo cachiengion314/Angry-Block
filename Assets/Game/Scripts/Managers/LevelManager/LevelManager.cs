@@ -34,8 +34,10 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
+    FindNeedArrangeCollumn();
+    SpawnColorBlocksUpdate();
+    FindNeedArrangeCollumnAndUpdate();
     WaitAndFindMatchedUpdate();
-    ReArrangeTopGridUpdate();
     BulletPositionsUpdate();
     LockAndFireTargetUpddate();
   }

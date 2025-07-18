@@ -83,7 +83,7 @@ public partial class LevelManager : MonoBehaviour
         var sign = math.sign(
           math.cross(blastBlock.transform.up, dirToTarget).z
         );
-        var deltaTargetRad = sign * Time.deltaTime * rotationSpeed * targetRad;
+        var deltaTargetRad = sign * rotationSpeed * Time.deltaTime * targetRad;
         var deltaQuad = new Quaternion(
           0, 0, math.sin(deltaTargetRad / 2f), math.cos(deltaTargetRad / 2f)
         );
