@@ -3,6 +3,8 @@ using UnityEngine;
 
 public interface IMoveable
 {
+  public void SetInitPostion(float3 pos);
+  public float3 GetInitPostion();
   public void SetLockedPosition(float3 lockedPosition);
   public float3 GetLockedPosition();
   public Transform GetLockedTarget();

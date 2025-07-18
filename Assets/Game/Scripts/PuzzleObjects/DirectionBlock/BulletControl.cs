@@ -13,6 +13,7 @@ public class BulletControl : MonoBehaviour
   float3 _lockedPosition;
   float _lifeDuration;
   Transform _lockedTarget;
+  float3 _initPosition;
 
   public void SetVelocity(float3 velocity)
   {
@@ -44,12 +45,12 @@ public class BulletControl : MonoBehaviour
     return _lockedPosition;
   }
 
-  public float GetLifeDuration()
+  public float GetLifeTimer()
   {
     return _lifeDuration;
   }
 
-  public void SetLifeDuration(float duration)
+  public void SetLifeTimer(float duration)
   {
     _lifeDuration = duration;
   }
@@ -62,5 +63,15 @@ public class BulletControl : MonoBehaviour
   public void SetLockedTarget(Transform lockedTarget)
   {
     _lockedTarget = lockedTarget;
+  }
+
+  public void SetInitPostion(float3 pos)
+  {
+    _initPosition = pos;
+  }
+
+  public float3 GetInitPostion()
+  {
+    return _initPosition;
   }
 }

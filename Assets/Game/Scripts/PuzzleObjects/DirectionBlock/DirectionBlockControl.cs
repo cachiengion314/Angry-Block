@@ -6,6 +6,7 @@ public class DirectionBlockControl : MonoBehaviour
   , IColorBlock
   , IMoveable
   , IMergeable
+  , IGameObj
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
@@ -112,5 +113,15 @@ public class DirectionBlockControl : MonoBehaviour
   public GameObject GetGameObject()
   {
     return gameObject;
+  }
+
+  public void SetInitPostion(float3 pos)
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public float3 GetInitPostion()
+  {
+    throw new System.NotImplementedException();
   }
 }

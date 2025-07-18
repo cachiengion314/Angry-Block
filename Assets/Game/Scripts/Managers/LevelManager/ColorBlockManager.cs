@@ -12,8 +12,6 @@ public partial class LevelManager : MonoBehaviour
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
   [Range(1f, 10f)]
   [SerializeField] float arrangeSpeed = 5.5f;
-  readonly List<GameObject> _needMovingObjs = new();
-  readonly List<float3> _destinations = new();
 
   ColorBlockControl FindFirstBlockMatchedFor(GameObject blastBlock)
   {
@@ -46,6 +44,20 @@ public partial class LevelManager : MonoBehaviour
     return true;
   }
 
+  int FindNeedSpawningCollumn()
+  {
+    var y = topGrid.GridSize.y - 1;
+    for (int x = 0; x < topGrid.GridSize.x; ++x)
+    {
+      if (IsColmunEmptyAt(x)) continue;
+      var grid = new int2(x, y);
+      var index = topGrid.ConvertGridPosToIndex(grid);
+      var obj = _colorBlocks[index];
+      if (obj == null) return x;
+    }
+    return -1;
+  }
+
   int FindNeedArrangeCollumn()
   {
     for (int y = 0; y < 1; ++y)
@@ -64,80 +76,52 @@ public partial class LevelManager : MonoBehaviour
     return -1;
   }
 
-  void SpawningColorBlocksUpdate()
+  int FindDelegateColorFrom(List<GameObject> moveableBlocks)
   {
-
-  }
-
-  bool RemoveGameObjectSafely(List<GameObject> list, GameObject target)
-  {
-    for (int i = list.Count - 1; i >= 0; i--)
+    var obj = moveableBlocks[0];
+    foreach (var item in moveableBlocks)
     {
-      if (list[i] == null || list[i] == target)
-      {
-        list.RemoveAt(i);
-        if (list[i] == target) return true; // Found and removed target
-      }
+      print("moveable_block: " + item.GetInstanceID());
     }
-    return false;
+    if (obj.TryGetComponent<IColorBlock>(out var colorBlock)) return 0;
+    return colorBlock.GetColorValue();
   }
 
-  void ArrangeTopGridUpdate()
+  void SpawnColorBlocksUpdate()
   {
-    for (int i = 0; i < _needMovingObjs.Count; ++i)
+    var needSpawningCollumn = FindNeedSpawningCollumn();
+    if (needSpawningCollumn == -1)
     {
-      var obj = _needMovingObjs[i];
-
-      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
-      if (!obj.TryGetComponent<IGameObj>(out var blockObj)) continue;
-
-      var targetPos = _destinations[i];
-      InterpolateMoveUpdate(
-        blockObj.GetGameObject().transform.position,
-        topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
-        targetPos,
-        updateSpeed * arrangeSpeed,
-        out var t,
-        out var nextPos
-      );
-      blockObj.GetGameObject().transform.position = nextPos;
-      if (t < 1) continue;
-
-      RemoveGameObjectSafely(_needMovingObjs, obj);
-      _destinations.Remove(targetPos);
+      return;
     }
+
+    var y = topGrid.GridSize.y - 1;
+    var grid = new int2(needSpawningCollumn, y);
+    var currentIndex = topGrid.ConvertGridPosToIndex(grid);
+
+    var colorBlock = SpawnColorBlockAt(currentIndex, spawnedParent);
+    colorBlock.GetComponent<IColorBlock>().SetIndex(currentIndex);
+
+    var moveableBlocks = FindMoveableDirectionBlocks();
+    if (moveableBlocks.Count > 0)
+    {
+      print("moveableBlocks.Count: " + moveableBlocks.Count);
+      var delegateColor = FindDelegateColorFrom(moveableBlocks);
+      colorBlock.GetComponent<IColorBlock>().SetColorValue(delegateColor);
+    }
+    else
+      colorBlock.GetComponent<IColorBlock>().SetColorValue(0);
+
+    _colorBlocks[currentIndex] = colorBlock;
   }
 
-  void ReArrangeTopGridUpdate()
+  void FindNeedArrangeCollumnAndUpdate()
   {
     var needArrangeCollumn = FindNeedArrangeCollumn();
     if (needArrangeCollumn == -1)
     {
       return;
     }
-
-    // for (int y = 0; y < topGrid.GridSize.y; ++y)
-    // {
-    //   var grid = new int2(needArrangeCollumn, y);
-    //   var currentIndex = topGrid.ConvertGridPosToIndex(grid);
-    //   var colorBlock = _colorBlocks[currentIndex];
-    //   if (colorBlock == null) continue;
-    //   if (!colorBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
-
-    //   var downGrid = grid + new int2(0, -1);
-    //   var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
-    //   var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
-
-    //   _needMovingObjs.Add(colorBlock.gameObject);
-    //   _destinations.Add(targetPos);
-
-
-
-
-    //   _colorBlocks[colorBlock.GetIndex()] = null;
-    //   _colorBlocks[targetIndex] = colorBlock;
-    //   colorBlock.SetIndex(targetIndex);
-    // }
 
     for (int y = 0; y < topGrid.GridSize.y; ++y)
     {

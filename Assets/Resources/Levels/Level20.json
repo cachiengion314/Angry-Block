@@ -94,19 +94,19 @@
         {
             "Index": 0,
             "ColorValue": 1,
-            "DirectionValue": 0,
+            "DirectionValue": 2,
             "Ammunition": 5
         },
         {
             "Index": 1,
             "ColorValue": 0,
-            "DirectionValue": 1,
+            "DirectionValue": 2,
             "Ammunition": 5
         },
         {
             "Index": 3,
             "ColorValue": 0,
-            "DirectionValue": 0,
+            "DirectionValue": 2,
             "Ammunition": 5
         },
         {
@@ -129,8 +129,8 @@
         },
         {
             "Index": 17,
-            "ColorValue": 1,
-            "DirectionValue": 0,
+            "ColorValue": 0,
+            "DirectionValue": 3,
             "Ammunition": 5
         }
     ],
@@ -142,14 +142,7 @@
             "Ammunition": 5
         }
     ],
-    "InitIceBlocks": [
-        {
-            "Index": 9,
-            "ColorValue": 0,
-            "DirectionValue": 0,
-            "Ammunition": 5
-        }
-    ],
+    "InitIceBlocks": [],
     "InitTunnels": [
         {
             "Index": 18,
