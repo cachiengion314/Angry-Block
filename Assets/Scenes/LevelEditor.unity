@@ -486,11 +486,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 256924935}
-  blockType: 0
+  blockType: 1
   directionBlockData:
-    Index: 0
+    Index: 6
     ColorValue: 0
-    DirectionValue: 0
+    DirectionValue: 1
     Ammunition: 5
   tunnelData:
     Index: 0
@@ -542,7 +542,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1694,12 +1694,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1006089476}
-  blockType: 0
+  blockType: 1
   directionBlockData:
-    Index: 0
+    Index: 18
     ColorValue: 0
-    DirectionValue: 0
-    Ammunition: 5
+    DirectionValue: 3
+    Ammunition: 13
   tunnelData:
     Index: 0
     directionBlockDatas: []
@@ -1750,7 +1750,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1918,11 +1918,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1096449892}
-  blockType: 0
+  blockType: 1
   directionBlockData:
-    Index: 0
+    Index: 11
     ColorValue: 0
-    DirectionValue: 0
+    DirectionValue: 1
     Ammunition: 5
   tunnelData:
     Index: 0
@@ -1974,7 +1974,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2366,12 +2366,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1652896421}
-  blockType: 0
+  blockType: 1
   directionBlockData:
-    Index: 0
+    Index: 3
     ColorValue: 0
-    DirectionValue: 0
-    Ammunition: 5
+    DirectionValue: 2
+    Ammunition: 11
   tunnelData:
     Index: 0
     directionBlockDatas: []
@@ -2422,7 +2422,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3343,10 +3343,26 @@ MonoBehaviour:
       ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+    - Index: 3
+      ColorValue: 0
+      DirectionValue: 2
+      Ammunition: 11
+    - Index: 6
+      ColorValue: 0
+      DirectionValue: 1
+      Ammunition: 5
+    - Index: 11
+      ColorValue: 0
+      DirectionValue: 1
+      Ammunition: 5
     - Index: 16
       ColorValue: 0
       DirectionValue: 0
       Ammunition: 5
+    - Index: 18
+      ColorValue: 0
+      DirectionValue: 3
+      Ammunition: 13
     InitWoodenBlocks: []
     InitIceBlocks: []
     InitTunnels: []
