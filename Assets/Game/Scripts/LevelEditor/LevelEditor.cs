@@ -1,6 +1,70 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+
+[Serializable]
+public enum BlockType
+{
+    None,
+    DirectionBlock,
+    WoodenBlock,
+    Tunnel,
+    IceBlock
+}
+
+[Serializable]
+public enum DirectionValue
+{
+    Right,
+    Up,
+    Left,
+    Down,
+}
+
+[Serializable]
+public class ColorBlockData
+{
+    public int ColorValue;
+    [Range(1, 20)]
+    public int Health = 1;
+}
+
+[Serializable]
+public class DirectionBlockData
+{
+    [ViewOnly] public int Index;
+    public int ColorValue;
+    public DirectionValue DirectionValue;
+    [Range(1, 20)]
+    public int Ammunition = 5;
+}
+
+[Serializable]
+public class TunnelData
+{
+    [ViewOnly] public int Index;
+    public DirectionBlockData[] directionBlockDatas;
+    public DirectionValue DirectionValue;
+}
+
+[Serializable]
+public class LevelInformation
+{
+    [ViewOnly]
+    public int Index;
+    public int2 ColorBlocksGridSize;
+    /// <summary>
+    /// Should doing quad tree stuffs
+    /// </summary>
+    [Tooltip("Manual place color blocks in grid positions")]
+    public ColorBlockData[] InitColorBlocks;
+    public int2 DirectionBlocksGridSize;
+    public DirectionBlockData[] InitDirectionBlocks;
+    public DirectionBlockData[] InitWoodenBlocks;
+    public DirectionBlockData[] InitIceBlocks;
+    public TunnelData[] InitTunnels;
+}
 
 public class LevelEditor : MonoBehaviour
 {
@@ -8,13 +72,14 @@ public class LevelEditor : MonoBehaviour
     [SerializeField] BlockEditor blockEditorPref;
     [SerializeField] GridWorld gridWorld;
     [SerializeField] BlockEditor[] tiles;
-    LevelInformation levelInformation;
+    [SerializeField] LevelInformation levelInformation;
     [SerializeField][Range(1, 20)] int levelSelected = 1;
 
     [NaughtyAttributes.Button]
     void CreateGird()
     {
         ClearGrid();
+        gridWorld.GridSize = levelInformation.DirectionBlocksGridSize;
         gridWorld.BakingGridWorld();
         var length = gridWorld.GridSize.x * gridWorld.GridSize.y;
         tiles = new BlockEditor[length];
@@ -171,9 +236,7 @@ public class LevelEditor : MonoBehaviour
     [NaughtyAttributes.Button]
     void SaveLevel()
     {
-        levelInformation = new();
         levelInformation.Index = levelSelected - 1;
-        levelInformation.DirectionBlocksGridSize = gridWorld.GridSize;
         SaveDirectionBlocks();
         SaveWoodenBlocks();
         SaveIceBlocks();

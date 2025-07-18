@@ -7,6 +7,8 @@ public partial class LevelManager : MonoBehaviour
 {
   public static LevelManager Instance { get; private set; }
   [Header("Level Manager")]
+  LevelInformation levelInformation;
+  [SerializeField][Range(1, 20)] int levelSelected = 1;
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
   public Transform SpawnedParent => spawnedParent;
@@ -210,5 +212,15 @@ public partial class LevelManager : MonoBehaviour
   public void RestartLevel()
   {
     SceneManager.LoadScene(KeyString.NAME_SCENE_GAMEPLAY);
+  }
+
+  public void LoadLevelFrom(int level)
+  {
+    var _rawLevelInfo = Resources.Load<TextAsset>("Levels/" + KeyString.NAME_LEVEL_FILE + level).text;
+    var levelInfo = JsonUtility.FromJson<LevelInformation>(_rawLevelInfo);
+
+    if (levelInfo == null) { print("This level is not existed!"); return; }
+    levelInformation = levelInfo;
+    print("Load level successfully");
   }
 }
