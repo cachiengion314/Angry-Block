@@ -88,22 +88,58 @@ public partial class LevelManager : MonoBehaviour
     }
 
     var endPos = positions.GetChild(slotIndex).position;
-    moveable.SetLockedPosition(endPos);
-    directionBlock.transform.DOMove(endPos, .5f)
-      .OnComplete(() =>
-      {
-        moveable.SetLockedPosition(0);
-      });
+    if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
+
+    if (color.GetIndex() == -1)
+    {
+      moveable.SetLockedPosition(endPos);
+      directionBlock.transform.DOMove(endPos, .5f)
+        .OnComplete(() => moveable.SetLockedPosition(0));
+      return;
+    }
+
+    Vector3[] path = PathMove(directionBlock, endPos);
+    if (path == null) return;
+
+    Sequence seq = DOTween.Sequence();
+    var atPosition = 0f;
+    var duration = 0.5f;
+
+    seq.InsertCallback(atPosition, () => moveable.SetLockedPosition(endPos));
+
+    seq.Insert(atPosition, directionBlock.transform.DOMove(path[0], duration));
+    atPosition += duration;
+
+    seq.Insert(atPosition, directionBlock.transform.DOPath(path, duration));
+    atPosition += duration;
+
+    seq.InsertCallback(atPosition, () =>
+    {
+      color.SetIndex(-1);
+      moveable.SetLockedPosition(0);
+    });
   }
 
-  // Vector3[] PathMove(GameObject directionBlock)
-  // {
-  //   if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return null;
-  //   if (!directionBlock.TryGetComponent(out IColorBlock color)) return null;
-  //   var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
-  //   var blockDir = direction.GetDirection();
-  //   var pos1 = (bottomGrid.GridSize - blockGrid) * blockDir + blockGrid;
-  // }
+  Vector3[] PathMove(GameObject directionBlock, float3 endPos)
+  {
+    if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return null;
+    if (!directionBlock.TryGetComponent(out IColorBlock color)) return null;
+    Vector3[] Path = null;
+
+    var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
+    var blockDir = direction.GetDirection();
+    var grid1 = (bottomGrid.GridSize - blockGrid) * blockDir + blockGrid;
+    var pos1 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(grid1);
+    var pos2 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, -1));
+    var pos3 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, bottomGrid.GridSize.y));
+    var pos4 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(bottomGrid.GridSize);
+    var pos5 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, -1));
+    if (blockDir.Equals(new int2(0, 1))) Path = new Vector3[2] { pos1, endPos };
+    if (blockDir.Equals(new int2(1, 0))) Path = new Vector3[3] { pos1, pos4, endPos };
+    if (blockDir.Equals(new int2(0, -1))) Path = new Vector3[4] { pos1, pos2, pos3, endPos };
+    if (blockDir.Equals(new int2(-1, 0))) Path = new Vector3[3] { pos1, pos3, endPos };
+    return Path;
+  }
 
   bool IsBlockMove(GameObject directionBlock)
   {
