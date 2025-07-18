@@ -45,12 +45,12 @@ public class BulletControl : MonoBehaviour
     return _lockedPosition;
   }
 
-  public float GetLifeDuration()
+  public float GetLifeTimer()
   {
     return _lifeDuration;
   }
 
-  public void SetLifeDuration(float duration)
+  public void SetLifeTimer(float duration)
   {
     _lifeDuration = duration;
   }

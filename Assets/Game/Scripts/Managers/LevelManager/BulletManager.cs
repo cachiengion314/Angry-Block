@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -34,7 +35,7 @@ public partial class LevelManager : MonoBehaviour
   {
     obj.gameObject.SetActive(true);
     if (obj.TryGetComponent<IBullet>(out var bullet))
-      bullet.SetLifeDuration(0);
+      bullet.SetLifeTimer(0);
     _activeBullets.Add(obj);
   }
 
@@ -73,35 +74,36 @@ public partial class LevelManager : MonoBehaviour
       var bullet = _activeBullets[i];
       if (!bullet.TryGetComponent<IMoveable>(out var bullMoveable)) continue;
       if (!bullet.TryGetComponent<IBullet>(out var bulletComp)) continue;
-      if (bulletComp.GetLifeDuration() > KEY_BULLET_LIFE_DURATION)
+      if (bulletComp.GetLifeTimer() > KEY_BULLET_LIFE_DURATION)
       {
         CleanReleaseFor(bullet);
         continue;
       }
-      bulletComp.SetLifeDuration(
-        bulletComp.GetLifeDuration() + Time.deltaTime
+      bulletComp.SetLifeTimer(
+        bulletComp.GetLifeTimer() + Time.deltaTime
       );
-      // InterpolateMoveUpdate(
-      //   bullet.transform.position,
+      InterpolateMoveUpdate(
+        bullet.transform.position,
+        bullMoveable.GetInitPostion(),
+        bullMoveable.GetLockedPosition(),
+        updateSpeed * bulletSpeed,
+        out var t,
+        out var nextPos
+      );
+      bullet.transform.position = nextPos;
+      if (t < 1) continue;
 
-      // )
-      bullet.transform.position += Time.deltaTime * (Vector3)bullet.GetVelocity();
-
-      var currentPos = bullet.transform.position;
-      if (topGrid.IsPosOutsideAt(currentPos)) continue;
-
-      var idx = topGrid.ConvertWorldPosToIndex(currentPos);
-      if (_colorBlocks[idx] == null) continue;
-
-      var colorBlock = _colorBlocks[idx];
-      if (!colorBlock.TryGetComponent<IDamageable>(out var colorBlockDamageable)) continue;
+      var targetBlock = bullMoveable.GetLockedTarget();
+      if (!targetBlock.TryGetComponent<IDamageable>(out var colorBlockDamageable)) continue;
 
       colorBlockDamageable.SetHealth(colorBlockDamageable.GetHealth() - bullet.GetDamage());
       colorBlockDamageable.SetWhoLocked(null);
       if (!colorBlockDamageable.IsDead()) continue;
 
+      if (!targetBlock.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+
       _colorBlocks[colorBlock.GetIndex()] = null;
-      Destroy(colorBlock.gameObject);
+      Destroy(targetBlock.gameObject);
 
       CleanReleaseFor(bullet);
     }

@@ -9,7 +9,7 @@ public partial class LevelManager : MonoBehaviour
   readonly List<GameObject> _firingSlots = new();
   [Range(1f, 10f)]
   [SerializeField] float rotationSpeed = 3.5f;
-  [Range(1f, 30)]
+  [Range(1f, 200)]
   [SerializeField] float bulletSpeed = 10.0f;
   [Range(1f, 30)]
   [SerializeField] float wanderingSpeed = 1.0f;
@@ -109,8 +109,13 @@ public partial class LevelManager : MonoBehaviour
         ).normalized,
         1
       );
+      if (bullet.TryGetComponent<IBullet>(out var bulletComp))
+      {
+        bulletComp.SetLifeTimer(0);
+      }
       if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
       {
+        moveableBullet.SetInitPostion(bullet.transform.position);
         moveableBullet.SetLockedPosition(colorBlock.transform.position);
         moveableBullet.SetLockedTarget(colorBlock.transform);
       }
