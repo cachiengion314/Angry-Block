@@ -44,9 +44,9 @@ public partial class LevelManager : MonoBehaviour
 
   GameObject FindDirectionBlockIn(Collider2D[] cols)
   {
-    var colorBlock = FindObjIn<IDirectionBlock>(cols);
-    if (colorBlock == null) return null;
-    return colorBlock.GetGameObject();
+    var col = FindObjIn<IDirectionBlock>(cols);
+    if (col == null) return null;
+    return col.gameObject;
   }
 
   List<GameObject> FindMoveableDirectionBlocks()
@@ -60,14 +60,20 @@ public partial class LevelManager : MonoBehaviour
         var currentIndex = bottomGrid.ConvertGridPosToIndex(gridPos);
         var dirBlock = _directionBlocks[currentIndex];
         if (dirBlock == null) continue;
-        if (dirBlock.TryGetComponent<IDirectionBlock>(out var directionBlock)) continue;
+        if (!dirBlock.TryGetComponent<IDirectionBlock>(out var directionBlock)) continue;
+        if (!dirBlock.TryGetComponent<IGameObj>(out var gameobjComp)) continue;
 
         var nextGridPos = gridPos + directionBlock.GetDirection();
+        if (bottomGrid.IsGridPosOutsideAt(nextGridPos))
+        {
+          list.Add(gameobjComp.GetGameObject());
+          continue;
+        }
         var nextIdx = bottomGrid.ConvertGridPosToIndex(nextGridPos);
         var nextBlock = _directionBlocks[nextIdx];
         if (nextBlock != null) continue;
 
-        list.Add(nextBlock);
+        list.Add(gameobjComp.GetGameObject());
       }
     }
     return list;

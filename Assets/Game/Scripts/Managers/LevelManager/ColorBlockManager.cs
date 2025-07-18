@@ -76,6 +76,17 @@ public partial class LevelManager : MonoBehaviour
     return -1;
   }
 
+  int FindDelegateColorFrom(List<GameObject> moveableBlocks)
+  {
+    var obj = moveableBlocks[0];
+    foreach (var item in moveableBlocks)
+    {
+      print("moveable_block: " + item.GetInstanceID());
+    }
+    if (obj.TryGetComponent<IColorBlock>(out var colorBlock)) return 0;
+    return colorBlock.GetColorValue();
+  }
+
   void SpawnColorBlocksUpdate()
   {
     var needSpawningCollumn = FindNeedSpawningCollumn();
@@ -90,7 +101,16 @@ public partial class LevelManager : MonoBehaviour
 
     var colorBlock = SpawnColorBlockAt(currentIndex, spawnedParent);
     colorBlock.GetComponent<IColorBlock>().SetIndex(currentIndex);
-    colorBlock.GetComponent<IColorBlock>().SetColorValue(0);
+
+    var moveableBlocks = FindMoveableDirectionBlocks();
+    if (moveableBlocks.Count > 0)
+    {
+      print("moveableBlocks.Count: " + moveableBlocks.Count);
+      var delegateColor = FindDelegateColorFrom(moveableBlocks);
+      colorBlock.GetComponent<IColorBlock>().SetColorValue(delegateColor);
+    }
+    else
+      colorBlock.GetComponent<IColorBlock>().SetColorValue(0);
 
     _colorBlocks[currentIndex] = colorBlock;
   }

@@ -131,14 +131,14 @@ public partial class LevelManager : MonoBehaviour
     InitWaitingSlots();
   }
 
-  public T FindObjIn<T>(Collider2D[] cols)
+  public Collider2D FindObjIn<T>(Collider2D[] cols)
   {
     for (int i = 0; i < cols.Length; ++i)
     {
       if (cols[i] == null) continue;
       if (cols[i].TryGetComponent<T>(out var comp))
       {
-        return comp;
+        return cols[i];
       }
     }
     return default;

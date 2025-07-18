@@ -6,6 +6,7 @@ public class DirectionBlockControl : MonoBehaviour
   , IColorBlock
   , IMoveable
   , IMergeable
+  , IGameObj
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
