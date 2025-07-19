@@ -59,6 +59,8 @@ public partial class LevelManager : MonoBehaviour
 
   void SetupCurrentLevel()
   {
+    topGrid.transform.position = levelInformation.ColorBlocksGridPosition;
+    bottomGrid.transform.position = levelInformation.DirectionBlocksGridPosition;
     topGrid.GridSize = levelInformation.ColorBlocksGridSize;
     bottomGrid.GridSize = levelInformation.DirectionBlocksGridSize;
     topGrid.BakingGridWorld();

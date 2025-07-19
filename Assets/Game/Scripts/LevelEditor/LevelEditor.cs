@@ -86,7 +86,6 @@ public class LevelEditor : MonoBehaviour
   void CreateGird()
   {
     ClearGrid();
-    bottomGrid.GridSize = levelInformation.DirectionBlocksGridSize;
     bottomGrid.BakingGridWorld();
     var length = bottomGrid.GridSize.x * bottomGrid.GridSize.y;
     tiles = new BlockEditor[length];
@@ -250,7 +249,6 @@ public class LevelEditor : MonoBehaviour
   void SaveLevel()
   {
     levelInformation.Index = levelSelected - 1;
-
     levelInformation.ColorBlocksGridPosition = topGrid.transform.position;
     levelInformation.ColorBlocksGridSize = topGrid.GridSize;
     levelInformation.DirectionBlocksGridPosition = bottomGrid.transform.position;
