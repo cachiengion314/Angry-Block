@@ -32,7 +32,13 @@ public partial class LevelManager : MonoBehaviour
     return null;
   }
 
-  bool IsColmunEmptyAt(int x)
+  bool IsAtVisibleBound(GameObject colorBlock)
+  {
+    if (colorBlock.transform.position.y < 13.5f) return true;
+    return false;
+  }
+
+  bool IsCollmunEmptyAt(int x)
   {
     for (int y = 0; y < topGrid.GridSize.y; ++y)
     {
@@ -49,7 +55,7 @@ public partial class LevelManager : MonoBehaviour
     var y = topGrid.GridSize.y - 1;
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
-      if (IsColmunEmptyAt(x)) continue;
+      if (IsCollmunEmptyAt(x)) continue;
       var grid = new int2(x, y);
       var index = topGrid.ConvertGridPosToIndex(grid);
       var obj = _colorBlocks[index];
@@ -65,7 +71,7 @@ public partial class LevelManager : MonoBehaviour
     {
       for (int x = 0; x < topGrid.GridSize.x; ++x)
       {
-        if (IsColmunEmptyAt(x)) continue;
+        if (IsCollmunEmptyAt(x)) continue;
         var grid = new int2(x, y);
         var index = topGrid.ConvertGridPosToIndex(grid);
         var obj = _colorBlocks[index];
@@ -119,7 +125,7 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
 
-    for (int x = 0; x < 1; ++x)
+    for (int x = 0; x < needArrangeCollumns.Count; ++x)
     {
       var needArrangeCollumn = needArrangeCollumns[x];
       for (int y = 0; y < topGrid.GridSize.y; ++y)
@@ -143,6 +149,13 @@ public partial class LevelManager : MonoBehaviour
           out var t,
           out var nextPos
         );
+
+        if (
+          IsAtVisibleBound(colorBlock.gameObject)
+          && colorBlock.gameObject.activeSelf == false
+        )
+          colorBlock.gameObject.SetActive(true);
+
         colorBlock.transform.position = nextPos;
         if (t < 1) continue;
 

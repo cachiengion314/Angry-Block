@@ -2,7 +2,7 @@
     "Index": 0,
     "ColorBlocksGridPosition": {
         "x": 0.0,
-        "y": 10.0600004196167,
+        "y": 12.050000190734864,
         "z": 0.0
     },
     "ColorBlocksGridSize": {
@@ -61,7 +61,7 @@
     ],
     "DirectionBlocksGridPosition": {
         "x": 0.0,
-        "y": 0.0,
+        "y": -6.420000076293945,
         "z": 0.0
     },
     "DirectionBlocksGridSize": {
