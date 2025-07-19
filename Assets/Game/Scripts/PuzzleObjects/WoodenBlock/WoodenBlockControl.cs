@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock
 {
-    [SerializeField] Transform blockParent;
+    public Transform blockParent;
     int Index;
     public int GetColorValue()
     {
