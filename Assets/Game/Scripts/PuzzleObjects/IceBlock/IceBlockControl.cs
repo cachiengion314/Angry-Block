@@ -3,7 +3,7 @@ using UnityEngine;
 public class IceBlockControl : MonoBehaviour, IColorBlock
 {
     [SerializeField] SpriteRenderer bodyRenderer;
-    [SerializeField] Transform blockParent;
+    public Transform blockParent;
     int Index;
     int heart = 4;
 

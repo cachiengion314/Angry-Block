@@ -4,7 +4,7 @@ using UnityEngine;
 public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlock
 {
     [SerializeField] SpriteRenderer bodyRenderer;
-    [SerializeField] Transform blockParent;
+    public Transform blockParent;
     DirectionValue _directionValue;
     public int2 Direction { get; private set; }
     public int Index;

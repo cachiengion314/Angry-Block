@@ -104,7 +104,6 @@ public partial class LevelManager : MonoBehaviour
 
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
     if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
-
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
       _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
     _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
@@ -140,7 +139,7 @@ public partial class LevelManager : MonoBehaviour
         _waitingSlots[idx] = blast.gameObject;
       }
     }
-    _mergeSlots[colorBlock.GetColorValue()] = new HashSet<GameObject>();
+    _mergeSlots.Remove(colorBlock.GetColorValue());
   }
 
   void WaitAndFindMatchedUpdate()

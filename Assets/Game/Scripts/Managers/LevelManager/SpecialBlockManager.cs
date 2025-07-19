@@ -11,6 +11,7 @@ public partial class LevelManager
         var neighbors = bottomGrid.FindNeighborsAt(blockPos);
         foreach (var neighbor in neighbors)
         {
+            if (bottomGrid.IsPosOutsideAt(neighbor)) continue;
             var neighborIndex = bottomGrid.ConvertWorldPosToIndex(neighbor);
             var neighborBlock = _directionBlocks[neighborIndex];
             if (neighborBlock == null) continue;
