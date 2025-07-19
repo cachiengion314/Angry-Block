@@ -25,7 +25,7 @@ public partial class LevelManager : MonoBehaviour
     if (IsWaitingSlotsMMoving()) return;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
-    if (!IsBlockMove(directionBlock)) return;
+    if (!IsBlockMoveable(directionBlock)) return;
 
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
@@ -107,9 +107,9 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
     if (!moveable.GetLockedPosition().Equals(0)) return;
-    Vector3[] path = PathMove(directionBlock, endPos);
+    Vector3[] path = FindPathMoves(directionBlock, endPos);
     if (path == null) return;
-
+  
     Sequence seq = DOTween.Sequence();
     var atPosition = 0f;
     var duration = 0.5f;
@@ -129,7 +129,7 @@ public partial class LevelManager : MonoBehaviour
     });
   }
 
-  Vector3[] PathMove(GameObject directionBlock, float3 endPos)
+  Vector3[] FindPathMoves(GameObject directionBlock, float3 endPos)
   {
     if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return null;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return null;
@@ -153,7 +153,7 @@ public partial class LevelManager : MonoBehaviour
     return Path;
   }
 
-  bool IsBlockMove(GameObject directionBlock)
+  bool IsBlockMoveable(GameObject directionBlock)
   {
     if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return false;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return false;

@@ -34,7 +34,7 @@ public partial class LevelManager : MonoBehaviour
 
   bool IsAtVisibleBound(GameObject colorBlock)
   {
-    if (colorBlock.transform.position.y < 12.5f) return true;
+    if (colorBlock.transform.position.y < 13.5f) return true;
     return false;
   }
 
