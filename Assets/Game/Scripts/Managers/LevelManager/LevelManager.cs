@@ -36,7 +36,6 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
-    FindNeedArrangeCollumns();
     FindNeedArrangeCollumnAndUpdate();
     WaitAndFindMatchedUpdate();
     BulletPositionsUpdate();
@@ -60,7 +59,9 @@ public partial class LevelManager : MonoBehaviour
   void SetupCurrentLevel()
   {
     topGrid.GridSize = levelInformation.ColorBlocksGridSize;
+    topGrid.transform.position = levelInformation.ColorBlocksGridPosition;
     bottomGrid.GridSize = levelInformation.DirectionBlocksGridSize;
+    bottomGrid.transform.position = levelInformation.DirectionBlocksGridPosition;
     topGrid.BakingGridWorld();
     bottomGrid.BakingGridWorld();
     bottomGrid.BakingPathFinding();
@@ -94,6 +95,9 @@ public partial class LevelManager : MonoBehaviour
           colorBlock.SetIndex(index);
           colorBlock.SetColorValue(partition.ColorValue);
           colorBlock.SetInitHealth(partition.Health);
+
+          if (!IsAtVisibleBound(colorBlock.gameObject))
+            colorBlock.gameObject.SetActive(false);
 
           _colorBlocks[index] = colorBlock;
         }
