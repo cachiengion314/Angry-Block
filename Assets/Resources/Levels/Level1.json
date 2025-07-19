@@ -1,291 +1,69 @@
 {
     "Index": 0,
-    "ColorBlocksGridSize": {
-        "x": 9,
-        "y": 9
+    "ColorBlocksGridPosition": {
+        "x": 0.0,
+        "y": 10.0600004196167,
+        "z": 0.0
     },
-    "InitColorBlocks": [
+    "ColorBlocksGridSize": {
+        "x": 10,
+        "y": 10
+    },
+    "ColorBlockPartitionDatas": [
         {
+            "PercentInX": {
+                "x": 0,
+                "y": 50
+            },
+            "PercentInY": {
+                "x": 0,
+                "y": 50
+            },
             "ColorValue": 0,
             "Health": 1
         },
         {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
-            "ColorValue": 0,
-            "Health": 1
-        },
-        {
+            "PercentInX": {
+                "x": 50,
+                "y": 100
+            },
+            "PercentInY": {
+                "x": 0,
+                "y": 50
+            },
             "ColorValue": 1,
             "Health": 1
         },
         {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
-            "ColorValue": 1,
-            "Health": 1
-        },
-        {
+            "PercentInX": {
+                "x": 0,
+                "y": 50
+            },
+            "PercentInY": {
+                "x": 50,
+                "y": 100
+            },
             "ColorValue": 2,
             "Health": 1
         },
         {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
-            "Health": 1
-        },
-        {
-            "ColorValue": 2,
+            "PercentInX": {
+                "x": 50,
+                "y": 100
+            },
+            "PercentInY": {
+                "x": 50,
+                "y": 100
+            },
+            "ColorValue": 3,
             "Health": 1
         }
     ],
+    "DirectionBlocksGridPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
     "DirectionBlocksGridSize": {
         "x": 5,
         "y": 5

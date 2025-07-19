@@ -37,7 +37,6 @@ public partial class LevelManager : MonoBehaviour
   void Update()
   {
     FindNeedArrangeCollumns();
-    SpawnColorBlocksUpdate();
     FindNeedArrangeCollumnAndUpdate();
     WaitAndFindMatchedUpdate();
     BulletPositionsUpdate();
@@ -53,6 +52,11 @@ public partial class LevelManager : MonoBehaviour
     bottomGrid.DisposePathFinding();
   }
 
+  int ConvertPercentToIdx(int percentInt, int gridSize)
+  {
+    return (int)math.floor(percentInt / 100.0f * gridSize);
+  }
+
   void SetupCurrentLevel()
   {
     topGrid.GridSize = levelInformation.ColorBlocksGridSize;
@@ -61,24 +65,39 @@ public partial class LevelManager : MonoBehaviour
     bottomGrid.BakingGridWorld();
     bottomGrid.BakingPathFinding();
 
-    var initColorBlocks = levelInformation.InitColorBlocks;
+    var colorBlockPartitionDatas = levelInformation.ColorBlockPartitionDatas;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;
     var initWoodenBlocks = levelInformation.InitWoodenBlocks;
     var initIceBlock = levelInformation.InitIceBlocks;
     var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
-    for (int i = 0; i < topGrid.Grid.Length; ++i)
+
+    for (int i = 0; i < colorBlockPartitionDatas.Length; ++i)
     {
-      if (i > initColorBlocks.Length - 1) break;
-      if (initColorBlocks[i] == null) continue;
+      var partition = colorBlockPartitionDatas[i];
+      var percentInX = partition.PercentInX;
+      var percentInY = partition.PercentInY;
 
-      var colorBlock = SpawnColorBlockAt(i, spawnedParent);
-      colorBlock.SetIndex(i);
-      colorBlock.SetColorValue(initColorBlocks[i].ColorValue);
-      colorBlock.SetInitHealth(initColorBlocks[i].Health);
+      var startX = ConvertPercentToIdx(percentInX.x, levelInformation.ColorBlocksGridSize.x);
+      var endX = ConvertPercentToIdx(percentInX.y, levelInformation.ColorBlocksGridSize.x);
+      var startY = ConvertPercentToIdx(percentInY.x, levelInformation.ColorBlocksGridSize.y);
+      var endY = ConvertPercentToIdx(percentInY.y, levelInformation.ColorBlocksGridSize.y);
 
-      _colorBlocks[i] = colorBlock;
+      for (int y = startY; y < endY; ++y)
+      {
+        for (int x = startX; x < endX; ++x)
+        {
+          var gridPos = new int2(x, y);
+          var index = topGrid.ConvertGridPosToIndex(gridPos);
+          var colorBlock = SpawnColorBlockAt(index, spawnedParent);
+          colorBlock.SetIndex(index);
+          colorBlock.SetColorValue(partition.ColorValue);
+          colorBlock.SetInitHealth(partition.Health);
+
+          _colorBlocks[index] = colorBlock;
+        }
+      }
     }
 
     _directionBlocks = new GameObject[bottomGrid.Grid.Length];
@@ -163,14 +182,6 @@ public partial class LevelManager : MonoBehaviour
     var t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
     _t = math.min(t, 1);
     nextPos = Lerp(startPos, targetPos, _t);
-  }
-
-  bool IsPosOccupiedAt(float3 pos)
-  {
-    if (bottomGrid.IsPosOutsideAt(pos)) return true;
-    var idx = bottomGrid.ConvertWorldPosToIndex(pos);
-    if (_directionBlocks[idx] != null) return true;
-    return false;
   }
 
   int FindSlotFor(GameObject block, GameObject[] slots)

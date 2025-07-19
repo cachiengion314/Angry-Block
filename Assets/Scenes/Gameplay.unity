@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrangeSpeed: 7.31
   _firingPositions: {fileID: 1142100}
-  rotationSpeed: 5
+  rotationSpeed: 15
   bulletSpeed: 70
   wanderingSpeed: 7
   levelSelected: 1
