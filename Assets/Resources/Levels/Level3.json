@@ -2,12 +2,12 @@
     "Index": 2,
     "ColorBlocksGridPosition": {
         "x": 0.0,
-        "y": 9.050000190734864,
+        "y": 10.0,
         "z": 0.0
     },
     "ColorBlocksGridSize": {
         "x": 10,
-        "y": 10
+        "y": 12
     },
     "ColorBlockPartitionDatas": [
         {
@@ -17,7 +17,7 @@
             },
             "PercentInY": {
                 "x": 0,
-                "y": 30
+                "y": 50
             },
             "ColorValue": 1,
             "Health": 1
@@ -28,8 +28,8 @@
                 "y": 100
             },
             "PercentInY": {
-                "x": 30,
-                "y": 60
+                "x": 50,
+                "y": 100
             },
             "ColorValue": 2,
             "Health": 1
@@ -37,7 +37,7 @@
     ],
     "DirectionBlocksGridPosition": {
         "x": 0.0,
-        "y": -5.0,
+        "y": -5.5,
         "z": 0.0
     },
     "DirectionBlocksGridSize": {
@@ -49,73 +49,73 @@
             "Index": 0,
             "ColorValue": 1,
             "DirectionValue": 1,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 1,
             "ColorValue": 2,
             "DirectionValue": 1,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 2,
             "ColorValue": 1,
             "DirectionValue": 1,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 3,
             "ColorValue": 2,
             "DirectionValue": 2,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 4,
             "ColorValue": 1,
             "DirectionValue": 1,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 5,
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 6,
             "ColorValue": 2,
             "DirectionValue": 2,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 7,
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 8,
             "ColorValue": 2,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 9,
             "ColorValue": 1,
             "DirectionValue": 3,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 10,
             "ColorValue": 2,
             "DirectionValue": 3,
-            "Ammunition": 5
+            "Ammunition": 10
         },
         {
             "Index": 11,
             "ColorValue": 1,
             "DirectionValue": 0,
-            "Ammunition": 5
+            "Ammunition": 10
         }
     ],
     "InitWoodenBlocks": [],

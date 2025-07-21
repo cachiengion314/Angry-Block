@@ -29,7 +29,7 @@ public class DirectionBlockData
   public int ColorValue;
   public DirectionValue DirectionValue;
   [Range(1, 20)]
-  public int Ammunition = 5;
+  public int Ammunition = 10;
 }
 
 [Serializable]

@@ -10,6 +10,8 @@ public class BlockEditor : MonoBehaviour
     public TunnelData tunnelData;
     public void OnValidate()
     {
+        if (arrowRenderer == null) return;
+        
         if (directionBlockData.DirectionValue == DirectionValue.Right)
             arrowRenderer.transform.rotation = Quaternion.Euler(0, 0, 0);
         if (directionBlockData.DirectionValue == DirectionValue.Left)
