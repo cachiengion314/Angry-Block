@@ -2228,12 +2228,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87040a67180cc4f81b6800a4e219ab8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrangeSpeed: 7.31
+  arrangeSpeed: 7.5
+  movingSpeed: 12
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 16
   bulletSpeed: 25
   wanderingSpeed: 6
-  levelSelected: 1
+  levelSelected: 4
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -14559,12 +14560,12 @@ PrefabInstance:
     - target: {fileID: 1266171470314134861, guid: dfb75feb680034648a142042ad4a327f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.48988
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266171470314134861, guid: dfb75feb680034648a142042ad4a327f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.43315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266171470314134861, guid: dfb75feb680034648a142042ad4a327f,
         type: 3}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public partial class LevelManager : MonoBehaviour
     var targetIdx = (idx + 1) % _firingPositions.childCount;
     var targetPos = _firingPositions.GetChild(targetIdx).position;
 
-    InterpolateMoveUpdate(
+    HoangNam.Utility.InterpolateMoveUpdate(
       blastBlock.transform.position,
       startPos,
       targetPos,
@@ -36,6 +37,19 @@ public partial class LevelManager : MonoBehaviour
     if (t < 1) return;
 
     _firingPositionIndexes[blastBlock.GetInstanceID()] = idx + 1;
+  }
+
+  GameObject ChooseTargetFrom(List<GameObject> colorBlocks, GameObject blastBlock)
+  {
+    for (int i = 0; i < colorBlocks.Count; ++i)
+    {
+      var obj = colorBlocks[i];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.GetWhoPicked() == blastBlock) return obj;
+      if (damageable.GetWhoPicked() == null) return obj;
+    }
+    return null;
   }
 
   void LockAndFireTargetUpddate()
@@ -50,31 +64,34 @@ public partial class LevelManager : MonoBehaviour
       if (!blastBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        var idx = FindSlotFor(blastBlock, _firingSlots);
-        if (idx < 0 || idx > _firingSlots.Count - 1) continue;
+        var slot = FindSlotFor(blastBlock, _firingSlots);
+        if (slot < 0 || slot > _firingSlots.Count - 1) continue;
 
-        _firingSlots[idx] = null;
-        Destroy(blastBlock);
+        _firingSlots[slot] = null;
+        // var arr = new Vector3[2] { new(10, 0, 0), new(-10, 0, 0) };
+        // var targetPos = arr[UnityEngine.Random.Range(0, arr.Length)];
+        Destroy(blastBlock, .7f);
+        // blastBlock.transform.DOMove(targetPos, .5f);
         continue;
       }
 
       WanderingAroundUpdate(blastBlock);
 
       if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
-      var colorBlock = FindFirstBlockMatchedFor(blastBlock);
-      if (colorBlock == null)
+      var colorBlocks = FindColorBlocksMatchedFor(blastBlock);
+      if (colorBlocks.Count == 0)
       {
-        // cannot find any targets so this blastBlock should go to the waiting slot
-        // ShouldGoWaitingUpdate(blastBlock);
+        // cannot find any targets
         continue;
       }
-
-      if (!colorBlock.TryGetComponent<IDamageable>(out var damageable)) continue;
+      var target = ChooseTargetFrom(colorBlocks, blastBlock);
+      if (target == null) continue;
+      if (!target.TryGetComponent<IDamageable>(out var damageable)) continue;
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
 
       damageable.SetWhoPicked(blastBlock); // picking this target to prevent other interfere
-      var dirToTarget = colorBlock.transform.position - blastBlock.transform.position;
+      var dirToTarget = target.transform.position - blastBlock.transform.position;
       var targetRad = math.acos(
         math.dot(dirToTarget.normalized, blastBlock.transform.up)
       );
@@ -83,7 +100,7 @@ public partial class LevelManager : MonoBehaviour
         var sign = math.sign(
           math.cross(blastBlock.transform.up, dirToTarget).z
         );
-        var deltaTargetRad = sign * rotationSpeed * Time.deltaTime * targetRad;
+        var deltaTargetRad = updateSpeed * sign * rotationSpeed * Time.deltaTime * targetRad;
         var deltaQuad = new Quaternion(
           0, 0, math.sin(deltaTargetRad / 2f), math.cos(deltaTargetRad / 2f)
         );
@@ -98,16 +115,14 @@ public partial class LevelManager : MonoBehaviour
         && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
       ) continue; // if block is not standing at firing zone its should not permitted for firing
 
+      // standing and firing at target
       damageable.SetWhoLocked(blastBlock);
-      // standing to fire to target
       blastBlock.GetComponent<IGun>().SetAmmunition(
         blastBlock.GetComponent<IGun>().GetAmmunition() - 1
       );
       var bullet = SpawnBulletAt(
         blastBlock.transform.position,
-        updateSpeed * bulletSpeed * (
-          colorBlock.transform.position - blastBlock.transform.position
-        ).normalized,
+        updateSpeed * bulletSpeed,
         1
       );
       if (bullet.TryGetComponent<IBullet>(out var bulletComp))
@@ -117,8 +132,8 @@ public partial class LevelManager : MonoBehaviour
       if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
       {
         moveableBullet.SetInitPostion(bullet.transform.position);
-        moveableBullet.SetLockedPosition(colorBlock.transform.position);
-        moveableBullet.SetLockedTarget(colorBlock.transform);
+        moveableBullet.SetLockedPosition(target.transform.position);
+        moveableBullet.SetLockedTarget(target.transform);
       }
       if (_waitingTimers.ContainsKey(blastBlock.GetInstanceID()))
         _waitingTimers[blastBlock.GetInstanceID()] = 0f;

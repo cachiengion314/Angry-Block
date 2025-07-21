@@ -9,8 +9,7 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _waitingSlots;
   readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
-  readonly float KEY_NOT_FOUND_MATCHED_DURATION = 5.82f;
-  readonly float KEY_FOUND_MATCHED_DURATION = .4f;
+  readonly float KEY_FOUND_MATCHED_DURATION = .2f;
 
   void InitWaitingSlots()
   {
@@ -47,43 +46,16 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  void ShouldGoWaitingUpdate(GameObject tmpNotFoundMatchedBlastBlock)
+  void AutoSortingWaitingSlotAndMoves()
   {
-    if (!_waitingTimers.ContainsKey(tmpNotFoundMatchedBlastBlock.GetInstanceID()))
-      _waitingTimers.Add(tmpNotFoundMatchedBlastBlock.GetInstanceID(), 0f);
-    _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] += Time.deltaTime;
-    if (
-      _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] < KEY_NOT_FOUND_MATCHED_DURATION
-    )
-      return;
-
-    _waitingTimers[tmpNotFoundMatchedBlastBlock.GetInstanceID()] = 0f;
-    // move to waiting slot
-    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
-    if (emptyWaitingSlot < 0 || emptyWaitingSlot > _waitingSlots.Length - 1)
+    AutoSortingWaitingSlots();
+    _needMovingObjs.Clear();
+    for (int i = 0; i < _waitingSlots.Length; ++i)
     {
-      // gameover should be here
-      return;
+      var obj = _waitingSlots[i];
+      if (obj == null) continue;
+      AddToMoveQueue(i, obj, waitingPositions);
     }
-
-    var firingIdx = FindSlotFor(tmpNotFoundMatchedBlastBlock, _firingSlots);
-    if (firingIdx < 0 || firingIdx > _firingSlots.Count - 1) return;
-
-    _firingSlots[firingIdx] = null;
-    _waitingSlots[emptyWaitingSlot] = tmpNotFoundMatchedBlastBlock;
-
-    var targetPos = waitingPositions.GetChild(emptyWaitingSlot).position;
-    var targetIdx = bottomGrid.ConvertWorldPosToIndex(targetPos);
-    _directionBlocks[tmpNotFoundMatchedBlastBlock.GetComponent<IColorBlock>().GetIndex()] = null;
-    _directionBlocks[targetIdx] = tmpNotFoundMatchedBlastBlock;
-    tmpNotFoundMatchedBlastBlock.GetComponent<IColorBlock>().SetIndex(targetIdx);
-
-    tmpNotFoundMatchedBlastBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
-    tmpNotFoundMatchedBlastBlock.transform.DOMove(targetPos, .5f)
-      .OnComplete(() =>
-      {
-        tmpNotFoundMatchedBlastBlock.GetComponent<IMoveable>().SetLockedPosition(0);
-      });
   }
 
   bool IsWaitingSlotsMMoving()
@@ -116,18 +88,19 @@ public partial class LevelManager : MonoBehaviour
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
-      var idx = FindSlotFor(mergeableBlock, _waitingSlots);
-      if (idx == -1 || idx > _waitingSlots.Length - 1) continue;
+      var slot = FindSlotFor(mergeableBlock, _waitingSlots);
+      if (slot == -1 || slot > _waitingSlots.Length - 1) continue;
 
-      _waitingSlots[idx] = null;
+      _waitingSlots[slot] = null;
       Destroy(mergeableBlock);
 
       if (i == 1)
       {
-        var blastPos = waitingPositions.GetChild(idx).position;
+        var blastPos = waitingPositions.GetChild(slot).position;
         var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {
+          blastColor.SetIndex(-1);
           blastColor.SetColorValue(
             mergeableBlock.GetComponent<IColorBlock>().GetColorValue()
           );
@@ -136,9 +109,12 @@ public partial class LevelManager : MonoBehaviour
         {
           blastGun.SetAmmunition(totalAmmunition);
         }
-        _waitingSlots[idx] = blast.gameObject;
+        _waitingSlots[slot] = blast.gameObject;
       }
     }
+
+    AutoSortingWaitingSlotAndMoves();
+
     _mergeSlots.Remove(colorBlock.GetColorValue());
   }
 
@@ -163,14 +139,14 @@ public partial class LevelManager : MonoBehaviour
         _waitingTimers.Add(waitingBlock.GetInstanceID(), 0f);
       _waitingTimers[waitingBlock.GetInstanceID()] += Time.deltaTime;
       if (_waitingTimers[waitingBlock.GetInstanceID()] < KEY_FOUND_MATCHED_DURATION)
-        return;
+        continue;
 
       _waitingTimers[waitingBlock.GetInstanceID()] = 0f;
       /// move to firing slot
       var emptyFiringSlot = FindEmptySlotFrom(_firingSlots);
 
       var waitingIdx = FindSlotFor(waitingBlock, _waitingSlots);
-      if (waitingIdx < 0 || waitingIdx > _waitingSlots.Length - 1) return;
+      if (waitingIdx < 0 || waitingIdx > _waitingSlots.Length - 1) continue;
 
       _waitingSlots[waitingIdx] = null;
       if (emptyFiringSlot > _firingSlots.Count - 1)
@@ -181,7 +157,7 @@ public partial class LevelManager : MonoBehaviour
       var targetPos = _firingPositions.GetChild(0).position;
 
       waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
-      waitingBlock.transform.DOMove(targetPos, .3f)
+      waitingBlock.transform.DOMove(targetPos, .2f)
         .OnComplete(() =>
         {
           waitingBlock.GetComponent<IMoveable>().SetLockedPosition(0);

@@ -22,6 +22,7 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
       if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.IsDead()) continue;
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
       if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
@@ -30,6 +31,33 @@ public partial class LevelManager : MonoBehaviour
       if (colorBlock.GetColorValue() == dirColor.GetColorValue()) return obj;
     }
     return null;
+  }
+
+  List<GameObject> FindColorBlocksMatchedFor(GameObject blastBlock)
+  {
+    var ammunition = blastBlock.GetComponent<IGun>().GetAmmunition();
+    var list = new List<GameObject>();
+    for (int x = 0; x < topGrid.GridSize.x; ++x)
+    {
+      var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
+      var obj = _colorBlocks[idx];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.IsDead()) continue;
+      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
+        continue;
+      if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
+      if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+      if (ammunition == 0) return list;
+
+      if (colorBlock.GetColorValue() == dirColor.GetColorValue())
+      {
+        ammunition--;
+        list.Add(obj.gameObject);
+      }
+    }
+    return list;
   }
 
   bool IsAtVisibleBound(GameObject colorBlock)
@@ -50,20 +78,6 @@ public partial class LevelManager : MonoBehaviour
     return true;
   }
 
-  int FindNeedSpawningCollumn()
-  {
-    var y = topGrid.GridSize.y - 1;
-    for (int x = 0; x < topGrid.GridSize.x; ++x)
-    {
-      if (IsCollmunEmptyAt(x)) continue;
-      var grid = new int2(x, y);
-      var index = topGrid.ConvertGridPosToIndex(grid);
-      var obj = _colorBlocks[index];
-      if (obj == null) return x;
-    }
-    return -1;
-  }
-
   List<int> FindNeedArrangeCollumns()
   {
     var list = new List<int>();
@@ -81,40 +95,6 @@ public partial class LevelManager : MonoBehaviour
       }
     }
     return list;
-  }
-
-  int FindDelegateColorFrom(List<GameObject> moveableBlocks)
-  {
-    var obj = moveableBlocks[0];
-    if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) return 0;
-    return colorBlock.GetColorValue();
-  }
-
-  void SpawnColorBlocksUpdate()
-  {
-    var needSpawningCollumn = FindNeedSpawningCollumn();
-    if (needSpawningCollumn == -1)
-    {
-      return;
-    }
-
-    var y = topGrid.GridSize.y - 1;
-    var grid = new int2(needSpawningCollumn, y);
-    var currentIndex = topGrid.ConvertGridPosToIndex(grid);
-
-    var colorBlock = SpawnColorBlockAt(currentIndex, spawnedParent);
-    colorBlock.GetComponent<IColorBlock>().SetIndex(currentIndex);
-
-    var moveableBlocks = FindMoveableDirectionBlocks();
-    if (moveableBlocks.Count > 0)
-    {
-      var delegateColor = FindDelegateColorFrom(moveableBlocks);
-      colorBlock.GetComponent<IColorBlock>().SetColorValue(delegateColor);
-    }
-    else
-      colorBlock.GetComponent<IColorBlock>().SetColorValue(0);
-
-    _colorBlocks[currentIndex] = colorBlock;
   }
 
   void FindNeedArrangeCollumnAndUpdate()
@@ -141,7 +121,7 @@ public partial class LevelManager : MonoBehaviour
         var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
         if (topGrid.IsPosOutsideAt(targetPos)) continue;
 
-        InterpolateMoveUpdate(
+        HoangNam.Utility.InterpolateMoveUpdate(
           colorBlock.transform.position,
           topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
           targetPos,

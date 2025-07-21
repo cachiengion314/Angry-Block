@@ -8,7 +8,7 @@ public partial class LevelManager : MonoBehaviour
   ObjectPool<BulletControl> _bulletsPool;
   public ObjectPool<BulletControl> BulletsPool { get { return _bulletsPool; } }
   List<BulletControl> _activeBullets;
-  readonly float KEY_BULLET_LIFE_DURATION = 1.9f;
+  float KEY_BULLET_LIFE_DURATION = 2.0f;
 
   void InitPool()
   {
@@ -22,6 +22,7 @@ public partial class LevelManager : MonoBehaviour
       100
     );
     _activeBullets = new List<BulletControl>();
+    KEY_BULLET_LIFE_DURATION /= updateSpeed;
   }
 
   BulletControl CreateBulletsPool()
@@ -35,6 +36,13 @@ public partial class LevelManager : MonoBehaviour
     obj.gameObject.SetActive(true);
     if (obj.TryGetComponent<IBullet>(out var bullet))
       bullet.SetLifeTimer(0);
+    if (obj.TryGetComponent<IMoveable>(out var moveable))
+    {
+      moveable.SetInitPostion(0);
+      moveable.SetLockedPosition(0);
+      moveable.SetLockedTarget(null);
+      moveable.SetPath(null);
+    }
     _activeBullets.Add(obj);
   }
 
@@ -81,7 +89,7 @@ public partial class LevelManager : MonoBehaviour
       bulletComp.SetLifeTimer(
         bulletComp.GetLifeTimer() + Time.deltaTime
       );
-      InterpolateMoveUpdate(
+      HoangNam.Utility.InterpolateMoveUpdate(
         bullet.transform.position,
         bullMoveable.GetInitPostion(),
         bullMoveable.GetLockedPosition(),

@@ -37,6 +37,27 @@ namespace HoangNam
       return secondsSinceEpoch;
     }
 
+    public static float3 Lerp(float3 start, float3 end, float t)
+    {
+      return (1 - t) * start + t * end;
+    }
+
+    public static void InterpolateMoveUpdate(
+      in float3 currentPos,
+      in float3 startPos,
+      in float3 targetPos,
+      in float speed,
+      out float _t,
+      out float3 nextPos
+    )
+    {
+      var distanceFromStart = math.length(currentPos - startPos);
+      var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
+      var t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
+      _t = math.min(t, 1);
+      nextPos = Lerp(startPos, targetPos, _t);
+    }
+
     /// <summary>
     /// EDIT: That's in radians, btw. If you need degrees, multiply by Mathf.Deg2Rad or Mathf.Rad2Deg depending on direction.
     /// </summary>
@@ -46,8 +67,8 @@ namespace HoangNam
     public static Vector2 Rotate(Vector2 v, float delta)
     {
       return new Vector2(
-          v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
-          v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+        v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+        v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
       );
     }
 

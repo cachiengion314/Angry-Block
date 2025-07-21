@@ -118,4 +118,14 @@ public class ColorBlockControl : MonoBehaviour
   {
     throw new System.NotImplementedException();
   }
+
+  public void SetPath(float3[] path)
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public float3[] GetPath()
+  {
+    throw new System.NotImplementedException();
+  }
 }
