@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class LevelManager : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public partial class LevelManager : MonoBehaviour
   /// <summary>
   /// Manager all color blocks
   /// </summary>
+  readonly Dictionary<int, List<GameObject>> _needMovingColorBlocks = new();
   ColorBlockControl[] _colorBlocks;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
   [Range(1f, 10f)]
@@ -35,7 +38,6 @@ public partial class LevelManager : MonoBehaviour
 
   List<GameObject> FindColorBlocksMatchedFor(GameObject blastBlock)
   {
-    var ammunition = blastBlock.GetComponent<IGun>().GetAmmunition();
     var list = new List<GameObject>();
     for (int x = 0; x < topGrid.GridSize.x; ++x)
     {
@@ -49,11 +51,9 @@ public partial class LevelManager : MonoBehaviour
         continue;
       if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
       if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
-      if (ammunition == 0) return list;
 
       if (colorBlock.GetColorValue() == dirColor.GetColorValue())
       {
-        ammunition--;
         list.Add(obj.gameObject);
       }
     }
@@ -97,51 +97,79 @@ public partial class LevelManager : MonoBehaviour
     return list;
   }
 
-  void FindNeedArrangeCollumnAndUpdate()
+  void ArrangeColorBlocksUpdate()
   {
-    var needArrangeCollumns = FindNeedArrangeCollumns();
-    if (needArrangeCollumns.Count == 0)
-    {
-      return;
-    }
+    var columnsToRemove = new List<int>();
 
-    for (int x = 0; x < needArrangeCollumns.Count; ++x)
+    foreach (var kvp in _needMovingColorBlocks)
     {
-      var needArrangeCollumn = needArrangeCollumns[x];
-      for (int y = 0; y < topGrid.GridSize.y; ++y)
+      var needArrangeCollumn = kvp.Key;
+      var needMovingObjs = kvp.Value;
+      for (int i = needMovingObjs.Count - 1; i >= 0; --i)
       {
-        var grid = new int2(needArrangeCollumn, y);
-        var currentIndex = topGrid.ConvertGridPosToIndex(grid);
-        var colorBlock = _colorBlocks[currentIndex];
-        if (colorBlock == null) continue;
-        if (!colorBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
-
-        var downGrid = grid + new int2(0, -1);
-        var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
-        var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
-        if (topGrid.IsPosOutsideAt(targetPos)) continue;
+        var obj = needMovingObjs[i];
+        if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+        if (!obj.TryGetComponent<IMoveable>(out var colorMoveable)) continue;
 
         HoangNam.Utility.InterpolateMoveUpdate(
-          colorBlock.transform.position,
-          topGrid.ConvertIndexToWorldPos(colorBlock.GetIndex()),
-          targetPos,
+          obj.transform.position,
+          colorMoveable.GetInitPostion(),
+          colorMoveable.GetLockedPosition(),
           updateSpeed * arrangeSpeed,
           out var t,
           out var nextPos
         );
 
-        if (
-          IsAtVisibleBound(colorBlock.gameObject)
-          && colorBlock.gameObject.activeSelf == false
-        )
-          colorBlock.gameObject.SetActive(true);
+        if (IsAtVisibleBound(obj) && obj.activeSelf == false)
+          obj.SetActive(true);
 
-        colorBlock.transform.position = nextPos;
+        obj.transform.position = nextPos;
         if (t < 1) continue;
 
-        _colorBlocks[colorBlock.GetIndex()] = null;
-        _colorBlocks[targetIndex] = colorBlock;
+        var targetIndex = topGrid.ConvertWorldPosToIndex(colorMoveable.GetLockedPosition());
+        _colorBlocks[targetIndex] = obj.GetComponent<ColorBlockControl>();
         colorBlock.SetIndex(targetIndex);
+
+        needMovingObjs.Remove(obj);
+      }
+
+      if (needMovingObjs.Count == 0)
+        columnsToRemove.Add(needArrangeCollumn);
+    }
+
+    foreach (var column in columnsToRemove)
+      _needMovingColorBlocks.Remove(column);
+  }
+
+  void FindNeedArrangeCollumnInUpdate()
+  {
+    var needArrangeCollumns = FindNeedArrangeCollumns();
+    if (needArrangeCollumns.Count == 0) return;
+
+    for (int x = 0; x < needArrangeCollumns.Count; ++x)
+    {
+      var needArrangeCollumn = needArrangeCollumns[x];
+      if (_needMovingColorBlocks.ContainsKey(needArrangeCollumn)) continue;
+
+      _needMovingColorBlocks.Add(needArrangeCollumn, new List<GameObject>());
+      for (int y = 0; y < topGrid.GridSize.y; ++y)
+      {
+        var gridPos = new int2(needArrangeCollumn, y);
+
+        var currentIndex = topGrid.ConvertGridPosToIndex(gridPos);
+        var colorBlock = _colorBlocks[currentIndex];
+        if (colorBlock == null) continue;
+        if (!colorBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+
+        var startPos = topGrid.ConvertGridPosToWorldPos(gridPos);
+        var downGrid = gridPos + new int2(0, -1);
+        var targetIndex = topGrid.ConvertGridPosToIndex(downGrid);
+        var targetPos = topGrid.ConvertIndexToWorldPos(targetIndex);
+
+        moveable.SetInitPostion(startPos);
+        moveable.SetLockedPosition(targetPos);
+        _needMovingColorBlocks[needArrangeCollumn].Add(colorBlock.gameObject);
+        _colorBlocks[currentIndex] = null;
       }
     }
   }

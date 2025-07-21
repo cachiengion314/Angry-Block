@@ -151,8 +151,6 @@ public partial class LevelManager : MonoBehaviour
       _waitingSlots[waitingIdx] = null;
       if (emptyFiringSlot > _firingSlots.Count - 1)
         _firingSlots.Add(waitingBlock);
-      else
-        _firingSlots[emptyFiringSlot] = waitingBlock;
 
       var targetPos = _firingPositions.GetChild(0).position;
 

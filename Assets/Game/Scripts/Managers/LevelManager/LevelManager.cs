@@ -36,7 +36,8 @@ public partial class LevelManager : MonoBehaviour
 
   void Update()
   {
-    FindNeedArrangeCollumnAndUpdate();
+    FindNeedArrangeCollumnInUpdate();
+    ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
     LockAndFireTargetUpddate();
     BulletPositionsUpdate();
@@ -201,10 +202,6 @@ public partial class LevelManager : MonoBehaviour
 
   int FindEmptySlotFrom(List<GameObject> slots)
   {
-    for (int i = 0; i < slots.Count; ++i)
-    {
-      if (slots[i] == null) return i;
-    }
     return slots.Count;
   }
 

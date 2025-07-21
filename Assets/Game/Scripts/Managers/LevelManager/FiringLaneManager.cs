@@ -54,7 +54,7 @@ public partial class LevelManager : MonoBehaviour
 
   void LockAndFireTargetUpddate()
   {
-    for (int i = 0; i < _firingSlots.Count; ++i)
+    for (int i = _firingSlots.Count - 1; i >= 0; --i)
     {
       if (_firingSlots[i] == null) continue;
 
@@ -64,14 +64,12 @@ public partial class LevelManager : MonoBehaviour
       if (!blastBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        var slot = FindSlotFor(blastBlock, _firingSlots);
-        if (slot < 0 || slot > _firingSlots.Count - 1) continue;
-
-        _firingSlots[slot] = null;
         // var arr = new Vector3[2] { new(10, 0, 0), new(-10, 0, 0) };
         // var targetPos = arr[UnityEngine.Random.Range(0, arr.Length)];
-        Destroy(blastBlock, .7f);
-        // blastBlock.transform.DOMove(targetPos, .5f);
+        // blastBlock.transform.DOMove(targetPos, .7f).OnComplete(() => Destroy(blastBlock));
+        Destroy(blastBlock);
+
+        _firingSlots.Remove(blastBlock);
         continue;
       }
 
@@ -109,14 +107,12 @@ public partial class LevelManager : MonoBehaviour
       }
 
       damageable.SetWhoPicked(null);
-      if (damageable.GetWhoLocked() == blastBlock) continue;
       if (
        _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
         && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
       ) continue; // if block is not standing at firing zone its should not permitted for firing
 
       // standing and firing at target
-      damageable.SetWhoLocked(blastBlock);
       blastBlock.GetComponent<IGun>().SetAmmunition(
         blastBlock.GetComponent<IGun>().GetAmmunition() - 1
       );
@@ -125,6 +121,7 @@ public partial class LevelManager : MonoBehaviour
         updateSpeed * bulletSpeed,
         1
       );
+      damageable.SetWhoLocked(bullet.gameObject);
       if (bullet.TryGetComponent<IBullet>(out var bulletComp))
       {
         bulletComp.SetLifeTimer(0);
