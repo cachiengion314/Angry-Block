@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -108,10 +109,10 @@ public partial class LevelManager : MonoBehaviour
       colorBlockDamageable.SetWhoLocked(null);
       if (!colorBlockDamageable.IsDead()) continue;
 
-      if (!targetBlock.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+      if (!targetBlock.TryGetComponent<IColorBlock>(out var targetColorBlock)) continue;
 
-      _colorBlocks[colorBlock.GetIndex()] = null;
-      Destroy(targetBlock.gameObject);
+      _colorBlocks[targetColorBlock.GetIndex()] = null;
+      OnColorBlockDestroyedByBullet(targetBlock.gameObject);
 
       CleanReleaseFor(bullet);
     }

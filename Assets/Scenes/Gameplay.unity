@@ -2232,10 +2232,10 @@ MonoBehaviour:
   movingSpeed: 12
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 18
-  bulletSpeed: 20
+  bulletSpeed: 22
   wanderingSpeed: 5
   fireRate: 0.07
-  levelSelected: 8
+  levelSelected: 4
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -2255,6 +2255,8 @@ MonoBehaviour:
   blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
     type: 3}
   tunnelControlPref: {fileID: 1185800365850832064, guid: 9fef60b5c4ecf457c909ea25f6f91324,
+    type: 3}
+  colorSplashEfx: {fileID: 8846621222330615231, guid: 63f9cc64309a14e50bc764f3fede4fd3,
     type: 3}
   waitingPositions: {fileID: 2103059040}
 --- !u!4 &229877049

@@ -50,4 +50,15 @@ public partial class LevelManager : MonoBehaviour
       .DOScale(1.32f, fireRate / 2f)
       .SetLoops(2, LoopType.Yoyo);
   }
+
+  void OnColorBlockDestroyedByBullet(GameObject colorBlock)
+  {
+    colorBlock.transform
+      .DOScale(1.3f, .05f)
+      .OnComplete(() =>
+      {
+        SpawnColorSplashEfxAt(colorBlock.transform.position);
+        Destroy(colorBlock);
+      });
+  }
 }
