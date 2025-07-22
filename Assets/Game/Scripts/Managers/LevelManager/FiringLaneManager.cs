@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -14,6 +13,20 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] float bulletSpeed = 10.0f;
   [Range(1f, 30)]
   [SerializeField] float wanderingSpeed = 1.0f;
+
+  GameObject ChooseTargetFrom(List<GameObject> colorBlocks, GameObject blastBlock)
+  {
+    GameObject target = null;
+    for (int i = colorBlocks.Count - 1; i >= 0; --i)
+    {
+      var obj = colorBlocks[i];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
+      if (damageable.GetWhoPicked() == blastBlock) return obj;
+      if (damageable.GetWhoPicked() == null) target = obj;
+    }
+    return target;
+  }
 
   void WanderingAroundUpdate(GameObject blastBlock)
   {
@@ -39,39 +52,18 @@ public partial class LevelManager : MonoBehaviour
     _firingPositionIndexes[blastBlock.GetInstanceID()] = idx + 1;
   }
 
-  GameObject ChooseTargetFrom(List<GameObject> colorBlocks, GameObject blastBlock)
-  {
-    for (int i = 0; i < colorBlocks.Count; ++i)
-    {
-      var obj = colorBlocks[i];
-      if (obj == null) continue;
-      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.GetWhoPicked() == blastBlock) return obj;
-      if (damageable.GetWhoPicked() == null) return obj;
-    }
-    return null;
-  }
-
   void LockAndFireTargetUpddate()
   {
-    for (int i = 0; i < _firingSlots.Count; ++i)
+    for (int i = _firingSlots.Count - 1; i >= 0; --i)
     {
-      if (_firingSlots[i] == null) continue;
-
       var blastBlock = _firingSlots[i];
       if (!blastBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
       if (!blastBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        var slot = FindSlotFor(blastBlock, _firingSlots);
-        if (slot < 0 || slot > _firingSlots.Count - 1) continue;
-
-        _firingSlots[slot] = null;
-        // var arr = new Vector3[2] { new(10, 0, 0), new(-10, 0, 0) };
-        // var targetPos = arr[UnityEngine.Random.Range(0, arr.Length)];
-        Destroy(blastBlock, .7f);
-        // blastBlock.transform.DOMove(targetPos, .5f);
+        _firingSlots.Remove(blastBlock);
+        OnOutOfAmmunition(blastBlock);
         continue;
       }
 
@@ -89,6 +81,16 @@ public partial class LevelManager : MonoBehaviour
       if (!target.TryGetComponent<IDamageable>(out var damageable)) continue;
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
+
+      if (
+        _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
+        && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
+      )
+      {
+        // if block is not standing at firing zone its should not permitted for firing
+        damageable.SetWhoPicked(null);
+        continue;
+      }
 
       damageable.SetWhoPicked(blastBlock); // picking this target to prevent other interfere
       var dirToTarget = target.transform.position - blastBlock.transform.position;
@@ -109,34 +111,7 @@ public partial class LevelManager : MonoBehaviour
       }
 
       damageable.SetWhoPicked(null);
-      if (damageable.GetWhoLocked() == blastBlock) continue;
-      if (
-       _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
-        && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
-      ) continue; // if block is not standing at firing zone its should not permitted for firing
-
-      // standing and firing at target
-      damageable.SetWhoLocked(blastBlock);
-      blastBlock.GetComponent<IGun>().SetAmmunition(
-        blastBlock.GetComponent<IGun>().GetAmmunition() - 1
-      );
-      var bullet = SpawnBulletAt(
-        blastBlock.transform.position,
-        updateSpeed * bulletSpeed,
-        1
-      );
-      if (bullet.TryGetComponent<IBullet>(out var bulletComp))
-      {
-        bulletComp.SetLifeTimer(0);
-      }
-      if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
-      {
-        moveableBullet.SetInitPostion(bullet.transform.position);
-        moveableBullet.SetLockedPosition(target.transform.position);
-        moveableBullet.SetLockedTarget(target.transform);
-      }
-      if (_waitingTimers.ContainsKey(blastBlock.GetInstanceID()))
-        _waitingTimers[blastBlock.GetInstanceID()] = 0f;
+      OnFireTarget(blastBlock, target);
     }
   }
 }

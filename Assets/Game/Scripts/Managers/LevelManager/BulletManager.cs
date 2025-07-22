@@ -76,7 +76,7 @@ public partial class LevelManager : MonoBehaviour
 
   void BulletPositionsUpdate()
   {
-    for (int i = 0; i < _activeBullets.Count; ++i)
+    for (int i = _activeBullets.Count - 1; i >= 0; --i)
     {
       var bullet = _activeBullets[i];
       if (!bullet.TryGetComponent<IMoveable>(out var bullMoveable)) continue;

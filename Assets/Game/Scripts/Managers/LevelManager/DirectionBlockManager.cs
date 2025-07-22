@@ -130,7 +130,7 @@ public partial class LevelManager : MonoBehaviour
 
   void MovesToWaitingUpdate()
   {
-    for (int i = 0; i < _needMovingObjs.Count; ++i)
+    for (int i = _needMovingObjs.Count - 1; i >= 0; --i)
     {
       var obj = _needMovingObjs[i];
 

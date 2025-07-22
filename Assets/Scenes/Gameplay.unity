@@ -2234,7 +2234,7 @@ MonoBehaviour:
   rotationSpeed: 16
   bulletSpeed: 25
   wanderingSpeed: 6
-  levelSelected: 4
+  levelSelected: 10
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -14537,6 +14537,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 468233321, guid: dfb75feb680034648a142042ad4a327f, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1214976014, guid: dfb75feb680034648a142042ad4a327f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
