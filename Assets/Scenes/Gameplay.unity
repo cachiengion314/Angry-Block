@@ -2233,7 +2233,7 @@ MonoBehaviour:
   rotationSpeed: 16
   bulletSpeed: 25
   wanderingSpeed: 6
-  levelSelected: 1
+  levelSelected: 18
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
