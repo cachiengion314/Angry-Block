@@ -18,6 +18,9 @@ public class DirectionBlockControl : MonoBehaviour
   public int2 Direction { get; private set; }
   DirectionValue _directionValue;
   float3 _lockedPosition;
+  float3 _initPosition;
+  float3[] _path;
+  Transform _lockedTarget;
 
   public int GetColorValue()
   {
@@ -97,12 +100,12 @@ public class DirectionBlockControl : MonoBehaviour
 
   public Transform GetLockedTarget()
   {
-    throw new System.NotImplementedException();
+    return _lockedTarget;
   }
 
   public void SetLockedTarget(Transform lockedTarget)
   {
-    throw new System.NotImplementedException();
+    _lockedTarget = lockedTarget;
   }
 
   public int2 GetDirection()
@@ -117,11 +120,21 @@ public class DirectionBlockControl : MonoBehaviour
 
   public void SetInitPostion(float3 pos)
   {
-    throw new System.NotImplementedException();
+    _initPosition = pos;
   }
 
   public float3 GetInitPostion()
   {
-    throw new System.NotImplementedException();
+    return _initPosition;
+  }
+
+  public void SetPath(float3[] path)
+  {
+    _path = path;
+  }
+
+  public float3[] GetPath()
+  {
+    return _path;
   }
 }

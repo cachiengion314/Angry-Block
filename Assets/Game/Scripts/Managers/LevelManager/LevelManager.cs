@@ -38,8 +38,9 @@ public partial class LevelManager : MonoBehaviour
   {
     FindNeedArrangeCollumnAndUpdate();
     WaitAndFindMatchedUpdate();
-    BulletPositionsUpdate();
     LockAndFireTargetUpddate();
+    BulletPositionsUpdate();
+    MovesToWaitingUpdate();
   }
 
   void OnDestroy()
@@ -169,27 +170,6 @@ public partial class LevelManager : MonoBehaviour
     return default;
   }
 
-  float3 Lerp(float3 start, float3 end, float t)
-  {
-    return (1 - t) * start + t * end;
-  }
-
-  void InterpolateMoveUpdate(
-    in float3 currentPos,
-    in float3 startPos,
-    in float3 targetPos,
-    in float speed,
-    out float _t,
-    out float3 nextPos
-  )
-  {
-    var distanceFromStart = math.length(currentPos - startPos);
-    var totalDistance = ((Vector3)targetPos - (Vector3)startPos).magnitude;
-    var t = distanceFromStart / totalDistance + speed * 1 / totalDistance * Time.deltaTime;
-    _t = math.min(t, 1);
-    nextPos = Lerp(startPos, targetPos, _t);
-  }
-
   int FindSlotFor(GameObject block, GameObject[] slots)
   {
     for (int i = 0; i < slots.Length; ++i)
@@ -226,6 +206,42 @@ public partial class LevelManager : MonoBehaviour
       if (slots[i] == null) return i;
     }
     return slots.Count;
+  }
+
+  void InterpolatePathUpdate(
+    in float3 currentPos,
+    in int currentIdx,
+    in float3[] path,
+    in float speed,
+    out float _t,
+    out float3 nextPos,
+    out int nextIdx
+  )
+  {
+    _t = 1;
+    nextPos = currentPos;
+    nextIdx = currentIdx;
+    if (currentIdx > path.Length - 1) return;
+
+    var startPos = path[currentIdx];
+    var targetIdx = currentIdx + 1;
+    if (targetIdx > path.Length - 1) return;
+
+    var targetPos = path[targetIdx];
+
+    HoangNam.Utility.InterpolateMoveUpdate(
+      currentPos, startPos, targetPos, speed, out var percent, out var nextPosition
+    );
+    _t = (currentIdx + percent) / math.max(path.Length - 1, 1);
+    nextPos = nextPosition;
+
+    if (percent < 1)
+    {
+      nextIdx = currentIdx;
+      return;
+    }
+
+    nextIdx = currentIdx + 1;
   }
 
   public void RestartLevel()

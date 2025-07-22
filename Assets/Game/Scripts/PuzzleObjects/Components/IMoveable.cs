@@ -9,4 +9,6 @@ public interface IMoveable
   public float3 GetLockedPosition();
   public Transform GetLockedTarget();
   public void SetLockedTarget(Transform lockedTarget);
+  public void SetPath(float3[] path);
+  public float3[] GetPath();
 }

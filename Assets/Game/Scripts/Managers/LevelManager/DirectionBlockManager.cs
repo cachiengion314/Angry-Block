@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System;
-using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
+using Unity.Mathematics;
+using System.Collections.Generic;
 
 public partial class LevelManager : MonoBehaviour
 {
@@ -11,8 +10,11 @@ public partial class LevelManager : MonoBehaviour
   /// Manager all direction blocks
   /// </summary>
   GameObject[] _directionBlocks;
+  readonly List<GameObject> _needMovingObjs = new();
+  readonly Dictionary<int, int> _needMovingObjPathIndexes = new();
   public GameObject[] DirectionBlocks { get { return _directionBlocks; } }
   public Action OnDirectionBlockMove;
+  [SerializeField][Range(1, 100)] float movingSpeed = 12.5f;
 
   public void SetDirectionBlocks(int index, GameObject directionBlock)
   {
@@ -22,7 +24,6 @@ public partial class LevelManager : MonoBehaviour
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
-    if (IsWaitingSlotsMMoving()) return;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
     if (!IsBlockMoveable(directionBlock)) return;
@@ -33,13 +34,7 @@ public partial class LevelManager : MonoBehaviour
     _waitingSlots[emptyWaitingSlot] = directionBlock;
     _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
 
-    AutoSortingWaitingSlots();
-    for (int i = 0; i < _waitingSlots.Length; ++i)
-    {
-      var block = _waitingSlots[i];
-      if (block == null) continue;
-      MoveTo(i, block, _waitingSlots, waitingPositions);
-    }
+    AutoSortingWaitingSlotAndMoves();
 
     OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
@@ -52,40 +47,9 @@ public partial class LevelManager : MonoBehaviour
     return col.gameObject;
   }
 
-  List<GameObject> FindMoveableDirectionBlocks()
-  {
-    var list = new List<GameObject>();
-    for (int x = 0; x < bottomGrid.GridSize.x; ++x)
-    {
-      for (int y = 0; y < bottomGrid.GridSize.y; ++y)
-      {
-        var gridPos = new int2(x, y);
-        var currentIndex = bottomGrid.ConvertGridPosToIndex(gridPos);
-        var dirBlock = _directionBlocks[currentIndex];
-        if (dirBlock == null) continue;
-        if (!dirBlock.TryGetComponent<IDirectionBlock>(out var directionBlock)) continue;
-        if (!dirBlock.TryGetComponent<IGameObj>(out var gameobjComp)) continue;
-
-        var nextGridPos = gridPos + directionBlock.GetDirection();
-        if (bottomGrid.IsGridPosOutsideAt(nextGridPos))
-        {
-          list.Add(gameobjComp.GetGameObject());
-          continue;
-        }
-        var nextIdx = bottomGrid.ConvertGridPosToIndex(nextGridPos);
-        var nextBlock = _directionBlocks[nextIdx];
-        if (nextBlock != null) continue;
-
-        list.Add(gameobjComp.GetGameObject());
-      }
-    }
-    return list;
-  }
-
-  void MoveTo(
+  void AddToMoveQueue(
     int slotIndex,
     GameObject directionBlock,
-    GameObject[] slots,
     Transform positions
   )
   {
@@ -95,62 +59,57 @@ public partial class LevelManager : MonoBehaviour
       print("Slots is not available");
       return;
     }
-
-    var endPos = positions.GetChild(slotIndex).position;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
 
+    var startPos = bottomGrid.ConvertIndexToWorldPos(color.GetIndex());
+    var endPos = positions.GetChild(slotIndex).position;
     if (color.GetIndex() == -1)
     {
+      /// case: block is already standing at the waiting slot
+      moveable.SetInitPostion(directionBlock.transform.position);
       moveable.SetLockedPosition(endPos);
-      directionBlock.transform.DOMove(endPos, .5f)
-        .OnComplete(() => moveable.SetLockedPosition(0));
+      moveable.SetPath(null);
+      _needMovingObjs.Add(directionBlock);
       return;
     }
-    if (!moveable.GetLockedPosition().Equals(0)) return;
-    Vector3[] path = FindPathMoves(directionBlock, endPos);
-    if (path == null) return;
-  
-    Sequence seq = DOTween.Sequence();
-    var atPosition = 0f;
-    var duration = 0.5f;
 
-    seq.InsertCallback(atPosition, () => moveable.SetLockedPosition(endPos));
-
-    seq.Insert(atPosition, directionBlock.transform.DOMove(path[0], duration));
-    atPosition += duration;
-
-    seq.Insert(atPosition, directionBlock.transform.DOPath(path, duration, PathType.CatmullRom));
-    atPosition += duration;
-
-    seq.InsertCallback(atPosition, () =>
+    var path = CalculatePathFor(directionBlock, endPos);
+    if (path == null)
     {
-      color.SetIndex(-1);
-      moveable.SetLockedPosition(0);
-    });
+      /// case: block being blocking by others
+      print("Cannot move duo to others blocking path!");
+      return;
+    }
+
+    /// case: block move to the waiting slot
+    moveable.SetInitPostion(startPos);
+    moveable.SetLockedPosition(endPos);
+    moveable.SetPath(path);
+    _needMovingObjs.Add(directionBlock);
   }
 
-  Vector3[] FindPathMoves(GameObject directionBlock, float3 endPos)
+  float3[] CalculatePathFor(GameObject directionBlock, float3 endPos)
   {
     if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return null;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return null;
-    Vector3[] Path = null;
+    float3[] path = null;
 
-    var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
+    var startGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
+    var startPos = bottomGrid.ConvertGridPosToWorldPos(startGrid);
     var blockDir = direction.GetDirection();
     var pos1 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, -1));
     var pos2 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, bottomGrid.GridSize.y));
     var pos3 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(bottomGrid.GridSize);
-    var pos4 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, -1));
-    var pos5 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(blockGrid.x, bottomGrid.GridSize.y));
-    var pos6 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, blockGrid.y));
-    var pos7 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(blockGrid.x, -1));
-    var pos8 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, blockGrid.y));
+    var pos5 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(startGrid.x, bottomGrid.GridSize.y));
+    var pos6 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(bottomGrid.GridSize.x, startGrid.y));
+    var pos7 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(startGrid.x, -1));
+    var pos8 = (Vector3)bottomGrid.ConvertGridPosToWorldPos(new int2(-1, startGrid.y));
 
-    if (blockDir.Equals(new int2(0, 1))) Path = new Vector3[2] { pos5, endPos };
-    if (blockDir.Equals(new int2(1, 0))) Path = new Vector3[3] { pos6, pos3, endPos };
-    if (blockDir.Equals(new int2(0, -1))) Path = new Vector3[4] { pos7, pos1, pos2, endPos };
-    if (blockDir.Equals(new int2(-1, 0))) Path = new Vector3[3] { pos8, pos2, endPos };
-    return Path;
+    if (blockDir.Equals(new int2(0, 1))) path = new float3[3] { startPos, pos5, endPos };
+    if (blockDir.Equals(new int2(1, 0))) path = new float3[4] { startPos, pos6, pos3, endPos };
+    if (blockDir.Equals(new int2(0, -1))) path = new float3[5] { startPos, pos7, pos1, pos2, endPos };
+    if (blockDir.Equals(new int2(-1, 0))) path = new float3[4] { startPos, pos8, pos2, endPos };
+    return path;
   }
 
   bool IsBlockMoveable(GameObject directionBlock)
@@ -167,5 +126,54 @@ public partial class LevelManager : MonoBehaviour
       nextBlock += dirBlock;
     }
     return true;
+  }
+
+  void MovesToWaitingUpdate()
+  {
+    for (int i = 0; i < _needMovingObjs.Count; ++i)
+    {
+      var obj = _needMovingObjs[i];
+
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
+
+      var currentPos = obj.transform.position;
+      var startPos = moveable.GetInitPostion();
+      var targetPos = moveable.GetLockedPosition();
+      var path = moveable.GetPath();
+      if (path == null)
+      {
+        HoangNam.Utility.InterpolateMoveUpdate(
+          currentPos, startPos, targetPos, movingSpeed, out var percent, out var nextPosition
+        );
+        obj.transform.position = nextPosition;
+        if (percent < 1) continue;
+
+        colorBlock.SetIndex(-1);
+        moveable.SetLockedPosition(0);
+        moveable.SetLockedTarget(null);
+        _needMovingObjs.Remove(obj);
+        continue;
+      }
+
+      if (!_needMovingObjPathIndexes.ContainsKey(obj.GetInstanceID()))
+        _needMovingObjPathIndexes.Add(obj.GetInstanceID(), 0);
+      var currentIdx = _needMovingObjPathIndexes[obj.GetInstanceID()];
+
+      InterpolatePathUpdate(
+        currentPos, currentIdx, path, movingSpeed, out var t, out var nextPos, out var nextIdx
+      );
+      obj.transform.position = nextPos;
+      _needMovingObjPathIndexes[obj.GetInstanceID()] = nextIdx;
+      if (t < 1) continue;
+
+      colorBlock.SetIndex(-1);
+      moveable.SetLockedPosition(0);
+      moveable.SetLockedTarget(null);
+      moveable.SetPath(null);
+      _needMovingObjPathIndexes[obj.GetInstanceID()] = 0;
+      _needMovingObjs.Remove(obj);
+    }
   }
 }

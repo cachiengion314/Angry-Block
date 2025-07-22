@@ -42,7 +42,7 @@
         {
             "Index": 1,
             "ColorValue": 0,
-            "DirectionValue": 2,
+            "DirectionValue": 1,
             "Ammunition": 10
         },
         {
@@ -54,19 +54,19 @@
         {
             "Index": 3,
             "ColorValue": 0,
-            "DirectionValue": 2,
+            "DirectionValue": 1,
             "Ammunition": 10
         },
         {
             "Index": 4,
             "ColorValue": 0,
-            "DirectionValue": 3,
+            "DirectionValue": 1,
             "Ammunition": 10
         },
         {
             "Index": 5,
             "ColorValue": 0,
-            "DirectionValue": 0,
+            "DirectionValue": 1,
             "Ammunition": 10
         }
     ],

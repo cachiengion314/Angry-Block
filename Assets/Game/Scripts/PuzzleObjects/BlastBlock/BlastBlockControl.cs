@@ -14,6 +14,8 @@ public class BlastBlockControl : MonoBehaviour
   int _ammunition;
   float3 _lockedPosition;
   Transform _lockedTarget;
+  float3 _initPosition;
+  float3[] _path;
 
   public int GetColorValue()
   {
@@ -68,11 +70,21 @@ public class BlastBlockControl : MonoBehaviour
 
   public void SetInitPostion(float3 pos)
   {
-    throw new System.NotImplementedException();
+    _initPosition = pos;
   }
 
   public float3 GetInitPostion()
   {
-    throw new System.NotImplementedException();
+    return _initPosition;
+  }
+
+  public void SetPath(float3[] path)
+  {
+    _path = path;
+  }
+
+  public float3[] GetPath()
+  {
+    return _path;
   }
 }

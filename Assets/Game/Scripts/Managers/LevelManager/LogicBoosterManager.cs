@@ -25,7 +25,7 @@ public partial class LevelManager
     {
       var block = _waitingSlots[i];
       if (block == null) continue;
-      MoveTo(i, block, _waitingSlots, waitingPositions);
+      AddToMoveQueue(i, block, waitingPositions);
     }
 
     OnDirectionBlockMove?.Invoke();
@@ -113,7 +113,7 @@ public partial class LevelManager
     if (colorValue != -1)
     {
       int count = 0;
-      if(_mergeSlots.ContainsKey(colorValue)) count = _mergeSlots[colorValue].Count;
+      if (_mergeSlots.ContainsKey(colorValue)) count = _mergeSlots[colorValue].Count;
 
       var misAmount = 3 - count;
       Debug.Log("misAmount :" + misAmount);
