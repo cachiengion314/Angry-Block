@@ -5,13 +5,16 @@ public partial class GameplayPanel : MonoBehaviour
   public static GameplayPanel Instance { get; private set; }
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
-  public Transform SettingModal;
-  public Transform LevelCompleteModal;
-  public Transform LevelFiailedModal;
-  public Transform OutOfSpaceModal;
-  public Transform Booster1Modal;
-  public Transform Booster2Modal;
-  public Transform Booster3Modal;
+  [SerializeField] Transform SettingModal;
+  [SerializeField] Transform LevelCompleteModal;
+  [SerializeField] Transform LevelFiailedModal;
+  [SerializeField] Transform OutOfSpaceModal;
+  [SerializeField] Transform BuyBooster1Modal;
+  [SerializeField] Transform BuyBooster2Modal;
+  [SerializeField] Transform BuyBooster3Modal;
+  [SerializeField] Transform UseBooster1Modal;
+  [SerializeField] Transform UseBooster2Modal;
+  [SerializeField] Transform UseBooster3Modal;
 
   private void Awake()
   {
@@ -132,17 +135,22 @@ public partial class GameplayPanel : MonoBehaviour
     }
   }
 
+  public void CloseOutOfSpaceModal()
+  {
+    OutOfSpaceModal.gameObject.SetActive(false);
+  }
+
   public void ToggleBooster1Modal()
   {
     SoundManager.Instance.PlayPressBtnSfx();
 
-    if (!Booster1Modal.gameObject.activeSelf)
+    if (!BuyBooster1Modal.gameObject.activeSelf)
     {
-      OpenModal(Booster1Modal);
+      OpenModal(BuyBooster1Modal);
     }
     else
     {
-      CloseModal(Booster1Modal);
+      CloseModal(BuyBooster1Modal);
     }
   }
 
@@ -150,13 +158,13 @@ public partial class GameplayPanel : MonoBehaviour
   {
     SoundManager.Instance.PlayPressBtnSfx();
 
-    if (!Booster2Modal.gameObject.activeSelf)
+    if (!BuyBooster2Modal.gameObject.activeSelf)
     {
-      OpenModal(Booster2Modal);
+      OpenModal(BuyBooster2Modal);
     }
     else
     {
-      CloseModal(Booster2Modal);
+      CloseModal(BuyBooster2Modal);
     }
   }
 
@@ -164,14 +172,13 @@ public partial class GameplayPanel : MonoBehaviour
   {
     SoundManager.Instance.PlayPressBtnSfx();
 
-    if (!Booster3Modal.gameObject.activeSelf)
+    if (!BuyBooster3Modal.gameObject.activeSelf)
     {
-      OpenModal(Booster3Modal);
+      OpenModal(BuyBooster3Modal);
     }
     else
     {
-      CloseModal(Booster3Modal);
+      CloseModal(BuyBooster3Modal);
     }
   }
-
 }

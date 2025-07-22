@@ -8,6 +8,7 @@ public partial class GameplayPanel
     int levelUnlockBooster1 = 0;
     int levelUnlockBooster2 = 0;
     int levelUnlockBooster3 = 0;
+    public bool IsTriggerBooster1 { get; private set; }
     void InitBooster()
     {
         VisualeTriggerBooster1();
@@ -16,6 +17,7 @@ public partial class GameplayPanel
         GameManager.Instance.OnBooster1Change += VisualeTriggerBooster1;
         GameManager.Instance.OnBooster2Change += VisualeTriggerBooster2;
         GameManager.Instance.OnBooster3Change += VisualeTriggerBooster3;
+        LevelManager.Instance.OnTriggerBooster1Success += OnTriggerBooster1;
     }
 
     void UnsubscribeBoosterEvent()
@@ -23,6 +25,7 @@ public partial class GameplayPanel
         GameManager.Instance.OnBooster1Change -= VisualeTriggerBooster1;
         GameManager.Instance.OnBooster2Change -= VisualeTriggerBooster2;
         GameManager.Instance.OnBooster3Change -= VisualeTriggerBooster3;
+        LevelManager.Instance.OnTriggerBooster1Success -= OnTriggerBooster1;
     }
 
     public void OnTriggerBooster1()
@@ -31,11 +34,13 @@ public partial class GameplayPanel
         if (GameManager.Instance.Booster1 <= 0)
             ToggleBooster1Modal();
         else
-        {
-            var IsTriggerBooster1 = LevelManager.Instance.IsTriggerBooster1;
-            LevelManager.Instance.IsTriggerBooster1 = !IsTriggerBooster1;
-            //visualize trigger booster
-        }
+            ToggleUseBooster1();
+    }
+
+    void ToggleUseBooster1()
+    {
+        IsTriggerBooster1 = !IsTriggerBooster1;
+        UseBooster1Modal.gameObject.SetActive(IsTriggerBooster1);
     }
 
     public void OnTriggerBooster2()
@@ -46,9 +51,21 @@ public partial class GameplayPanel
             ToggleBooster2Modal();
         else
         {
-            LevelManager.Instance.OnTriggerBooster2();
-            //visualize trigger booster
+            UseBooster2Modal.gameObject.SetActive(true);
+            GameManager.Instance.SetGameState(GameState.GamepPause);
         }
+    }
+
+    public void ExitBooster2()
+    {
+        UseBooster2Modal.gameObject.SetActive(false);
+        GameManager.Instance.SetGameState(GameState.Gameplay);
+    }
+
+    public void OnTriggerBooster2Success()
+    {
+        LevelManager.Instance.OnTriggerBooster2();
+        ExitBooster2();
     }
 
     public void OnTriggerBooster3()

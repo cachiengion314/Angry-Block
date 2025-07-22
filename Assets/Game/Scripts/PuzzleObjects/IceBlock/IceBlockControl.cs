@@ -7,6 +7,15 @@ public class IceBlockControl : MonoBehaviour, IColorBlock
     int Index;
     int heart = 4;
 
+    void Start()
+    {
+        LevelManager.Instance.OnDirectionBlockMove += OnTrigger;
+    }
+    void OnDestroy()
+    {
+        LevelManager.Instance.OnDirectionBlockMove -= OnTrigger;
+    }
+
     public int GetColorValue()
     {
         throw new System.NotImplementedException();
@@ -30,7 +39,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock
     public void Initialize(DirectionBlockData directionBlockData)
     {
         Visualze();
-        LevelManager.Instance.OnDirectionBlockMove += OnTrigger;
+
         var directionBlock = LevelManager.Instance.SpawnDirectionBlockAt(Index, blockParent);
         directionBlock.SetIndex(Index);
         directionBlock.SetColorValue(directionBlockData.ColorValue);
@@ -45,7 +54,6 @@ public class IceBlockControl : MonoBehaviour, IColorBlock
         heart--;
         Visualze();
         if (heart > 0) return;
-        LevelManager.Instance.OnDirectionBlockMove -= OnTrigger;
         if (blockParent.childCount <= 0) return;
         var block = blockParent.GetChild(0);
         if (!block.TryGetComponent(out Collider2D col)) return;
