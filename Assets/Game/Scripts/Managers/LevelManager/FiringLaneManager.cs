@@ -4,15 +4,18 @@ using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
+  readonly Dictionary<int, float> _fireRateTimers = new();
   readonly Dictionary<int, int> _firingPositionIndexes = new();
   [SerializeField] Transform _firingPositions;
   readonly List<GameObject> _firingSlots = new();
-  [Range(1f, 50f)]
+  [Range(1f, 30f)]
   [SerializeField] float rotationSpeed = 5f;
   [Range(1f, 200)]
   [SerializeField] float bulletSpeed = 10.0f;
   [Range(1f, 30)]
   [SerializeField] float wanderingSpeed = 1.0f;
+  [Range(0f, .2f)]
+  [SerializeField] float fireRate = .1f;
 
   GameObject ChooseTargetFrom(List<GameObject> colorBlocks, GameObject blastBlock)
   {
@@ -97,7 +100,7 @@ public partial class LevelManager : MonoBehaviour
       var targetRad = math.acos(
         math.dot(dirToTarget.normalized, blastBlock.transform.up)
       );
-      if (math.abs(targetRad) > .1f)
+      if (math.abs(targetRad) > .18f)
       {
         var sign = math.sign(
           math.cross(blastBlock.transform.up, dirToTarget).z
@@ -111,6 +114,13 @@ public partial class LevelManager : MonoBehaviour
       }
 
       damageable.SetWhoPicked(null);
+
+      if (!_fireRateTimers.ContainsKey(blastBlock.GetInstanceID()))
+        _fireRateTimers.Add(blastBlock.GetInstanceID(), 0f);
+      _fireRateTimers[blastBlock.GetInstanceID()] += Time.deltaTime;
+      if (_fireRateTimers[blastBlock.GetInstanceID()] < fireRate) continue;
+
+      _fireRateTimers[blastBlock.GetInstanceID()] = 0f;
       OnFireTarget(blastBlock, target);
     }
   }

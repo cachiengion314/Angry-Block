@@ -7,9 +7,7 @@ public partial class LevelManager : MonoBehaviour
 {
   [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
-  readonly Dictionary<int, float> _waitingTimers = new();
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
-  readonly float KEY_FOUND_MATCHED_DURATION = .2f;
 
   void InitWaitingSlots()
   {
@@ -135,13 +133,6 @@ public partial class LevelManager : MonoBehaviour
       var colorBlock = FindFirstBlockMatchedFor(waitingBlock);
       if (colorBlock == null) continue;
 
-      if (!_waitingTimers.ContainsKey(waitingBlock.GetInstanceID()))
-        _waitingTimers.Add(waitingBlock.GetInstanceID(), 0f);
-      _waitingTimers[waitingBlock.GetInstanceID()] += Time.deltaTime;
-      if (_waitingTimers[waitingBlock.GetInstanceID()] < KEY_FOUND_MATCHED_DURATION)
-        continue;
-
-      _waitingTimers[waitingBlock.GetInstanceID()] = 0f;
       /// move to firing slot
       var emptyFiringSlot = FindEmptySlotFrom(_firingSlots);
 
@@ -152,7 +143,8 @@ public partial class LevelManager : MonoBehaviour
       if (emptyFiringSlot > _firingSlots.Count - 1)
         _firingSlots.Add(waitingBlock);
 
-      var targetPos = _firingPositions.GetChild(0).position;
+      var randDir = Vector3.right * UnityEngine.Random.Range(0, 2.4f);
+      var targetPos = _firingPositions.GetChild(0).position + randDir;
 
       waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
       waitingBlock.transform.DOMove(targetPos, .2f)

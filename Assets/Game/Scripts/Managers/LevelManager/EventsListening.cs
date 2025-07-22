@@ -45,5 +45,9 @@ public partial class LevelManager : MonoBehaviour
       moveableBullet.SetLockedPosition(target.transform.position);
       moveableBullet.SetLockedTarget(target.transform);
     }
+
+    blastBlock.transform
+      .DOScale(1.32f, fireRate / 2f)
+      .SetLoops(2, LoopType.Yoyo);
   }
 }

@@ -2231,10 +2231,11 @@ MonoBehaviour:
   arrangeSpeed: 7.5
   movingSpeed: 12
   _firingPositions: {fileID: 1142100}
-  rotationSpeed: 16
-  bulletSpeed: 25
-  wanderingSpeed: 6
-  levelSelected: 10
+  rotationSpeed: 18
+  bulletSpeed: 20
+  wanderingSpeed: 5
+  fireRate: 0.07
+  levelSelected: 8
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
