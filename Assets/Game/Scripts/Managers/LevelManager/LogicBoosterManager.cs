@@ -10,23 +10,19 @@ public partial class LevelManager
   public void OnTriggerBooster1(GameObject directionBlock)
   {
     if (directionBlock == null) return;
+    if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
+    if (color.GetIndex() == -1) return;
+
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
-
-    _waitingSlots[emptyWaitingSlot] = directionBlock;
-    _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
-
-    AutoSortingWaitingSlots();
 
     IsTriggerBooster1 = false;
     GameManager.Instance.Booster1--;
 
-    for (int i = 0; i < _waitingSlots.Length; ++i)
-    {
-      var block = _waitingSlots[i];
-      if (block == null) continue;
-      AddToMoveQueue(i, block, waitingPositions);
-    }
+    _waitingSlots[emptyWaitingSlot] = directionBlock;
+    _directionBlocks[color.GetIndex()] = null;
+
+    AutoSortingWaitingSlotAndMoves();
 
     OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
@@ -107,20 +103,16 @@ public partial class LevelManager
 
   public void OntriggerBooster3()
   {
-    Debug.Log("Booster 3");
     int colorValue = GetRandomColor();
-    Debug.Log("colorValue :" + colorValue);
     if (colorValue != -1)
     {
       int count = 0;
       if (_mergeSlots.ContainsKey(colorValue)) count = _mergeSlots[colorValue].Count;
 
       var misAmount = 3 - count;
-      Debug.Log("misAmount :" + misAmount);
       var DirBlocks = FindDirectionBlockColorAt(misAmount, colorValue);
       foreach (GameObject dirBlock in DirBlocks)
       {
-        Debug.Log("block", dirBlock);
         OnTriggerNeighborAt(dirBlock);
         if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) return;
         colorBlock.SetIndex(-1);
