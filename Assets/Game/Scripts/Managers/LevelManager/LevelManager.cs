@@ -41,6 +41,8 @@ public partial class LevelManager : MonoBehaviour
     LockAndFireTargetUpddate();
     BulletPositionsUpdate();
     MovesToWaitingUpdate();
+    
+    IsLoseLevel();
   }
 
   void OnDestroy()
@@ -257,5 +259,13 @@ public partial class LevelManager : MonoBehaviour
     if (levelInfo == null) { print("This level is not existed!"); return; }
     levelInformation = levelInfo;
     print("Load level " + level + " successfully ");
+  }
+
+  public void IsLoseLevel()
+  {
+    if (IsWaitingSlotsMMoving()) return;
+    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
+    if (emptyWaitingSlot != -1) return;
+    Debug.Log("lose");
   }
 }
