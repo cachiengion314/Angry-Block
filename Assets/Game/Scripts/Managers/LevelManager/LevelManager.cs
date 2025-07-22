@@ -10,6 +10,7 @@ public partial class LevelManager : MonoBehaviour
   [Header("Level Manager")]
   LevelInformation levelInformation;
   [SerializeField][Range(1, 20)] int levelSelected = 1;
+  [SerializeField]bool IsSelectlevel = false;
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
   public Transform SpawnedParent => spawnedParent;
@@ -31,7 +32,11 @@ public partial class LevelManager : MonoBehaviour
     SubscribeTouchEvent();
 
     InitPool();
+    
+    if (!IsSelectlevel)
+      levelSelected = GameManager.Instance.CurrentLevel + 1;
     LoadLevelFrom(levelSelected);
+    
     SetupCurrentLevel();
   }
 
@@ -41,10 +46,10 @@ public partial class LevelManager : MonoBehaviour
     ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
     LockAndFireTargetUpddate();
-    UpdateWinLevel();
     BulletPositionsUpdate();
     UpdateLoseLevel();
     MovesToWaitingUpdate();
+    UpdateWinLevel();
   }
 
   void OnDestroy()
@@ -107,6 +112,7 @@ public partial class LevelManager : MonoBehaviour
             colorBlock.gameObject.SetActive(false);
 
           _colorBlocks[index] = colorBlock;
+          _amountColorBlock++;
         }
       }
     }
@@ -257,21 +263,14 @@ public partial class LevelManager : MonoBehaviour
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot != -1) return;
     GameManager.Instance.SetGameState(GameState.Gameover);
-    Debug.Log("Lose");
+    GameplayPanel.Instance.ToggleLevelFailedModal();
   }
 
   void UpdateWinLevel()
   {
     if (GameManager.Instance.GetGameState() != GameState.Gameplay) return;
-    if (!IsBoardClear()) return;
+    if (_amountColorBlock > 0) return;
     GameManager.Instance.SetGameState(GameState.Gamewin);
-    Debug.Log("Win");
-  }
-
-  bool IsBoardClear()
-  {
-    for (int i = 0; i < _colorBlocks.Length; i++)
-      if (_colorBlocks[i] != null) return false;
-    return true;
+    GameplayPanel.Instance.ToggleLevelCompleteModal();
   }
 }

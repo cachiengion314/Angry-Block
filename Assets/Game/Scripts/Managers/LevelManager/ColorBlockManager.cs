@@ -12,6 +12,7 @@ public partial class LevelManager : MonoBehaviour
   /// </summary>
   readonly Dictionary<int, List<GameObject>> _needMovingColorBlocks = new();
   ColorBlockControl[] _colorBlocks;
+  int _amountColorBlock = 0;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
   [Range(1f, 10f)]
   [SerializeField] float arrangeSpeed = 5.5f;
