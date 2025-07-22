@@ -42,7 +42,7 @@ public partial class LevelManager : MonoBehaviour
     LockAndFireTargetUpddate();
     BulletPositionsUpdate();
     MovesToWaitingUpdate();
-    
+
     IsLoseLevel();
   }
 
@@ -176,16 +176,6 @@ public partial class LevelManager : MonoBehaviour
   int FindSlotFor(GameObject block, GameObject[] slots)
   {
     for (int i = 0; i < slots.Length; ++i)
-    {
-      if (slots[i] == null) continue;
-      if (slots[i] == block) return i;
-    }
-    return -1;
-  }
-
-  int FindSlotFor(GameObject block, List<GameObject> slots)
-  {
-    for (int i = 0; i < slots.Count; ++i)
     {
       if (slots[i] == null) continue;
       if (slots[i] == block) return i;
