@@ -73,13 +73,16 @@ public partial class LevelManager : MonoBehaviour
   void ShouldMergeUpdate(GameObject waitingBlock)
   {
     if (IsWaitingSlotsMMoving()) return;
-
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
     if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
+
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
       _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
+
     _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
+
     if (_mergeSlots[colorBlock.GetColorValue()].Count < 3) return;
+    Debug.Log("Merge:");
 
     var mergeableBlocks = _mergeSlots[colorBlock.GetColorValue()].ToArray();
     var totalAmmunition = 0;
