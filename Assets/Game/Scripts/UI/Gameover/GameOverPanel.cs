@@ -8,7 +8,7 @@ public class GameOverPanel : MonoBehaviour
   }
   public void LevelFail()
   {
-    GameplayPanel.Instance.OutOfSpaceModal.gameObject.SetActive(false);
+    GameplayPanel.Instance.CloseOutOfSpaceModal();
     GameplayPanel.Instance.ToggleLevelFailedModal();
   }
 }

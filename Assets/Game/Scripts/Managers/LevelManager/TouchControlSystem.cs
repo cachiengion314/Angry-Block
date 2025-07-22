@@ -29,7 +29,7 @@ public partial class LevelManager : MonoBehaviour
     Vector2 startTouchPos = Camera.main.ScreenToWorldPoint(finger.ScreenPosition);
     Collider2D[] colliders = Physics2D.OverlapPointAll(startTouchPos);
 
-    if (IsTriggerBooster1)
+    if (GameplayPanel.Instance.IsTriggerBooster1)
       OnTriggerBooster1(FindDirectionBlockIn(colliders));
     else
       TouchControlling(FindDirectionBlockIn(colliders));

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Random = UnityEngine.Random;
 public partial class LevelManager
 {
   [SerializeField] Transform mergePositions;
-  public bool IsTriggerBooster1 = false;
+  public Action OnTriggerBooster1Success;
   public void OnTriggerBooster1(GameObject directionBlock)
   {
     if (directionBlock == null) return;
@@ -16,7 +17,7 @@ public partial class LevelManager
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
-    IsTriggerBooster1 = false;
+    OnTriggerBooster1Success?.Invoke();
     GameManager.Instance.Booster1--;
 
     _waitingSlots[emptyWaitingSlot] = directionBlock;
