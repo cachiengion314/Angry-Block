@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,6 +34,7 @@ public partial class LevelManager
   public void OnTriggerBooster2()
   {
     var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
+    VisualizeUseTriggerBooster2();
     for (int i = directionBlockAvailables.Length - 1; i >= 0; i--)
     {
       int j = UnityEngine.Random.Range(0, i + 1);
@@ -311,5 +314,42 @@ public partial class LevelManager
     int index1 = Random.Range(0, blockParent.childCount);
     if (!blockParent.GetChild(index1).TryGetComponent(out IColorBlock colorBlock)) return -1;
     return colorBlock.GetColorValue();
+  }
+
+  void VisualizeUseTriggerBooster2()
+  {
+    Sequence seq = DOTween.Sequence();
+    float spaceTime = 0.08f;
+    float duration = 0.16f;
+
+    for (int i = 0; i < _directionBlocks.Length; i++)
+    {
+      var directionBlock = _directionBlocks[i];
+      if (directionBlock == null) continue;
+      if (!directionBlock.TryGetComponent(out DirectionBlockControl component)) continue;
+
+      var gridPos = bottomGrid.ConvertIndexToGridPos(component.GetIndex());
+      var startPos = bottomGrid.ConvertIndexToWorldPos(component.GetIndex());
+      var endPos = startPos + new float3(0f, 0.5f, 0f);
+
+      var startScale = directionBlock.transform.localScale;
+      var endScale = startScale * 1.2f;
+
+      seq.Insert(gridPos.y * spaceTime,
+        directionBlock.transform.DOMove(endPos, duration)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime + duration,
+        directionBlock.transform.DOMove(startPos, duration/2)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime,
+        directionBlock.transform.DOScale(endScale, duration)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime + duration,
+        directionBlock.transform.DOScale(startScale, duration/2)
+        .SetEase(Ease.Linear));
+    }
   }
 }

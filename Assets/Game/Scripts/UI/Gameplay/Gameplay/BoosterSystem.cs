@@ -8,7 +8,7 @@ public partial class GameplayPanel
     int levelUnlockBooster1 = 0;
     int levelUnlockBooster2 = 0;
     int levelUnlockBooster3 = 0;
-    public bool IsTriggerBooster1 { get;  private set; }
+    public bool IsTriggerBooster1 { get; private set; }
     void InitBooster()
     {
         VisualeTriggerBooster1();
@@ -51,9 +51,21 @@ public partial class GameplayPanel
             ToggleBooster2Modal();
         else
         {
-            LevelManager.Instance.OnTriggerBooster2();
-            //visualize trigger booster
+            UseBooster2Modal.gameObject.SetActive(true);
+            GameManager.Instance.SetGameState(GameState.GamepPause);
         }
+    }
+
+    public void ExitBooster2()
+    {
+        UseBooster2Modal.gameObject.SetActive(false);
+        GameManager.Instance.SetGameState(GameState.Gameplay);
+    }
+
+    public void OnTriggerBooster2Success()
+    {
+        LevelManager.Instance.OnTriggerBooster2();
+        ExitBooster2();
     }
 
     public void OnTriggerBooster3()

@@ -26,6 +26,7 @@ public partial class LevelManager : MonoBehaviour
   {
     _isUserScreenTouching = true;
 
+    if (GameManager.Instance.GetGameState() != GameState.Gameplay) return;
     Vector2 startTouchPos = Camera.main.ScreenToWorldPoint(finger.ScreenPosition);
     Collider2D[] colliders = Physics2D.OverlapPointAll(startTouchPos);
 
