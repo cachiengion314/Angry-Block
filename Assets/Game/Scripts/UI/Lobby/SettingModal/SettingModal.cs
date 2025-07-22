@@ -5,6 +5,7 @@ using Sych.ShareAssets.Runtime;
 using UnityEngine.Networking;
 using System;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 
 public class SettingModal : MonoBehaviour
@@ -169,6 +170,7 @@ public class SettingModal : MonoBehaviour
 
   public void BackHome()
   {
+    DOTween.KillAll();
     SoundManager.Instance.PlayPressBtnSfx();
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);
   }

@@ -112,6 +112,7 @@ public partial class LevelManager : MonoBehaviour
       if (!targetBlock.TryGetComponent<IColorBlock>(out var targetColorBlock)) continue;
 
       _colorBlocks[targetColorBlock.GetIndex()] = null;
+      _amountColorBlock--;
       OnColorBlockDestroyedByBullet(targetBlock.gameObject);
 
       CleanReleaseFor(bullet);

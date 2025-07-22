@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Firebase.Analytics;
 using TMPro;
 using UnityEngine;
@@ -14,11 +15,13 @@ public class LevelFailedPanel : MonoBehaviour
 
   public void TryAgain()
   {
+    DOTween.KillAll();
     SceneManager.LoadScene(KeyString.NAME_SCENE_GAMEPLAY);
   }
 
   public void BackHome()
   {
+    DOTween.KillAll();
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);
   }
 }

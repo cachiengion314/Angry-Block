@@ -2236,6 +2236,7 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.07
   levelSelected: 4
+  IsSelectlevel: 0
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -2340,7 +2341,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -13}
-  m_SizeDelta: {x: 176, y: 160}
+  m_SizeDelta: {x: 275.2, y: 172.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &255715112
 MonoBehaviour:
@@ -2362,7 +2363,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f5ac02f2ab90949f3948ea610670f2e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8a3325c986ec459c88a3e59f3bcf01b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -15414,6 +15415,269 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895738451}
   m_CullTransparentMesh: 1
+--- !u!1001 &1896843079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: boomSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: dea2ed304b4d0834ba0c82cf9175aa0c, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: swapSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: comboSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: pickEggs
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: mainTheme
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c6db47bbbb126248a9d1285b22bf6da, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: packedSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: rewardEgg
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: brokenEggs
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: giftBoxSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: hittingSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: suggesTaks
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: claimReward
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: coinDropSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: coverLetSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: cupBoardSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: dinhdinhSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: plantPotSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: pressBtnSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: claimItemSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: getRewardSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: levelFailSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: magicNestSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: nextLevelSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: nextStageSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: SuggessPosEgg
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: claimBreadSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: handOnCoinSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: iceDestroySfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: pickedTraySfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: placedTraySfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: balloonItemSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: coffeeBoardSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: coinExplodeSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: coinReceiveSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: trayTranferSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: machineCreamSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: leavesSpreadOutSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: claimDailyRewardSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 4878564222669383056, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: flowerPotBloomingSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1709aceb956f34637873df571d2bee20, type: 3}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160761483926919081, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288754524028493567, guid: 027a3f7ea1c654223990d2dede1c07fe,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 027a3f7ea1c654223990d2dede1c07fe, type: 3}
 --- !u!1 &1902774730
 GameObject:
   m_ObjectHideFlags: 0
@@ -17844,7 +18108,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -7}
-  m_SizeDelta: {x: 176, y: 160}
+  m_SizeDelta: {x: 275.2, y: 172.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &150259317280975033
 RectTransform:
@@ -18612,7 +18876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f5ac02f2ab90949f3948ea610670f2e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8a3325c986ec459c88a3e59f3bcf01b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -19621,6 +19885,7 @@ SceneRoots:
   - {fileID: 1608169874}
   - {fileID: 2208373389055128969}
   - {fileID: 663771092}
+  - {fileID: 1896843079}
   - {fileID: 837230475345675420}
   - {fileID: 229877049}
   - {fileID: 2142750223}
