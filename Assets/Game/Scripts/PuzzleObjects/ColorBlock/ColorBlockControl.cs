@@ -6,6 +6,7 @@ public class ColorBlockControl : MonoBehaviour
   , IColorBlock
   , IDamageable
   , IMoveable
+  , ISpriteRend
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
@@ -129,5 +130,20 @@ public class ColorBlockControl : MonoBehaviour
   public float3[] GetPath()
   {
     throw new System.NotImplementedException();
+  }
+
+  public SpriteRenderer GetBodyRenderer()
+  {
+    return bodyRenderer;
+  }
+
+  public int GetSortingOrder()
+  {
+    return bodyRenderer.sortingOrder;
+  }
+
+  public void SetSortingOrder(int sortingOrder)
+  {
+    bodyRenderer.sortingOrder = sortingOrder;
   }
 }

@@ -1,20 +1,30 @@
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
   void OnOutOfAmmunition(GameObject blastBlock)
   {
-    blastBlock.transform.DOScale(1.6f, .25f)
+    if (!blastBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
+    if (DOTween.IsTweening(sprite.GetBodyRenderer().transform)) return;
+
+    var duration = .2f;
+    sprite.GetBodyRenderer().DOColor(Color.gray, duration * 2f);
+    var originalScale = sprite.GetBodyRenderer().transform.localScale;
+    sprite.GetBodyRenderer().transform.DOScale(1.3f * originalScale, duration)
       .SetLoops(2, LoopType.Yoyo)
       .OnComplete(
         () =>
         {
-          blastBlock.transform.DOScale(1.2f, .25f)
-          .SetLoops(2, LoopType.Yoyo)
+          sprite.GetBodyRenderer().transform.DOScale(.7f * originalScale, duration)
+          .SetLoops(2, LoopType.Incremental)
           .OnComplete(
             () =>
             {
+              _firingSlots.Remove(blastBlock);
+              SpawnColorSplashEfxAt(blastBlock.transform.position);
+              GenerateCustomCameraShake(new float3(.02f, .2f, 0));
               Destroy(blastBlock);
             }
           );
@@ -47,18 +57,34 @@ public partial class LevelManager : MonoBehaviour
     }
 
     blastBlock.transform
-      .DOScale(1.32f, fireRate / 2f)
+      .DOScale(.9f, fireRate / 2f)
+      .SetLoops(2, LoopType.Yoyo);
+
+    if (!blastBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
+    var dirToTarget = (target.transform.position - blastBlock.transform.position).normalized;
+    var targetPos = Vector3.zero + -1 * .2f * dirToTarget;
+    sprite.GetBodyRenderer()
+      .transform.DOLocalMove(targetPos, fireRate / 2f)
       .SetLoops(2, LoopType.Yoyo);
   }
 
   void OnColorBlockDestroyedByBullet(GameObject colorBlock)
   {
+    var duration = .12f;
     colorBlock.transform
-      .DOScale(1.3f, .05f)
-      .OnComplete(() =>
-      {
-        SpawnColorSplashEfxAt(colorBlock.transform.position);
-        Destroy(colorBlock);
-      });
+     .DOScale(1.3f, duration)
+     .OnComplete(() =>
+     {
+       SpawnColorSplashEfxAt(colorBlock.transform.position);
+       Destroy(colorBlock);
+     });
+
+    if (!colorBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
+    sprite.SetSortingOrder(sprite.GetSortingOrder() + 1);
+    sprite.GetBodyRenderer()
+     .DOColor(Color.yellow, duration);
+    var targetPos = colorBlock.transform.position + Vector3.up * .3f;
+    sprite.GetBodyRenderer()
+      .transform.DOMove(targetPos, duration);
   }
 }

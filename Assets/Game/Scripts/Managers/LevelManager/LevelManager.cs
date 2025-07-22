@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -8,9 +7,11 @@ public partial class LevelManager : MonoBehaviour
 {
   public static LevelManager Instance { get; private set; }
   [Header("Level Manager")]
+  [Range(0f, 2f)]
+  [SerializeField] float updateSpeed;
   LevelInformation levelInformation;
   [SerializeField][Range(1, 20)] int levelSelected = 1;
-  [SerializeField]bool IsSelectlevel = false;
+  [SerializeField] bool IsSelectlevel = false;
   [Header("Dependencies")]
   [SerializeField] Transform spawnedParent;
   public Transform SpawnedParent => spawnedParent;
@@ -18,8 +19,6 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
   public GridWorld BottomGrid => bottomGrid;
-  [Range(0f, 2f)]
-  [SerializeField] float updateSpeed;
 
   void Start()
   {
@@ -32,11 +31,11 @@ public partial class LevelManager : MonoBehaviour
     SubscribeTouchEvent();
 
     InitPool();
-    
+
     if (!IsSelectlevel)
       levelSelected = GameManager.Instance.CurrentLevel + 1;
     LoadLevelFrom(levelSelected);
-    
+
     SetupCurrentLevel();
   }
 

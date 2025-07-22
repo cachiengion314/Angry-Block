@@ -62,15 +62,15 @@ public partial class LevelManager : MonoBehaviour
       var blastBlock = _firingSlots[i];
       if (!blastBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
+
+      WanderingAroundUpdate(blastBlock);
+
       if (!blastBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0)
       {
-        _firingSlots.Remove(blastBlock);
         OnOutOfAmmunition(blastBlock);
         continue;
       }
-
-      WanderingAroundUpdate(blastBlock);
 
       if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
       var colorBlocks = FindColorBlocksMatchedFor(blastBlock);

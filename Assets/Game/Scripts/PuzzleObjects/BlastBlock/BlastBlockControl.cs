@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class BlastBlockControl : MonoBehaviour
+  , ISpriteRend
   , IColorBlock
   , IMoveable
   , IGun
@@ -86,5 +87,20 @@ public class BlastBlockControl : MonoBehaviour
   public float3[] GetPath()
   {
     return _path;
+  }
+
+  public SpriteRenderer GetBodyRenderer()
+  {
+    return bodyRenderer;
+  }
+
+  public int GetSortingOrder()
+  {
+    return bodyRenderer.sortingOrder;
+  }
+
+  public void SetSortingOrder(int sortingOrder)
+  {
+    bodyRenderer.sortingOrder = sortingOrder;
   }
 }
