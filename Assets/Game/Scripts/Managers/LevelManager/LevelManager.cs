@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -40,10 +41,10 @@ public partial class LevelManager : MonoBehaviour
     ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
     LockAndFireTargetUpddate();
+    UpdateWinLevel();
     BulletPositionsUpdate();
+    UpdateLoseLevel();
     MovesToWaitingUpdate();
-
-    IsLoseLevel();
   }
 
   void OnDestroy()
@@ -158,6 +159,7 @@ public partial class LevelManager : MonoBehaviour
     }
 
     InitWaitingSlots();
+    GameManager.Instance.SetGameState(GameState.Gameplay);
   }
 
   public Collider2D FindObjIn<T>(Collider2D[] cols)
@@ -248,11 +250,28 @@ public partial class LevelManager : MonoBehaviour
     print("Load level " + level + " successfully ");
   }
 
-  public void IsLoseLevel()
+  void UpdateLoseLevel()
   {
+    if (GameManager.Instance.GetGameState() != GameState.Gameplay) return;
     if (IsWaitingSlotsMMoving()) return;
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot != -1) return;
-    Debug.Log("lose");
+    GameManager.Instance.SetGameState(GameState.Gameover);
+    Debug.Log("Lose");
+  }
+
+  void UpdateWinLevel()
+  {
+    if (GameManager.Instance.GetGameState() != GameState.Gameplay) return;
+    if (!IsBoardClear()) return;
+    GameManager.Instance.SetGameState(GameState.Gamewin);
+    Debug.Log("Win");
+  }
+
+  bool IsBoardClear()
+  {
+    for (int i = 0; i < _colorBlocks.Length; i++)
+      if (_colorBlocks[i] != null) return false;
+    return true;
   }
 }

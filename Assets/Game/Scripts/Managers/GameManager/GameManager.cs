@@ -8,6 +8,7 @@ public enum GameState
   Gameplay,
   GamepPause,
   Gameover,
+  Gamewin,
   Tutorial,
 }
 

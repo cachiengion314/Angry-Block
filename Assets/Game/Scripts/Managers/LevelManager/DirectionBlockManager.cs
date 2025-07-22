@@ -32,7 +32,7 @@ public partial class LevelManager : MonoBehaviour
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
     _waitingSlots[emptyWaitingSlot] = directionBlock;
-    _directionBlocks[directionBlock.GetComponent<IColorBlock>().GetIndex()] = null;
+    _directionBlocks[color.GetIndex()] = null;
 
     AutoSortingWaitingSlotAndMoves();
 
