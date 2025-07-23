@@ -20,10 +20,11 @@ public partial class LevelManager : MonoBehaviour
   GameObject ChooseTargetFrom(List<GameObject> colorBlocks, GameObject blastBlock)
   {
     GameObject target = null;
+
     for (int i = colorBlocks.Count - 1; i >= 0; --i)
     {
       var obj = colorBlocks[i];
-      if (obj == null) continue;
+
       if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
       if (damageable.GetWhoPicked() == blastBlock) return obj;
       if (damageable.GetWhoPicked() == null) target = obj;
@@ -85,15 +86,15 @@ public partial class LevelManager : MonoBehaviour
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
 
-      if (
-        _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
-        && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
-      )
-      {
-        // if block is not standing at firing zone its should not permitted for firing
-        damageable.SetWhoPicked(null);
-        continue;
-      }
+      // if (
+      //   _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
+      //   && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
+      // )
+      // {
+      //   // if block is not standing at firing zone its should not permitted for firing
+      //   damageable.SetWhoPicked(null);
+      //   continue;
+      // }
 
       damageable.SetWhoPicked(blastBlock); // picking this target to prevent other interfere
       var dirToTarget = target.transform.position - blastBlock.transform.position;

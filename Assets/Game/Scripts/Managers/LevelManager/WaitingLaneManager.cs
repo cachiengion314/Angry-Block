@@ -195,13 +195,15 @@ public partial class LevelManager : MonoBehaviour
       if (emptyFiringSlot > _firingSlots.Count - 1)
         _firingSlots.Add(waitingBlock);
 
-      var randDir = Vector3.right * UnityEngine.Random.Range(0, 2.4f);
+      var randDir = Vector3.right * UnityEngine.Random.Range(0, 2.8f);
       var targetPos = _firingPositions.GetChild(0).position + randDir;
 
       waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
       waitingBlock.transform.DOMove(targetPos, .2f)
         .OnComplete(() =>
         {
+          if (waitingBlock.TryGetComponent<Collider2D>(out var col))
+            col.enabled = false;
           waitingBlock.GetComponent<IMoveable>().SetLockedPosition(0);
           SortingWaitSlotAndAddToMovesQueue();
         });
