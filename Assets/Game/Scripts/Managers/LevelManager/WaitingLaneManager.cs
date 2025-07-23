@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
@@ -55,17 +54,6 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       AddToMoveQueue(i, obj, waitingPositions);
     }
-  }
-
-  bool IsWaitingSlotsMTweening()
-  {
-    for (int i = 0; i < _waitingSlots.Length; ++i)
-    {
-      var block = _waitingSlots[i];
-      if (block == null) continue;
-      if (DOTween.IsTweening(block.transform)) return true;
-    }
-    return false;
   }
 
   bool IsWaitingSlotsMMoving()

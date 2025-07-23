@@ -56,15 +56,16 @@ public partial class LevelManager : MonoBehaviour
       moveableBullet.SetLockedTarget(target.transform);
     }
 
-    blastBlock.transform
-      .DOScale(.9f, fireRate / 2f)
-      .SetLoops(2, LoopType.Yoyo);
-
     if (!blastBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
     var dirToTarget = (target.transform.position - blastBlock.transform.position).normalized;
-    var targetPos = Vector3.zero + -1 * .2f * dirToTarget;
+    var targetPos = Vector3.zero + -1 * .4f * dirToTarget;
     sprite.GetBodyRenderer()
       .transform.DOLocalMove(targetPos, fireRate / 2f)
+      .SetLoops(2, LoopType.Yoyo);
+
+    var originalScale = sprite.GetBodyRenderer().transform.localScale;
+    sprite.GetBodyRenderer()
+      .transform.DOScale(.8f * originalScale, fireRate / 2f)
       .SetLoops(2, LoopType.Yoyo);
   }
 
