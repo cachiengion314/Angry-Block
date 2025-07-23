@@ -225,6 +225,7 @@ public partial class LevelManager
     {
       var waittingBlock = _waitingSlots[i];
       if (waittingBlock == null) continue;
+      if (!waittingBlock.TryGetComponent(out DirectionBlockControl component)) continue;
       if (!waittingBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
       if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(waittingBlock);
       if (directionBlocks.Count == misAmount) return directionBlocks;
@@ -320,6 +321,7 @@ public partial class LevelManager
     for (int i = 0; i < _waitingSlots.Length; i++)
     {
       if (_waitingSlots[i] == null) continue;
+      if (!_waitingSlots[i].TryGetComponent(out DirectionBlockControl component)) continue;
       waitingSlots.Add(_waitingSlots[i]);
     }
     if (waitingSlots.Count == 0) return -1;
