@@ -110,7 +110,6 @@ public partial class LevelManager : MonoBehaviour
 
   void ShouldMergeUpdate(GameObject waitingBlock)
   {
-    // if (IsWaitingSlotsMMoving()) return;
     if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) return;
     if (!moveable.GetLockedPosition().Equals(0)) return;
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
@@ -189,7 +188,6 @@ public partial class LevelManager : MonoBehaviour
           blast.SetActive(true);
           SortingWaitSlotAndAddToMovesQueue();
           OnMergedCollided(blast);
-          SoundManager.Instance.PlayMergeBlockSfx();
         }
       );
     }
@@ -225,7 +223,7 @@ public partial class LevelManager : MonoBehaviour
       if (emptyFiringSlot > _firingSlots.Count - 1)
         _firingSlots.Add(waitingBlock);
 
-      var randDir = Vector3.right * UnityEngine.Random.Range(0, 2.8f);
+      var randDir = Vector3.right * UnityEngine.Random.Range(0, 5.0f);
       var targetPos = _firingPositions.GetChild(0).position + randDir;
 
       waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);

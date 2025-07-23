@@ -93,6 +93,8 @@ public partial class LevelManager : MonoBehaviour
 
   void OnMergedCollided(GameObject blast)
   {
+    SoundManager.Instance.PlayMergeBlockSfx();
+
     SpawnColorSplashEfxAt(blast.transform.position);
     ShakeCameraBy(new float3(.0f, .25f, .0f));
 
