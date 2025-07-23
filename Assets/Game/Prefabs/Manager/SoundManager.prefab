@@ -144,4 +144,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTheme: {fileID: 8300000, guid: 36d6d3cb5bc2f48748f1e86964fff0ac, type: 3}
   pressBtnSfx: {fileID: 8300000, guid: a4c0f056510b341ac84aebd3317d3530, type: 3}
+  winLevelSfx: {fileID: 8300000, guid: 39513b2dd52d042afa57cc6a837d51b3, type: 3}
+  loseLevelSfx: {fileID: 8300000, guid: d9a004fecc7714462b0f6a6e204ced7f, type: 3}
+  clickBlockSfx: {fileID: 8300000, guid: fbcb4fed2e9bc4ab3b4db6d2c46ce1fb, type: 3}
+  blockMoveSfx: {fileID: 8300000, guid: b18f9ec002d7c4facb0aabc2d675daec, type: 3}
+  mergeBlockSfx: {fileID: 8300000, guid: 84702356d9d76487cb883104ffa0a6ff, type: 3}
+  shootingSfx: {fileID: 8300000, guid: 7a7a081ef81c5453681c9641f43929c3, type: 3}
+  destoyBlockSfx: {fileID: 8300000, guid: 441de7a7d5ff24118878118ccde497b8, type: 3}
   audioSource: {fileID: 6400335707775268905}

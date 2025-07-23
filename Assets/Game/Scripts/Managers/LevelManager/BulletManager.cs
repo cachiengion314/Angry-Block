@@ -45,6 +45,7 @@ public partial class LevelManager : MonoBehaviour
       moveable.SetPath(null);
     }
     _activeBullets.Add(obj);
+    SoundManager.Instance.PlayShootingSfx();
   }
 
   void OnRelease(BulletControl obj)

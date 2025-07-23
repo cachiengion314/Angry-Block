@@ -12,6 +12,13 @@ public partial class SoundManager : MonoBehaviour
   [Header("Injected Dependencies")]
   [SerializeField] AudioClip mainTheme;
   [SerializeField] AudioClip pressBtnSfx;
+  [SerializeField] AudioClip winLevelSfx;
+  [SerializeField] AudioClip loseLevelSfx;
+  [SerializeField] AudioClip clickBlockSfx;
+  [SerializeField] AudioClip blockMoveSfx;
+  [SerializeField] AudioClip mergeBlockSfx;
+  [SerializeField] AudioClip shootingSfx;
+  [SerializeField] AudioClip destoyBlockSfx;
 
   [Header("Components")]
   [SerializeField] AudioSource audioSource;
@@ -57,9 +64,79 @@ public partial class SoundManager : MonoBehaviour
     AudioSource.PlayClipAtPoint(pressBtnSfx, Vector3.forward * -5, 1f);
   }
 
+  public void PlayClickBlockSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(clickBlockSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayBlockMoveSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(blockMoveSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayMergeBlockSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(mergeBlockSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayShootingSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(shootingSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayDestoyBlockSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(destoyBlockSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayWinLevelSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(winLevelSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayLoseLevelSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(loseLevelSfx, Vector3.forward * -5, 1f);
+  }
+
   public void PlayMainThemeSfx()
   {
-    audioSource.volume = 1f;
+    audioSource.volume = .35f;
     audioSource.clip = mainTheme;
     audioSource.loop = true;
     audioSource.Play();

@@ -24,9 +24,18 @@ public partial class LevelManager : MonoBehaviour
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
+
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
+
+    if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
+    if (!moveable.GetLockedPosition().Equals(0)) return;
+
+    SoundManager.Instance.PlayClickBlockSfx();
+    
     if (!IsBlockMoveable(directionBlock)) return;
+
+    SoundManager.Instance.PlayBlockMoveSfx();
 
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;

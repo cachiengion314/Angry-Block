@@ -26,6 +26,7 @@ public partial class LevelManager : MonoBehaviour
               SpawnColorSplashEfxAt(blastBlock.transform.position);
               ShakeCameraBy(new float3(.0f, -.25f, .0f));
               Destroy(blastBlock);
+              SoundManager.Instance.PlayDestoyBlockSfx();
             }
           );
         }

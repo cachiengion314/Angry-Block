@@ -97,10 +97,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleLevelCompleteModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!LevelCompleteModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayWinLevelSfx();
       OpenModal(LevelCompleteModal);
     }
     else
@@ -111,10 +110,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleLevelFailedModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!LevelFiailedModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayLoseLevelSfx();
       OpenModal(LevelFiailedModal);
     }
     else
@@ -125,10 +123,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleOutOfSpaceModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!OutOfSpaceModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayLoseLevelSfx();
       OpenModal(OutOfSpaceModal);
     }
     else

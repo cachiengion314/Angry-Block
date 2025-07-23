@@ -17,9 +17,14 @@ public partial class LevelManager
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
 
+    if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
+    if (!moveable.GetLockedPosition().Equals(0)) return;
+
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
+    SoundManager.Instance.PlayClickBlockSfx();
+    SoundManager.Instance.PlayBlockMoveSfx();
     OnTriggerBooster1Success?.Invoke();
     GameManager.Instance.Booster1--;
 
@@ -125,6 +130,7 @@ public partial class LevelManager
       OnTriggerNeighborAt(mergeableBlock);
       if (!mergeableBlock.TryGetComponent(out IColorBlock colorBlock)) return;
       colorBlock.SetIndex(-1);
+      SoundManager.Instance.PlayBlockMoveSfx();
     }
     AutoSortingMergeSlotBooster3AndMoves();
   }
@@ -256,6 +262,7 @@ public partial class LevelManager
           blast.SetActive(true);
           SortingWaitSlotAndAddToMovesQueue();
           OnMergedCollided(blast);
+          SoundManager.Instance.PlayMergeBlockSfx();
         }
       );
     }
