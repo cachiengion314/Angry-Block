@@ -169,7 +169,7 @@ public partial class LevelManager : MonoBehaviour
       _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 
-    InitWaitingSlots();
+    InitWaitingSlots(levelInformation.lockSlot);
     GameManager.Instance.SetGameState(GameState.Gameplay);
   }
 

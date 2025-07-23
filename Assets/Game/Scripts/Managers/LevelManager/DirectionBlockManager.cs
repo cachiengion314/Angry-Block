@@ -32,7 +32,7 @@ public partial class LevelManager : MonoBehaviour
     if (!moveable.GetLockedPosition().Equals(0)) return;
 
     SoundManager.Instance.PlayClickBlockSfx();
-    
+
     if (!IsBlockMoveable(directionBlock)) return;
 
     SoundManager.Instance.PlayBlockMoveSfx();
@@ -52,6 +52,13 @@ public partial class LevelManager : MonoBehaviour
   GameObject FindDirectionBlockIn(Collider2D[] cols)
   {
     var col = FindObjIn<IDirectionBlock>(cols);
+    if (col == null) return null;
+    return col.gameObject;
+  }
+
+  GameObject FindWatingSlotIn(Collider2D[] cols)
+  {
+    var col = FindObjIn<SlotControl>(cols);
     if (col == null) return null;
     return col.gameObject;
   }

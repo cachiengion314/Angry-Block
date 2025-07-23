@@ -2602,7 +2602,7 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.07
   updateSpeed: 1
-  levelSelected: 4
+  levelSelected: 6
   IsSelectlevel: 1
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
@@ -2625,6 +2625,8 @@ MonoBehaviour:
   blastBlockPref: {fileID: 7079601437973545734, guid: 2d1124fc1008d498cb8d478b0c782183,
     type: 3}
   tunnelControlPref: {fileID: 1185800365850832064, guid: 9fef60b5c4ecf457c909ea25f6f91324,
+    type: 3}
+  slotControlPref: {fileID: 3067627321831602852, guid: d98a7bcbb6f3a462c934fd3ace47659b,
     type: 3}
   colorSplashEfx: {fileID: 8846621222330615231, guid: 63f9cc64309a14e50bc764f3fede4fd3,
     type: 3}
@@ -7009,26 +7011,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3577034904263904071, guid: 3e301a139d9174e9b8f0122adc1a7193,
-        type: 3}
-      propertyPath: RunInEditor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577034904263904071, guid: 3e301a139d9174e9b8f0122adc1a7193,
-        type: 3}
-      propertyPath: TargetFrameRate
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 5060072142226198143, guid: 3e301a139d9174e9b8f0122adc1a7193,
         type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 129176591499187209, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
-    - {fileID: 3392381627869134536, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
-    - {fileID: 6036334647288523605, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
-    - {fileID: 49202133566436763, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

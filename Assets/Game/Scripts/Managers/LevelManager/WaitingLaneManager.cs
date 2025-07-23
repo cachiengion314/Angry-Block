@@ -9,9 +9,37 @@ public partial class LevelManager : MonoBehaviour
   GameObject[] _waitingSlots;
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
 
-  void InitWaitingSlots()
+  void InitWaitingSlots(int lockSlot)
   {
-    _waitingSlots = new GameObject[waitingPositions.childCount];
+    int unlockSlot = waitingPositions.childCount - lockSlot;
+    _waitingSlots = new GameObject[unlockSlot];
+    for (int i = 0; i < waitingPositions.childCount; i++)
+    {
+      var slot = SpawnSlotAt(waitingPositions.GetChild(i).position, spawnedParent);
+      if (i < unlockSlot) slot.UnlockSlot();
+      else slot.LockSlot();
+    }
+  }
+
+  void UnlockSlot()
+  {
+    int unlockSlot = _waitingSlots.Length;
+    unlockSlot++;
+    if (unlockSlot > waitingPositions.childCount)
+      unlockSlot = waitingPositions.childCount;
+    GameObject[] watingSlotTemp = (GameObject[])_waitingSlots.Clone();
+
+    _waitingSlots = new GameObject[unlockSlot];
+    for (int i = 0; i < watingSlotTemp.Length; i++)
+      _waitingSlots[i] = watingSlotTemp[i];
+  }
+
+  void OnUnlockSlot(GameObject slot)
+  {
+    if (slot == null) return;
+    if (!slot.TryGetComponent(out SlotControl control)) return;
+    control.UnlockSlot();
+    UnlockSlot();
   }
 
   void AutoSortingWaitingSlots()

@@ -54,6 +54,8 @@ public class ColorBlockPartitionData
 public class LevelInformation
 {
   [ViewOnly] public int Index;
+  [Range(0, 3)]
+  public int lockSlot;
   public float3 ColorBlocksGridPosition;
   [ViewOnly] public int2 ColorBlocksGridSize;
   /// <summary>
