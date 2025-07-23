@@ -17,14 +17,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: bffd124cb68734773b3dec9b2f7eb6b1
-  - enabled: 0
-    path: Assets/Scenes/MagicCauldron.unity
-    guid: 46c323273e04c439ea760c0b3cd7193f
-  - enabled: 0
-    path: Assets/Scenes/Tool/GameplayTool.unity
-    guid: 894c6e8bacc544b7d8d109ea03580f51
-  - enabled: 0
-    path: Assets/Scenes/Tool/TestNew.unity
-    guid: e4b12b927cca0475ba75ba050ffee3bc
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

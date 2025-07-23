@@ -7017,7 +7017,7 @@ PrefabInstance:
     - target: {fileID: 3577034904263904071, guid: 3e301a139d9174e9b8f0122adc1a7193,
         type: 3}
       propertyPath: TargetFrameRate
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5060072142226198143, guid: 3e301a139d9174e9b8f0122adc1a7193,
         type: 3}

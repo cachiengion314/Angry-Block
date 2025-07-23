@@ -160,7 +160,6 @@ public partial class LevelManager : MonoBehaviour
           blast.SetActive(true);
           SortingWaitSlotAndAddToMovesQueue();
           OnMergedCollided(blast);
-          SoundManager.Instance.PlayMergeBlockSfx();
         }
       );
     }
