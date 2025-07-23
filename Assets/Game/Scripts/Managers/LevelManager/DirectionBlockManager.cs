@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Unity.Mathematics;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public partial class LevelManager : MonoBehaviour
 {
@@ -24,16 +25,32 @@ public partial class LevelManager : MonoBehaviour
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
-
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
-
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
     if (!moveable.GetLockedPosition().Equals(0)) return;
 
     SoundManager.Instance.PlayClickBlockSfx();
-    
-    if (!IsBlockMoveable(directionBlock)) return;
+
+    if (!IsBlockMoveable(directionBlock, out var collidedBlock))
+    {
+      if (DOTween.IsTweening(directionBlock.transform)) return;
+
+      var duration = .1f;
+      var dir = .88f * (collidedBlock.transform.position - directionBlock.transform.position);
+      var dirTargetPos = directionBlock.transform.position + dir;
+      directionBlock.transform
+        .DOMove(dirTargetPos, duration)
+        .SetLoops(2, LoopType.Yoyo);
+
+      var colTargetPos = collidedBlock.transform.position + dir.normalized * .5f;
+      collidedBlock.transform
+        .DOMove(colTargetPos, duration)
+        .SetLoops(2, LoopType.Yoyo);
+
+      ShakeCameraBy(dir * .1f);
+      return;
+    }
 
     SoundManager.Instance.PlayBlockMoveSfx();
 
@@ -121,8 +138,9 @@ public partial class LevelManager : MonoBehaviour
     return path;
   }
 
-  bool IsBlockMoveable(GameObject directionBlock)
+  bool IsBlockMoveable(GameObject directionBlock, out GameObject collidedBlock)
   {
+    collidedBlock = null;
     if (!directionBlock.TryGetComponent(out IDirectionBlock direction)) return false;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return false;
     var blockGrid = bottomGrid.ConvertIndexToGridPos(color.GetIndex());
@@ -131,7 +149,11 @@ public partial class LevelManager : MonoBehaviour
     while (!bottomGrid.IsGridPosOutsideAt(nextBlock))
     {
       var index = bottomGrid.ConvertGridPosToIndex(nextBlock);
-      if (_directionBlocks[index] != null) return false;
+      if (_directionBlocks[index] != null)
+      {
+        collidedBlock = _directionBlocks[index];
+        return false;
+      }
       nextBlock += dirBlock;
     }
     return true;
