@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public partial class LevelManager
 {
   [SerializeField] Transform mergePositions;
+  [SerializeField] GameObject[] _mergeSlotBooster3 = new GameObject[3];
   public Action OnTriggerBooster1Success;
   public void OnTriggerBooster1(GameObject directionBlock)
   {
@@ -34,12 +35,12 @@ public partial class LevelManager
   public void OnTriggerBooster2()
   {
     var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
-    VisualizeUseTriggerBooster2();
     for (int i = directionBlockAvailables.Length - 1; i >= 0; i--)
     {
       int j = UnityEngine.Random.Range(0, i + 1);
       SwapAt(directionBlockAvailables[i], directionBlockAvailables[j]);
     }
+    VisualizeUseTriggerBooster2();
   }
 
   GameObject[] FindDirectionBlocksNotNullAt(GameObject[] directionBlocks)
@@ -108,27 +109,74 @@ public partial class LevelManager
   public void OntriggerBooster3()
   {
     int colorValue = GetRandomColor();
-    if (colorValue != -1)
+    if (colorValue == -1) return;
+    var needBlocks = FindDirectionBlockColorAt(3, colorValue);
+    foreach (var mergeableBlock in needBlocks)
     {
-      int count = 0;
-      if (_mergeSlots.ContainsKey(colorValue)) count = _mergeSlots[colorValue].Count;
+      if (mergeableBlock == null) continue;
 
-      var misAmount = 3 - count;
-      var DirBlocks = FindDirectionBlockColorAt(misAmount, colorValue);
-      foreach (GameObject dirBlock in DirBlocks)
-      {
-        OnTriggerNeighborAt(dirBlock);
-        if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) return;
-        colorBlock.SetIndex(-1);
-        ShouldMergeBooster3(dirBlock);
-      }
+      var slot = FindSlotFor(mergeableBlock, _waitingSlots);
+      if (slot != -1) _waitingSlots[slot] = null;
+
+      var emptyMergeSlot = FindEmptySlotFrom(_mergeSlotBooster3);
+      if (emptyMergeSlot == -1) continue;
+      _mergeSlotBooster3[emptyMergeSlot] = mergeableBlock;
+
+      OnTriggerNeighborAt(mergeableBlock);
+      if (!mergeableBlock.TryGetComponent(out IColorBlock colorBlock)) return;
+      colorBlock.SetIndex(-1);
+    }
+    AutoSortingMergeSlotBooster3AndMoves();
+  }
+
+  void AutoSortingMergeSlotBooster3AndMoves()
+  {
+    _needMovingObjs.Clear();
+    for (int i = 0; i < _mergeSlotBooster3.Length; ++i)
+    {
+      var obj = _mergeSlotBooster3[i];
+      if (obj == null) continue;
+      AddToMoveQueue(i, obj, mergePositions);
     }
   }
 
-  void ShouldMergeBooster3(GameObject waitingBlock)
+  void WaitAndFindMatchedBooter3Update()
   {
-    if (IsWaitingSlotsMMoving()) return;
+    if (IsMergeBooster3SlotsMMoving()) return;
+    for (int i = 0; i < _mergeSlotBooster3.Length; ++i)
+    {
+      if (_mergeSlotBooster3[i] == null) continue;
+      var mergeBlock = _mergeSlotBooster3[i];
+      if (!mergeBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+      ShouldMergeBooster3Update(mergeBlock);
 
+      if (!mergeBlock.TryGetComponent<IGun>(out var gun)) continue;
+      if (gun.GetAmmunition() <= 0) continue;
+
+      /// move to firing slot
+      var emptyFiringSlot = FindEmptySlotFrom(_firingSlots);
+
+      var mergeIdx = FindSlotFor(mergeBlock, _mergeSlotBooster3);
+      if (mergeIdx < 0 || mergeIdx > _mergeSlotBooster3.Length - 1) continue;
+
+      _mergeSlotBooster3[mergeIdx] = null;
+      if (emptyFiringSlot > _firingSlots.Count - 1)
+        _firingSlots.Add(mergeBlock);
+
+      var randDir = Vector3.right * UnityEngine.Random.Range(0, 2.4f);
+      var targetPos = _firingPositions.GetChild(0).position + randDir;
+
+      mergeBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
+      mergeBlock.transform.DOMove(targetPos, .2f)
+        .OnComplete(() =>
+        {
+          mergeBlock.GetComponent<IMoveable>().SetLockedPosition(0);
+        });
+    }
+  }
+
+  void ShouldMergeBooster3Update(GameObject waitingBlock)
+  {
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
     if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
@@ -143,15 +191,14 @@ public partial class LevelManager
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
-      var idx = FindSlotFor(mergeableBlock, _waitingSlots);
-      if (idx != -1)
-        _waitingSlots[idx] = null;
+      var slot = FindSlotFor(mergeableBlock, _mergeSlotBooster3);
+      if (slot == -1 || slot > _mergeSlotBooster3.Length - 1) continue;
+      _mergeSlotBooster3[slot] = null;
       Destroy(mergeableBlock);
 
       if (i == 1)
       {
-        var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
-        var blastPos = waitingPositions.GetChild(emptyWaitingSlot).position;
+        var blastPos = mergePositions.GetChild(i).position;
         var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {
@@ -163,15 +210,27 @@ public partial class LevelManager
         {
           blastGun.SetAmmunition(totalAmmunition);
         }
-        _waitingSlots[emptyWaitingSlot] = blast.gameObject;
+        _mergeSlotBooster3[1] = blast.gameObject;
       }
     }
+    AutoSortingWaitingSlotAndMoves();
     _mergeSlots.Remove(colorBlock.GetColorValue());
   }
 
   HashSet<GameObject> FindDirectionBlockColorAt(int misAmount, int colorValue)
   {
     HashSet<GameObject> directionBlocks = new();
+
+    for (int i = 0; i < _waitingSlots.Length; i++)
+    {
+      var waittingBlock = _waitingSlots[i];
+      if (waittingBlock == null) continue;
+      if (!waittingBlock.TryGetComponent(out DirectionBlockControl component)) continue;
+      if (!waittingBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
+      if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(waittingBlock);
+      if (directionBlocks.Count == misAmount) return directionBlocks;
+    }
+
     var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
     for (int i = 0; i < directionBlockAvailables.Length; i++)
     {
@@ -258,10 +317,17 @@ public partial class LevelManager
 
   int GetRandomColorInMergeSlots()
   {
-    if (_mergeSlots.Count == 0) return -1;
-    var keys = _mergeSlots.Keys.ToList();
-    int randomIndex = Random.Range(0, keys.Count);
-    return keys[randomIndex];
+    List<GameObject> waitingSlots = new();
+    for (int i = 0; i < _waitingSlots.Length; i++)
+    {
+      if (_waitingSlots[i] == null) continue;
+      if (!_waitingSlots[i].TryGetComponent(out DirectionBlockControl component)) continue;
+      waitingSlots.Add(_waitingSlots[i]);
+    }
+    if (waitingSlots.Count == 0) return -1;
+    int randomIndex = Random.Range(0, waitingSlots.Count);
+    if (!waitingSlots[randomIndex].TryGetComponent(out IColorBlock colorBlock)) return -1;
+    return colorBlock.GetColorValue();
   }
 
   int GetRandomColorInTable()
@@ -332,7 +398,7 @@ public partial class LevelManager
       var startPos = bottomGrid.ConvertIndexToWorldPos(component.GetIndex());
       var endPos = startPos + new float3(0f, 0.5f, 0f);
 
-      var startScale = directionBlock.transform.localScale;
+      var startScale = Vector3.one;
       var endScale = startScale * 1.2f;
 
       seq.Insert(gridPos.y * spaceTime,
@@ -340,7 +406,7 @@ public partial class LevelManager
         .SetEase(Ease.Linear));
 
       seq.Insert(gridPos.y * spaceTime + duration,
-        directionBlock.transform.DOMove(startPos, duration/2)
+        directionBlock.transform.DOMove(startPos, duration / 2)
         .SetEase(Ease.Linear));
 
       seq.Insert(gridPos.y * spaceTime,
@@ -348,7 +414,7 @@ public partial class LevelManager
         .SetEase(Ease.Linear));
 
       seq.Insert(gridPos.y * spaceTime + duration,
-        directionBlock.transform.DOScale(startScale, duration/2)
+        directionBlock.transform.DOScale(startScale, duration / 2)
         .SetEase(Ease.Linear));
     }
   }

@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,8 +21,9 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
   public GridWorld BottomGrid => bottomGrid;
+  bool isLoadLevelSuccess = false;
 
-  void Start()
+  IEnumerator Start()
   {
     if (Instance == null)
     {
@@ -35,15 +38,18 @@ public partial class LevelManager : MonoBehaviour
     if (!IsSelectlevel)
       levelSelected = GameManager.Instance.CurrentLevel + 1;
     LoadLevelFrom(levelSelected);
-
+    yield return new WaitForSeconds(0.2f);
     SetupCurrentLevel();
+    isLoadLevelSuccess = true;
   }
 
   void Update()
   {
+    if (!isLoadLevelSuccess) return;
     FindNeedArrangeCollumnInUpdate();
     ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
+    WaitAndFindMatchedBooter3Update();
     LockAndFireTargetUpddate();
     BulletPositionsUpdate();
     UpdateLoseLevel();
@@ -262,7 +268,7 @@ public partial class LevelManager : MonoBehaviour
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot != -1) return;
     GameManager.Instance.SetGameState(GameState.Gameover);
-    GameplayPanel.Instance.ToggleLevelFailedModal();
+    DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelFailedModal);
   }
 
   void UpdateWinLevel()
@@ -270,6 +276,6 @@ public partial class LevelManager : MonoBehaviour
     if (GameManager.Instance.GetGameState() != GameState.Gameplay) return;
     if (_amountColorBlock > 0) return;
     GameManager.Instance.SetGameState(GameState.Gamewin);
-    GameplayPanel.Instance.ToggleLevelCompleteModal();
+    DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelCompleteModal);
   }
 }

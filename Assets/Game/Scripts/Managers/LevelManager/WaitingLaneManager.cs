@@ -80,6 +80,18 @@ public partial class LevelManager : MonoBehaviour
     return false;
   }
 
+  bool IsMergeBooster3SlotsMMoving()
+  {
+    for (int i = 0; i < _mergeSlotBooster3.Length; ++i)
+    {
+      var block = _mergeSlotBooster3[i];
+      if (block == null) continue;
+      if (!block.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!moveable.GetLockedPosition().Equals(0)) return true;
+    }
+    return false;
+  }
+
   void ShouldMergeUpdate(GameObject waitingBlock)
   {
     if (IsWaitingSlotsMMoving()) return;
