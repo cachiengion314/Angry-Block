@@ -34,7 +34,7 @@ public partial class LevelManager : MonoBehaviour
     _waitingSlots[emptyWaitingSlot] = directionBlock;
     _directionBlocks[color.GetIndex()] = null;
 
-    AutoSortingWaitingSlotAndMoves();
+    SortingWaitSlotAndAddToMovesQueue();
 
     OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
@@ -135,6 +135,7 @@ public partial class LevelManager : MonoBehaviour
       var obj = _needMovingObjs[i];
 
       if (obj == null) continue;
+      if (obj.activeSelf == false) continue;
       if (!obj.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
 

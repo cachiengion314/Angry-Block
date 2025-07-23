@@ -26,7 +26,7 @@ public partial class LevelManager
     _waitingSlots[emptyWaitingSlot] = directionBlock;
     _directionBlocks[color.GetIndex()] = null;
 
-    AutoSortingWaitingSlotAndMoves();
+    SortingWaitSlotAndAddToMovesQueue();
 
     OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);
@@ -147,7 +147,9 @@ public partial class LevelManager
     {
       if (_mergeSlotBooster3[i] == null) continue;
       var mergeBlock = _mergeSlotBooster3[i];
+      if (mergeBlock.activeSelf == false) continue;
       if (!mergeBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+
       ShouldMergeBooster3Update(mergeBlock);
 
       if (!mergeBlock.TryGetComponent<IGun>(out var gun)) continue;
@@ -171,37 +173,44 @@ public partial class LevelManager
         .OnComplete(() =>
         {
           mergeBlock.GetComponent<IMoveable>().SetLockedPosition(0);
+          SortingWaitSlotAndAddToMovesQueue();
         });
     }
   }
 
-  void ShouldMergeBooster3Update(GameObject waitingBlock)
+  void ShouldMergeBooster3Update(GameObject mergeBlock)
   {
-    if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
-    if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
+    if (!mergeBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
+    if (!mergeBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
+
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
       _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
-    _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
+    _mergeSlots[colorBlock.GetColorValue()].Add(mergeBlock);
     if (_mergeSlots[colorBlock.GetColorValue()].Count < 3) return;
 
     var mergeableBlocks = _mergeSlots[colorBlock.GetColorValue()].ToArray();
     var totalAmmunition = 0;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
-      totalAmmunition += mergeableBlocks[i].GetComponent<DirectionBlockControl>().GetAmmunition();
+      totalAmmunition
+        += mergeableBlocks[i]
+        .GetComponent<DirectionBlockControl>()
+        .GetAmmunition();
+
+    GameObject blast = null;
+    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * 2.0f;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
       var slot = FindSlotFor(mergeableBlock, _mergeSlotBooster3);
       if (slot == -1 || slot > _mergeSlotBooster3.Length - 1) continue;
-      _mergeSlotBooster3[slot] = null;
-      Destroy(mergeableBlock);
 
+      _mergeSlotBooster3[slot] = null;
       if (i == 1)
       {
-        var blastPos = mergePositions.GetChild(i).position;
-        var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
+        blast = SpawnBlastBlockAt(upperPos, spawnedParent).gameObject;
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {
+          blastColor.SetIndex(-1);
           blastColor.SetColorValue(
             mergeableBlock.GetComponent<IColorBlock>().GetColorValue()
           );
@@ -210,10 +219,47 @@ public partial class LevelManager
         {
           blastGun.SetAmmunition(totalAmmunition);
         }
-        _mergeSlotBooster3[1] = blast.gameObject;
+        _mergeSlotBooster3[slot] = blast;
+        blast.SetActive(false);
       }
     }
-    AutoSortingWaitingSlotAndMoves();
+
+    var seq = DOTween.Sequence();
+    var startDuration = .0f;
+
+    var mergeDuration = .25f;
+    for (int i = 0; i < mergeableBlocks.Length; ++i)
+    {
+      var mergeableBlock = mergeableBlocks[i];
+
+      var localStartPos = mergeableBlock.transform.position;
+      var localUpperPos = mergeableBlock.transform.position + Vector3.up * 2.0f;
+      var path = new Vector3[] { localStartPos, localUpperPos, upperPos };
+      seq.Insert(
+        startDuration,
+        mergeableBlock.transform
+          .DOPath(path, mergeDuration)
+          .OnComplete(() =>
+          {
+            Destroy(mergeableBlock);
+          })
+        );
+    }
+    startDuration += mergeDuration;
+
+    if (blast != null)
+    {
+      seq.InsertCallback(
+        startDuration,
+        () =>
+        {
+          blast.SetActive(true);
+          SortingWaitSlotAndAddToMovesQueue();
+          OnMergedCollided(blast);
+        }
+      );
+    }
+
     _mergeSlots.Remove(colorBlock.GetColorValue());
   }
 
@@ -380,42 +426,5 @@ public partial class LevelManager
     int index1 = Random.Range(0, blockParent.childCount);
     if (!blockParent.GetChild(index1).TryGetComponent(out IColorBlock colorBlock)) return -1;
     return colorBlock.GetColorValue();
-  }
-
-  void VisualizeUseTriggerBooster2()
-  {
-    Sequence seq = DOTween.Sequence();
-    float spaceTime = 0.08f;
-    float duration = 0.16f;
-
-    for (int i = 0; i < _directionBlocks.Length; i++)
-    {
-      var directionBlock = _directionBlocks[i];
-      if (directionBlock == null) continue;
-      if (!directionBlock.TryGetComponent(out DirectionBlockControl component)) continue;
-
-      var gridPos = bottomGrid.ConvertIndexToGridPos(component.GetIndex());
-      var startPos = bottomGrid.ConvertIndexToWorldPos(component.GetIndex());
-      var endPos = startPos + new float3(0f, 0.5f, 0f);
-
-      var startScale = Vector3.one;
-      var endScale = startScale * 1.2f;
-
-      seq.Insert(gridPos.y * spaceTime,
-        directionBlock.transform.DOMove(endPos, duration)
-        .SetEase(Ease.Linear));
-
-      seq.Insert(gridPos.y * spaceTime + duration,
-        directionBlock.transform.DOMove(startPos, duration / 2)
-        .SetEase(Ease.Linear));
-
-      seq.Insert(gridPos.y * spaceTime,
-        directionBlock.transform.DOScale(endScale, duration)
-        .SetEase(Ease.Linear));
-
-      seq.Insert(gridPos.y * spaceTime + duration,
-        directionBlock.transform.DOScale(startScale, duration / 2)
-        .SetEase(Ease.Linear));
-    }
   }
 }

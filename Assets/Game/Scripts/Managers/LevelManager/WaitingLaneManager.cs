@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
@@ -44,7 +45,7 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
-  void AutoSortingWaitingSlotAndMoves()
+  void SortingWaitSlotAndAddToMovesQueue()
   {
     AutoSortingWaitingSlots();
     _needMovingObjs.Clear();
@@ -54,6 +55,17 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       AddToMoveQueue(i, obj, waitingPositions);
     }
+  }
+
+  bool IsWaitingSlotsMTweening()
+  {
+    for (int i = 0; i < _waitingSlots.Length; ++i)
+    {
+      var block = _waitingSlots[i];
+      if (block == null) continue;
+      if (DOTween.IsTweening(block.transform)) return true;
+    }
+    return false;
   }
 
   bool IsWaitingSlotsMMoving()
@@ -88,16 +100,19 @@ public partial class LevelManager : MonoBehaviour
 
     if (!_mergeSlots.ContainsKey(colorBlock.GetColorValue()))
       _mergeSlots.Add(colorBlock.GetColorValue(), new HashSet<GameObject>());
-
     _mergeSlots[colorBlock.GetColorValue()].Add(waitingBlock);
-
     if (_mergeSlots[colorBlock.GetColorValue()].Count < 3) return;
-    Debug.Log("Merge:");
 
     var mergeableBlocks = _mergeSlots[colorBlock.GetColorValue()].ToArray();
     var totalAmmunition = 0;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
-      totalAmmunition += mergeableBlocks[i].GetComponent<DirectionBlockControl>().GetAmmunition();
+      totalAmmunition
+        += mergeableBlocks[i]
+        .GetComponent<DirectionBlockControl>()
+        .GetAmmunition();
+
+    GameObject blast = null;
+    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * 2.0f;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
@@ -105,12 +120,9 @@ public partial class LevelManager : MonoBehaviour
       if (slot == -1 || slot > _waitingSlots.Length - 1) continue;
 
       _waitingSlots[slot] = null;
-      Destroy(mergeableBlock);
-
       if (i == 1)
       {
-        var blastPos = waitingPositions.GetChild(slot).position;
-        var blast = SpawnBlastBlockAt(blastPos, spawnedParent);
+        blast = SpawnBlastBlockAt(upperPos, spawnedParent).gameObject;
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {
           blastColor.SetIndex(-1);
@@ -122,11 +134,46 @@ public partial class LevelManager : MonoBehaviour
         {
           blastGun.SetAmmunition(totalAmmunition);
         }
-        _waitingSlots[slot] = blast.gameObject;
+        _waitingSlots[slot] = blast;
+        blast.SetActive(false);
       }
     }
 
-    AutoSortingWaitingSlotAndMoves();
+    var seq = DOTween.Sequence();
+    var startDuration = .0f;
+
+    var mergeDuration = .25f;
+    for (int i = 0; i < mergeableBlocks.Length; ++i)
+    {
+      var mergeableBlock = mergeableBlocks[i];
+
+      var localStartPos = mergeableBlock.transform.position;
+      var localUpperPos = mergeableBlock.transform.position + Vector3.up * 2.0f;
+      var path = new Vector3[] { localStartPos, localUpperPos, upperPos };
+      seq.Insert(
+        startDuration,
+        mergeableBlock.transform
+          .DOPath(path, mergeDuration)
+          .OnComplete(() =>
+          {
+            Destroy(mergeableBlock);
+          })
+        );
+    }
+    startDuration += mergeDuration;
+
+    if (blast != null)
+    {
+      seq.InsertCallback(
+        startDuration,
+        () =>
+        {
+          blast.SetActive(true);
+          SortingWaitSlotAndAddToMovesQueue();
+          OnMergedCollided(blast);
+        }
+      );
+    }
 
     _mergeSlots.Remove(colorBlock.GetColorValue());
   }
@@ -137,6 +184,7 @@ public partial class LevelManager : MonoBehaviour
     {
       if (_waitingSlots[i] == null) continue;
       var waitingBlock = _waitingSlots[i];
+      if (waitingBlock.activeSelf == false) continue;
       if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
       if (!moveable.GetLockedPosition().Equals(0)) continue;
 
@@ -166,6 +214,7 @@ public partial class LevelManager : MonoBehaviour
         .OnComplete(() =>
         {
           waitingBlock.GetComponent<IMoveable>().SetLockedPosition(0);
+          SortingWaitSlotAndAddToMovesQueue();
         });
     }
   }
