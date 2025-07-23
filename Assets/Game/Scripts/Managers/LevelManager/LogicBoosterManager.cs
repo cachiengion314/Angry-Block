@@ -25,7 +25,7 @@ public partial class LevelManager
     _waitingSlots[emptyWaitingSlot] = directionBlock;
     _directionBlocks[color.GetIndex()] = null;
 
-    AutoSortingWaitingSlotAndMoves();
+    SortingWaitSlotAndAddToMovesQueue();
 
     OnDirectionBlockMove?.Invoke();
     OnTriggerNeighborAt(directionBlock);

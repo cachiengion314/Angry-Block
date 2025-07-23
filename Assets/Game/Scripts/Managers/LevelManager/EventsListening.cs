@@ -24,7 +24,7 @@ public partial class LevelManager : MonoBehaviour
             {
               _firingSlots.Remove(blastBlock);
               SpawnColorSplashEfxAt(blastBlock.transform.position);
-              GenerateCustomCameraShake(new float3(.02f, .2f, 0));
+              ShakeCameraBy(new float3(.0f, -.25f, .0f));
               Destroy(blastBlock);
             }
           );
@@ -86,5 +86,18 @@ public partial class LevelManager : MonoBehaviour
     var targetPos = colorBlock.transform.position + Vector3.up * .3f;
     sprite.GetBodyRenderer()
       .transform.DOMove(targetPos, duration);
+  }
+
+  void OnMergedCollided(GameObject blast)
+  {
+    SpawnColorSplashEfxAt(blast.transform.position);
+    ShakeCameraBy(new float3(.0f, .25f, .0f));
+
+    if (!blast.TryGetComponent<ISpriteRend>(out var blastSprite)) return;
+    if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;
+
+    blastSprite.GetBodyRenderer().color = Color.yellow;
+    var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
+    blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
   }
 }
