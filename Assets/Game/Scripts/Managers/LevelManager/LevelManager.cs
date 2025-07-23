@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.Mathematics;
@@ -20,8 +21,9 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
   public GridWorld BottomGrid => bottomGrid;
+  bool isLoadLevelSuccess = false;
 
-  void Start()
+  IEnumerator Start()
   {
     if (Instance == null)
     {
@@ -36,12 +38,14 @@ public partial class LevelManager : MonoBehaviour
     if (!IsSelectlevel)
       levelSelected = GameManager.Instance.CurrentLevel + 1;
     LoadLevelFrom(levelSelected);
-
+    yield return new WaitForSeconds(0.2f);
     SetupCurrentLevel();
+    isLoadLevelSuccess = true;
   }
 
   void Update()
   {
+    if (!isLoadLevelSuccess) return;
     FindNeedArrangeCollumnInUpdate();
     ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
