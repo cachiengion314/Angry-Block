@@ -154,7 +154,6 @@ public partial class LevelManager
       if (_mergeSlotBooster3[i] == null) continue;
       var mergeBlock = _mergeSlotBooster3[i];
       if (mergeBlock.activeSelf == false) continue;
-      if (!mergeBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
 
       ShouldMergeBooster3Update(mergeBlock);
 
@@ -178,6 +177,8 @@ public partial class LevelManager
       mergeBlock.transform.DOMove(targetPos, .2f)
         .OnComplete(() =>
         {
+          if (mergeBlock.TryGetComponent<Collider2D>(out var col))
+            col.enabled = false;
           mergeBlock.GetComponent<IMoveable>().SetLockedPosition(0);
           SortingWaitSlotAndAddToMovesQueue();
         });
