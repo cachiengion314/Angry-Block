@@ -2594,7 +2594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrangeSpeed: 7.5
-  movingSpeed: 12
+  movingSpeed: 19
   impulseSource: {fileID: 229877050}
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 18
@@ -2602,7 +2602,7 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.07
   updateSpeed: 1
-  levelSelected: 6
+  levelSelected: 4
   IsSelectlevel: 1
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}

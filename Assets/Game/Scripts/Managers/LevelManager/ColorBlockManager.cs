@@ -69,7 +69,7 @@ public partial class LevelManager : MonoBehaviour
 
     if (list.Count == 0)
     {
-      for (int x = 0; x < startX; ++x)
+      for (int x = startX - 1; x >= 0; --x)
       {
         var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
         var obj = _colorBlocks[idx];

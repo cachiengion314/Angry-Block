@@ -82,7 +82,9 @@ public partial class LevelManager : MonoBehaviour
 
   void ShouldMergeUpdate(GameObject waitingBlock)
   {
-    if (IsWaitingSlotsMMoving()) return;
+    // if (IsWaitingSlotsMMoving()) return;
+    if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) return;
+    if (!moveable.GetLockedPosition().Equals(0)) return;
     if (!waitingBlock.TryGetComponent<IColorBlock>(out var colorBlock)) return;
     if (!waitingBlock.TryGetComponent<IMergeable>(out var mergeable)) return;
 
@@ -174,11 +176,11 @@ public partial class LevelManager : MonoBehaviour
       if (_waitingSlots[i] == null) continue;
       var waitingBlock = _waitingSlots[i];
       if (waitingBlock.activeSelf == false) continue;
-      if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
-      if (!moveable.GetLockedPosition().Equals(0)) continue;
 
       ShouldMergeUpdate(waitingBlock);
 
+      if (!waitingBlock.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!moveable.GetLockedPosition().Equals(0)) continue;
       if (!waitingBlock.TryGetComponent<IGun>(out var gun)) continue;
       if (gun.GetAmmunition() <= 0) continue;
       if (!waitingBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
