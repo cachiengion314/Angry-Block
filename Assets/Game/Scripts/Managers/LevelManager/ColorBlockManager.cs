@@ -15,6 +15,20 @@ public partial class LevelManager : MonoBehaviour
   [Range(1f, 10f)]
   [SerializeField] float arrangeSpeed = 5.5f;
 
+  bool ShouldAdd(GameObject colorBlockObj, GameObject blastBlock)
+  {
+    if (!colorBlockObj.TryGetComponent<IColorBlock>(out var colorBlock)) return false;
+    if (!colorBlockObj.TryGetComponent<IDamageable>(out var damageable)) return false;
+    if (damageable.IsDead()) return false;
+    if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
+      return false;
+    if (damageable.GetWhoLocked() != null) return false; // the damageable block is waiting its dead when locked
+    if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) return false;
+    if (colorBlock.GetColorValue() != dirColor.GetColorValue()) return false;
+
+    return true;
+  }
+
   ColorBlockControl FindFirstBlockMatchedFor(GameObject blastBlock)
   {
     for (int x = 0; x < topGrid.GridSize.x; ++x)
@@ -22,15 +36,8 @@ public partial class LevelManager : MonoBehaviour
       var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
       var obj = _colorBlocks[idx];
       if (obj == null) continue;
-      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
-      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.IsDead()) continue;
-      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
-        continue;
-      if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
-      if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
-
-      if (colorBlock.GetColorValue() == dirColor.GetColorValue()) return obj;
+      if (!ShouldAdd(obj.gameObject, blastBlock)) continue;
+      return obj;
     }
     return null;
   }
@@ -38,24 +45,41 @@ public partial class LevelManager : MonoBehaviour
   List<GameObject> FindColorBlocksMatchedFor(GameObject blastBlock)
   {
     var list = new List<GameObject>();
-    for (int x = 0; x < topGrid.GridSize.x; ++x)
+
+    var startX = 0;
+    var firstHit = Physics2D.Raycast(
+      (Vector2)blastBlock.transform.position,
+      (Vector2)blastBlock.transform.up
+    );
+    if (
+      firstHit.collider != null
+      && firstHit.collider.TryGetComponent<IColorBlock>(out var color)
+    )
+      startX = topGrid.ConvertIndexToGridPos(color.GetIndex()).x;
+
+    for (int x = startX; x < topGrid.GridSize.x; ++x)
     {
       var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
       var obj = _colorBlocks[idx];
       if (obj == null) continue;
-      if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
-      if (!obj.TryGetComponent<IDamageable>(out var damageable)) continue;
-      if (damageable.IsDead()) continue;
-      if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
-        continue;
-      if (damageable.GetWhoLocked() != null) continue; // the damageable block is waiting its dead when locked
-      if (!blastBlock.TryGetComponent<IColorBlock>(out var dirColor)) continue;
+      if (!ShouldAdd(obj.gameObject, blastBlock)) continue;
 
-      if (colorBlock.GetColorValue() == dirColor.GetColorValue())
+      list.Add(obj.gameObject);
+    }
+
+    if (list.Count == 0)
+    {
+      for (int x = 0; x < startX; ++x)
       {
+        var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
+        var obj = _colorBlocks[idx];
+        if (obj == null) continue;
+        if (!ShouldAdd(obj.gameObject, blastBlock)) continue;
+
         list.Add(obj.gameObject);
       }
     }
+
     return list;
   }
 
