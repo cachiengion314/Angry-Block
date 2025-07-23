@@ -12,46 +12,13 @@ public partial class SoundManager : MonoBehaviour
   [Header("Injected Dependencies")]
   [SerializeField] AudioClip mainTheme;
   [SerializeField] AudioClip pressBtnSfx;
-  [SerializeField] AudioClip hittingSfx;
-  [SerializeField] AudioClip trayTranferSfx;
-  [SerializeField] AudioClip boomSfx;
-  // new sound
-  [SerializeField] AudioClip comboSfx;
-  [SerializeField] AudioClip coinDropSfx;
-  [SerializeField] AudioClip handOnCoinSfx;
-  [SerializeField] AudioClip pickedTraySfx;
-  [SerializeField] AudioClip placedTraySfx;
-  [SerializeField] AudioClip packedSfx;
-  [SerializeField] AudioClip nextStageSfx;
-  [SerializeField] AudioClip nextLevelSfx;
-  [SerializeField] AudioClip levelFailSfx;
-  // ver 1.3
-  [SerializeField] AudioClip iceDestroySfx;
-  [SerializeField] AudioClip swapSfx;
-  [SerializeField] AudioClip claimItemSfx;
-  [SerializeField] AudioClip balloonItemSfx;
-  [SerializeField] AudioClip coinReceiveSfx;
-  [SerializeField] AudioClip coinExplodeSfx;
-  [SerializeField] AudioClip claimDailyRewardSfx;
-  [SerializeField] AudioClip claimBreadSfx;
-  //ver 1.5.4
-  [SerializeField] AudioClip giftBoxSfx;
-  [SerializeField] AudioClip coffeeBoardSfx;
-  [SerializeField] AudioClip plantPotSfx;
-  [SerializeField] AudioClip coverLetSfx;
-
-  // ver 1.5.5
-  [SerializeField] AudioClip moneyBagSfx;
-  [SerializeField] AudioClip cupBoardSfx;
-  [SerializeField] AudioClip machineCreamSfx;
-  [SerializeField] AudioClip dinhdinhSfx;
-  [SerializeField] AudioClip getRewardSfx;
-  [SerializeField] AudioClip magicNestSfx;
-
-  // ver 1.5.16
-  [SerializeField] AudioClip flowerPotBloomingSfx;
-  [SerializeField] AudioClip leavesSpreadOutSfx;
-
+  [SerializeField] AudioClip winLevelSfx;
+  [SerializeField] AudioClip loseLevelSfx;
+  [SerializeField] AudioClip clickBlockSfx;
+  [SerializeField] AudioClip blockMoveSfx;
+  [SerializeField] AudioClip mergeBlockSfx;
+  [SerializeField] AudioClip shootingSfx;
+  [SerializeField] AudioClip destoyBlockSfx;
 
   [Header("Components")]
   [SerializeField] AudioSource audioSource;
@@ -87,64 +54,6 @@ public partial class SoundManager : MonoBehaviour
     }
   }
 
-  public void PlayBoomSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(boomSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayTrayTransferSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(trayTranferSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCoinDropSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(coinDropSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayDinhDinhSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(dinhdinhSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayGetRewardSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(getRewardSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayHapticWith(HapticPatterns.PresetType presetType)
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(presetType);
-    }
-  }
-
   public void PlayPressBtnSfx()
   {
     if (GameManager.Instance.IsHapticOn)
@@ -152,267 +61,77 @@ public partial class SoundManager : MonoBehaviour
       HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(pressBtnSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(pressBtnSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayHittingSfx()
+  public void PlayClickBlockSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
       HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(hittingSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(clickBlockSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayHandOnCoinSfx()
+  public void PlayBlockMoveSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
       HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(handOnCoinSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(blockMoveSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayPickedTraySfx()
+  public void PlayMergeBlockSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(pickedTraySfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(mergeBlockSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayPlacedTraySfx()
+  public void PlayShootingSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(placedTraySfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(shootingSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayNextLevelSfx()
+  public void PlayDestoyBlockSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(nextLevelSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(destoyBlockSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayLevelFailSfx()
+  public void PlayWinLevelSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(levelFailSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(winLevelSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayPackedSfx()
+  public void PlayLoseLevelSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(packedSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayNextStageSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(nextStageSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayIceDestroySfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(iceDestroySfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlaySwapSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(swapSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayClaimItemSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(claimItemSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayBalloonItemSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(balloonItemSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCoinReceiveSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(coinReceiveSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCoinExplodeSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(coinExplodeSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayClaimDailyRewardSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(claimDailyRewardSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayClaimBreadSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(claimBreadSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayGiftBoxSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(giftBoxSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCoffeeBoardSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(coffeeBoardSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayPlantPotSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(plantPotSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCoverLetSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(coverLetSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayMoneyBagSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(moneyBagSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayCupBoardSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(cupBoardSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayMachineCreamSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(machineCreamSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayMagicNestSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(magicNestSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayFlowerPotBloomingSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(flowerPotBloomingSfx, Vector3.forward * -5, 1);
-  }
-
-  public void PlayLeavesSpreadOutSfx()
-  {
-    if (GameManager.Instance.IsHapticOn)
-    {
-      HapticPatterns.PlayPreset(HapticPatterns.PresetType.Success);
-    }
-    if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(leavesSpreadOutSfx, Vector3.forward * -5, 1);
+    AudioSource.PlayClipAtPoint(loseLevelSfx, Vector3.forward * -5, 1f);
   }
 
   public void PlayMainThemeSfx()

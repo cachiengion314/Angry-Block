@@ -15,6 +15,7 @@ public class LevelCompletedPanel : MonoBehaviour
   public void NextLevel()
   {
     DOTween.KillAll();
+    SoundManager.Instance.PlayPressBtnSfx();
     GameManager.Instance.CurrentCoin += 10;
     GameManager.Instance.CurrentLevel++;
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);

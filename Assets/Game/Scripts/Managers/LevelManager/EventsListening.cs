@@ -26,6 +26,7 @@ public partial class LevelManager : MonoBehaviour
               SpawnColorSplashEfxAt(blastBlock.transform.position);
               ShakeCameraBy(new float3(.0f, -.25f, .0f));
               Destroy(blastBlock);
+              SoundManager.Instance.PlayDestoyBlockSfx();
             }
           );
         }
@@ -100,5 +101,42 @@ public partial class LevelManager : MonoBehaviour
     blastSprite.GetBodyRenderer().color = Color.yellow;
     var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
     blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
+  }
+
+  void VisualizeUseTriggerBooster2()
+  {
+    Sequence seq = DOTween.Sequence();
+    float spaceTime = 0.08f;
+    float duration = 0.16f;
+
+    for (int i = 0; i < _directionBlocks.Length; i++)
+    {
+      var directionBlock = _directionBlocks[i];
+      if (directionBlock == null) continue;
+      if (!directionBlock.TryGetComponent(out DirectionBlockControl component)) continue;
+
+      var gridPos = bottomGrid.ConvertIndexToGridPos(component.GetIndex());
+      var startPos = bottomGrid.ConvertIndexToWorldPos(component.GetIndex());
+      var endPos = startPos + new float3(0f, 0.5f, 0f);
+
+      var startScale = Vector3.one;
+      var endScale = startScale * 1.2f;
+
+      seq.Insert(gridPos.y * spaceTime,
+        directionBlock.transform.DOMove(endPos, duration)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime + duration,
+        directionBlock.transform.DOMove(startPos, duration / 2)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime,
+        directionBlock.transform.DOScale(endScale, duration)
+        .SetEase(Ease.Linear));
+
+      seq.Insert(gridPos.y * spaceTime + duration,
+        directionBlock.transform.DOScale(startScale, duration / 2)
+        .SetEase(Ease.Linear));
+    }
   }
 }

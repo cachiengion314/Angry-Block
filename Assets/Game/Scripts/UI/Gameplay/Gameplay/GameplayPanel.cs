@@ -65,6 +65,7 @@ public partial class GameplayPanel : MonoBehaviour
   {
     panel.gameObject.SetActive(true);
     panel.GetComponentInChildren<Animator>().Play("OpenModal");
+    GameManager.Instance.SetGameState(GameState.GamepPause);
   }
 
   void CloseModal(Transform panel)
@@ -75,6 +76,7 @@ public partial class GameplayPanel : MonoBehaviour
     LeanTween.delayedCall(gameObject, m_CurrentClipLength, () =>
     {
       panel.gameObject.SetActive(false);
+      GameManager.Instance.SetGameState(GameState.Gameplay);
     });
   }
 
@@ -95,10 +97,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleLevelCompleteModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!LevelCompleteModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayWinLevelSfx();
       OpenModal(LevelCompleteModal);
     }
     else
@@ -109,10 +110,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleLevelFailedModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!LevelFiailedModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayLoseLevelSfx();
       OpenModal(LevelFiailedModal);
     }
     else
@@ -123,10 +123,9 @@ public partial class GameplayPanel : MonoBehaviour
 
   public void ToggleOutOfSpaceModal()
   {
-    SoundManager.Instance.PlayPressBtnSfx();
-
     if (!OutOfSpaceModal.gameObject.activeSelf)
     {
+      SoundManager.Instance.PlayLoseLevelSfx();
       OpenModal(OutOfSpaceModal);
     }
     else
