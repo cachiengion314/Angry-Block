@@ -35,9 +35,13 @@ public partial class LevelManager : MonoBehaviour
 
     InitPool();
 
-    if (!IsSelectlevel)
-      levelSelected = GameManager.Instance.CurrentLevel + 1;
-    LoadLevelFrom(levelSelected);
+    if (IsSelectlevel)
+    {
+      GameManager.Instance.CurrentLevelIndex = levelSelected - 1;
+      LoadLevelFrom(levelSelected);
+    }
+    else LoadLevelFrom(GameManager.Instance.CurrentLevelIndex + 1);
+
     yield return new WaitForSeconds(0.2f);
     SetupCurrentLevel();
     isLoadLevelSuccess = true;
@@ -63,7 +67,6 @@ public partial class LevelManager : MonoBehaviour
 
     topGrid.DisposeGridWorld();
     bottomGrid.DisposeGridWorld();
-    bottomGrid.DisposePathFinding();
   }
 
   int ConvertPercentToIdx(int percentInt, int gridSize)
@@ -81,7 +84,6 @@ public partial class LevelManager : MonoBehaviour
     bottomGrid.transform.position = levelInformation.DirectionBlocksGridPosition;
     topGrid.BakingGridWorld();
     bottomGrid.BakingGridWorld();
-    bottomGrid.BakingPathFinding();
 
     var colorBlockPartitionDatas = levelInformation.ColorBlockPartitionDatas;
     var initDirectionBlocks = levelInformation.InitDirectionBlocks;

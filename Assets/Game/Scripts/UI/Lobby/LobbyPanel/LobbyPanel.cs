@@ -16,7 +16,7 @@ public partial class LobbyPanel : MonoBehaviour
     if (Instance == null) Instance = this;
     else Destroy(gameObject);
 
-    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevel + 1}";
+    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevelIndex + 1}";
   }
 
   private void OnDestroy()

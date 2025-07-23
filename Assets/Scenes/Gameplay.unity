@@ -7024,6 +7024,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7068912641978885458, guid: 3e301a139d9174e9b8f0122adc1a7193,
+        type: 3}
+      propertyPath: levelIndexCapacity
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 129176591499187209, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}
     - {fileID: 3392381627869134536, guid: 3e301a139d9174e9b8f0122adc1a7193, type: 3}

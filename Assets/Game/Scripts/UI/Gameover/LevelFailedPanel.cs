@@ -10,7 +10,7 @@ public class LevelFailedPanel : MonoBehaviour
   [SerializeField] TextMeshProUGUI levelText;
   void Start()
   {
-    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevel + 1}";
+    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevelIndex + 1}";
   }
 
   public void TryAgain()

@@ -20,7 +20,7 @@ public partial class KeyString
   public const string KEY_IS_MUSIC_ON = "KEY_IS_MUSIC_ON";
   public const string KEY_IS_SOUND_ON = "KEY_IS_SOUND_ON";
 
-  public const string KEY_CURRENT_LEVEL = "KEY_CURRENT_LEVEL";
+  public const string KEY_CURRENT_LEVEL_INDEX = "KEY_CURRENT_LEVEL_INDEX";
   public const string KEY_HIGHEST_SCORE = "KEY_HIGHEST_SCORE";
   public const string KEY_CURRENT_SCORE = "KEY_CURRENT_SCORE";
   public const string KEY_CURRENT_COIN = "KEY_CURRENT_COIN";

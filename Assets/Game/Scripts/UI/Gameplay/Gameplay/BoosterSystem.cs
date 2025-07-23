@@ -31,7 +31,7 @@ public partial class GameplayPanel
     public void OnTriggerBooster1()
     {
         SoundManager.Instance.PlayPressBtnSfx();
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster1) return;
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster1) return;
         if (GameManager.Instance.Booster1 <= 0)
             ToggleBooster1Modal();
         else
@@ -47,7 +47,7 @@ public partial class GameplayPanel
     public void OnTriggerBooster2()
     {
         SoundManager.Instance.PlayPressBtnSfx();
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster2) return;
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster2) return;
 
         if (GameManager.Instance.Booster2 <= 0)
             ToggleBooster2Modal();
@@ -74,7 +74,7 @@ public partial class GameplayPanel
     public void OnTriggerBooster3()
     {
         SoundManager.Instance.PlayPressBtnSfx();
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster3) return;
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster3) return;
         if (GameManager.Instance.Booster3 <= 0)
             ToggleBooster3Modal();
         else
@@ -99,7 +99,7 @@ public partial class GameplayPanel
 
     void VisualeTriggerBooster1()
     {
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster1)
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster1)
         {
             booster1Ctrl.Lock();
             return;
@@ -117,7 +117,7 @@ public partial class GameplayPanel
 
     void VisualeTriggerBooster2()
     {
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster2)
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster2)
         {
             booster2Ctrl.Lock();
             return;
@@ -135,7 +135,7 @@ public partial class GameplayPanel
 
     void VisualeTriggerBooster3()
     {
-        if (GameManager.Instance.CurrentLevel < levelUnlockBooster3)
+        if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster3)
         {
             booster3Ctrl.Lock();
             return;

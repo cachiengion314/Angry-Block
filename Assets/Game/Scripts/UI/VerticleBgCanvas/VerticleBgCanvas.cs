@@ -12,7 +12,7 @@ public class VerticleBgCanvas : MonoBehaviour
 
   void SetupLevel()
   {
-    var currLevelNumber = GameManager.Instance.CurrentLevel + 1;
+    var currLevelNumber = GameManager.Instance.CurrentLevelIndex + 1;
     var lastLevelNumber = currLevelNumber - 2;
     for (int i = 0; i < levels.Length; ++i)
     {

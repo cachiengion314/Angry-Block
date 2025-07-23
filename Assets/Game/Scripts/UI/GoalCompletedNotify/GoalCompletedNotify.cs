@@ -47,7 +47,7 @@ public class GoalCompletedNotify : MonoBehaviour
     notifyContentText.gameObject.SetActive(false);
 
     // var currDailyGoal = DailyGoalManager.Instance.GetDailyGoalDataFrom(type);
-    // var currLevel = currDailyGoal.CurrentLevel;
+    // var currLevel = currDailyGoal.CurrentLevelIndex;
     // var Amount = DailyGoalRule.GetAmountFrom(currLevel, type);
     // if (type == DailyGoalType.CollectCoin)
     // {
