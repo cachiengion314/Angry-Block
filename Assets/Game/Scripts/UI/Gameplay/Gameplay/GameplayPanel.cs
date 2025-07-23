@@ -65,6 +65,7 @@ public partial class GameplayPanel : MonoBehaviour
   {
     panel.gameObject.SetActive(true);
     panel.GetComponentInChildren<Animator>().Play("OpenModal");
+    GameManager.Instance.SetGameState(GameState.GamepPause);
   }
 
   void CloseModal(Transform panel)
@@ -75,6 +76,7 @@ public partial class GameplayPanel : MonoBehaviour
     LeanTween.delayedCall(gameObject, m_CurrentClipLength, () =>
     {
       panel.gameObject.SetActive(false);
+      GameManager.Instance.SetGameState(GameState.Gameplay);
     });
   }
 

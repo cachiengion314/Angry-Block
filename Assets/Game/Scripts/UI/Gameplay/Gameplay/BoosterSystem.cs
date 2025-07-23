@@ -30,6 +30,7 @@ public partial class GameplayPanel
 
     public void OnTriggerBooster1()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevel < levelUnlockBooster1) return;
         if (GameManager.Instance.Booster1 <= 0)
             ToggleBooster1Modal();
@@ -45,6 +46,7 @@ public partial class GameplayPanel
 
     public void OnTriggerBooster2()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevel < levelUnlockBooster2) return;
 
         if (GameManager.Instance.Booster2 <= 0)
@@ -58,6 +60,7 @@ public partial class GameplayPanel
 
     public void ExitBooster2()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         UseBooster2Modal.gameObject.SetActive(false);
         GameManager.Instance.SetGameState(GameState.Gameplay);
     }
@@ -70,6 +73,7 @@ public partial class GameplayPanel
 
     public void OnTriggerBooster3()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevel < levelUnlockBooster3) return;
         if (GameManager.Instance.Booster3 <= 0)
             ToggleBooster3Modal();
@@ -82,6 +86,7 @@ public partial class GameplayPanel
 
     public void ExitBooster3()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         UseBooster3Modal.gameObject.SetActive(false);
         GameManager.Instance.SetGameState(GameState.Gameplay);
     }
@@ -148,6 +153,7 @@ public partial class GameplayPanel
 
     public void BuyBooster1()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         int price = 100;
         if (GameManager.Instance.CurrentCoin < price)
         {
@@ -160,6 +166,7 @@ public partial class GameplayPanel
     }
     public void BuyBooster2()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         int price = 100;
         if (GameManager.Instance.CurrentCoin < price)
         {
@@ -172,6 +179,7 @@ public partial class GameplayPanel
     }
     public void BuyBooster3()
     {
+        SoundManager.Instance.PlayPressBtnSfx();
         int price = 100;
         if (GameManager.Instance.CurrentCoin < price)
         {
