@@ -213,7 +213,7 @@ public partial class LevelManager
         _mergeSlotBooster3[1] = blast.gameObject;
       }
     }
-    AutoSortingWaitingSlotAndMoves();
+    SortingWaitSlotAndAddToMovesQueue();
     _mergeSlots.Remove(colorBlock.GetColorValue());
   }
 
