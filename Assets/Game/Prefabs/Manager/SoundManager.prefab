@@ -150,5 +150,7 @@ MonoBehaviour:
   blockMoveSfx: {fileID: 8300000, guid: b18f9ec002d7c4facb0aabc2d675daec, type: 3}
   mergeBlockSfx: {fileID: 8300000, guid: 84702356d9d76487cb883104ffa0a6ff, type: 3}
   shootingSfx: {fileID: 8300000, guid: 7a7a081ef81c5453681c9641f43929c3, type: 3}
-  destoyBlockSfx: {fileID: 8300000, guid: 441de7a7d5ff24118878118ccde497b8, type: 3}
+  destoyColorBlockSfx: {fileID: 8300000, guid: a8b1ba160d5df42a79d3190b0b022ec7, type: 3}
+  destoyShootingBlockSfx: {fileID: 8300000, guid: 441de7a7d5ff24118878118ccde497b8,
+    type: 3}
   audioSource: {fileID: 6400335707775268905}

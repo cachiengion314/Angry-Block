@@ -18,7 +18,8 @@ public partial class SoundManager : MonoBehaviour
   [SerializeField] AudioClip blockMoveSfx;
   [SerializeField] AudioClip mergeBlockSfx;
   [SerializeField] AudioClip shootingSfx;
-  [SerializeField] AudioClip destoyBlockSfx;
+  [SerializeField] AudioClip destoyColorBlockSfx;
+  [SerializeField] AudioClip destoyShootingBlockSfx;
 
   [Header("Components")]
   [SerializeField] AudioSource audioSource;
@@ -104,14 +105,24 @@ public partial class SoundManager : MonoBehaviour
     AudioSource.PlayClipAtPoint(shootingSfx, Vector3.forward * -5, 1f);
   }
 
-  public void PlayDestoyBlockSfx()
+  public void PlayDestoyColorBlockSfx()
   {
     if (GameManager.Instance.IsHapticOn)
     {
       HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
     }
     if (!GameManager.Instance.IsSoundOn) return;
-    AudioSource.PlayClipAtPoint(destoyBlockSfx, Vector3.forward * -5, 1f);
+    AudioSource.PlayClipAtPoint(destoyColorBlockSfx, Vector3.forward * -5, 1f);
+  }
+
+  public void PlayDestoyShootingBlockSfx()
+  {
+    if (GameManager.Instance.IsHapticOn)
+    {
+      HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
+    }
+    if (!GameManager.Instance.IsSoundOn) return;
+    AudioSource.PlayClipAtPoint(destoyShootingBlockSfx, Vector3.forward * -5, 1f);
   }
 
   public void PlayWinLevelSfx()
