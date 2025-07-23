@@ -44,6 +44,7 @@ public partial class LevelManager : MonoBehaviour
     FindNeedArrangeCollumnInUpdate();
     ArrangeColorBlocksUpdate();
     WaitAndFindMatchedUpdate();
+    WaitAndFindMatchedBooter3Update();
     LockAndFireTargetUpddate();
     BulletPositionsUpdate();
     UpdateLoseLevel();

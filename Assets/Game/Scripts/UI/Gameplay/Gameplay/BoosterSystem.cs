@@ -75,9 +75,21 @@ public partial class GameplayPanel
             ToggleBooster3Modal();
         else
         {
-            LevelManager.Instance.OntriggerBooster3();
-            //visualize trigger booster
+            UseBooster3Modal.gameObject.SetActive(true);
+            GameManager.Instance.SetGameState(GameState.GamepPause);
         }
+    }
+
+    public void ExitBooster3()
+    {
+        UseBooster3Modal.gameObject.SetActive(false);
+        GameManager.Instance.SetGameState(GameState.Gameplay);
+    }
+
+    public void OnTriggerBooster3Success()
+    {
+        LevelManager.Instance.OntriggerBooster3();
+        ExitBooster3();
     }
 
     void VisualeTriggerBooster1()
