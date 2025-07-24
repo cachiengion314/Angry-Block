@@ -37,8 +37,8 @@ public partial class LevelManager : MonoBehaviour
       if (DOTween.IsTweening(directionBlock.transform)) return;
 
       var duration = .1f;
-      var dir = .88f * (collidedBlock.transform.position - directionBlock.transform.position);
-      var dirTargetPos = directionBlock.transform.position + dir;
+      var dir = collidedBlock.transform.position - directionBlock.transform.position;
+      var dirTargetPos = directionBlock.transform.position + dir * .8f;
       directionBlock.transform
         .DOMove(dirTargetPos, duration)
         .SetLoops(2, LoopType.Yoyo);
@@ -46,7 +46,7 @@ public partial class LevelManager : MonoBehaviour
       ShakeCameraBy(dir * .1f);
       if (DOTween.IsTweening(collidedBlock.transform)) return;
 
-      var colTargetPos = collidedBlock.transform.position + dir.normalized * .5f;
+      var colTargetPos = collidedBlock.transform.position + dir.normalized * .4f;
       collidedBlock.transform
         .DOMove(colTargetPos, duration)
         .SetLoops(2, LoopType.Yoyo);
