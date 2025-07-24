@@ -537,7 +537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &57811911
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2245,7 +2245,7 @@ MonoBehaviour:
   fireRate: 0.04
   updateSpeed: 1
   levelSelected: 6
-  IsSelectlevel: 1
+  IsSelectlevel: 0
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -5329,12 +5329,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ae78c1a54134f6f8855d879c102cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hapticNegativeBarOn: {fileID: 0}
-  hapticNegativeBarOff: {fileID: 0}
-  soundNegativeBarOn: {fileID: 0}
-  soundNegativeBarOff: {fileID: 0}
-  musicNegativeBarOn: {fileID: 0}
-  musicNegativeBarOff: {fileID: 0}
+  hapticNegativeBarOn: {fileID: 289442282}
+  hapticNegativeBarOff: {fileID: 419694607}
+  soundNegativeBarOn: {fileID: 654709792}
+  soundNegativeBarOff: {fileID: 1976222738}
+  musicNegativeBarOn: {fileID: 1206369991}
+  musicNegativeBarOff: {fileID: 136314842}
   versionText: {fileID: 397474118}
   _urlGame: https://apps.apple.com/vn/app/coffee-pack-color-puzzle/id6630378838
 --- !u!114 &639691835
@@ -6932,7 +6932,7 @@ RectTransform:
   m_GameObject: {fileID: 759694946}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1626304937}
