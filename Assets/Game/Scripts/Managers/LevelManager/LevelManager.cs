@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Firebase.Analytics;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -184,6 +185,12 @@ public partial class LevelManager : MonoBehaviour
 
     InitWaitingSlots(levelInformation.lockSlot);
     GameManager.Instance.SetGameState(GameState.Gameplay);
+
+    FirebaseAnalytics.LogEvent(KeyString.FIREBASE_START_LEVEL,
+   new Parameter[]
+   {
+        new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
+   });
   }
 
   public Collider2D FindObjIn<T>(Collider2D[] cols)
@@ -282,6 +289,13 @@ public partial class LevelManager : MonoBehaviour
     if (emptyWaitingSlot != -1) return;
     GameManager.Instance.SetGameState(GameState.Gameover);
     DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelFailedModal);
+
+    FirebaseAnalytics.LogEvent(KeyString.FIREBASE_END_LEVEL,
+     new Parameter[]
+     {
+          new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
+          new ("result", 0),
+     });
   }
 
   void UpdateWinLevel()
@@ -290,5 +304,12 @@ public partial class LevelManager : MonoBehaviour
     if (_amountColorBlock > 0) return;
     GameManager.Instance.SetGameState(GameState.Gamewin);
     DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelCompleteModal);
+
+    FirebaseAnalytics.LogEvent(KeyString.FIREBASE_END_LEVEL,
+  new Parameter[]
+  {
+        new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
+        new ("result", 1),
+  });
   }
 }
