@@ -43,12 +43,13 @@ public partial class LevelManager : MonoBehaviour
         .DOMove(dirTargetPos, duration)
         .SetLoops(2, LoopType.Yoyo);
 
+      ShakeCameraBy(dir * .1f);
+      if (DOTween.IsTweening(collidedBlock.transform)) return;
+
       var colTargetPos = collidedBlock.transform.position + dir.normalized * .5f;
       collidedBlock.transform
         .DOMove(colTargetPos, duration)
         .SetLoops(2, LoopType.Yoyo);
-
-      ShakeCameraBy(dir * .1f);
       return;
     }
 

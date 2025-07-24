@@ -134,11 +134,13 @@ public partial class LevelManager : MonoBehaviour
         if (!obj.TryGetComponent<IColorBlock>(out var colorBlock)) continue;
         if (!obj.TryGetComponent<IMoveable>(out var colorMoveable)) continue;
 
+        var targetGridPos = topGrid.ConvertWorldPosToGridPos(colorMoveable.GetLockedPosition());
+        var y = targetGridPos.y;
         HoangNam.Utility.InterpolateMoveUpdate(
           obj.transform.position,
           colorMoveable.GetInitPostion(),
           colorMoveable.GetLockedPosition(),
-          updateSpeed * arrangeSpeed,
+          updateSpeed * arrangeSpeed + 1 / math.max(y, 1),
           out var t,
           out var nextPos
         );

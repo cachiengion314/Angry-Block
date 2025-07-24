@@ -101,7 +101,7 @@ public partial class LevelManager : MonoBehaviour
         .GetAmmunition();
 
     GameObject blast = null;
-    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * 2.0f;
+    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * .5f;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
@@ -158,8 +158,11 @@ public partial class LevelManager : MonoBehaviour
         () =>
         {
           blast.SetActive(true);
-          SortingWaitSlotAndAddToMovesQueue();
           OnMergedCollided(blast);
+
+          var colorBlock = FindFirstBlockMatchedFor(waitingBlock);
+          if (colorBlock != null) return;
+          SortingWaitSlotAndAddToMovesQueue();
         }
       );
     }
@@ -199,7 +202,7 @@ public partial class LevelManager : MonoBehaviour
       var targetPos = _firingPositions.GetChild(0).position + randDir;
 
       waitingBlock.GetComponent<IMoveable>().SetLockedPosition(targetPos);
-      waitingBlock.transform.DOMove(targetPos, .2f)
+      waitingBlock.transform.DOMove(targetPos, .28f)
         .OnComplete(() =>
         {
           if (waitingBlock.TryGetComponent<Collider2D>(out var col))
