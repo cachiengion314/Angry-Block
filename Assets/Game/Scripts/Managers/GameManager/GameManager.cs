@@ -40,7 +40,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster1
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 999);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_1, value);
@@ -50,7 +50,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster2
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 1);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_2, value);
@@ -60,7 +60,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster3
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 1);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_3, value);

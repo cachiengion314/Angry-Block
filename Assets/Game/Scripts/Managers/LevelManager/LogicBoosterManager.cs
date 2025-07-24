@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using NUnit.Framework;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -40,6 +38,7 @@ public partial class LevelManager
 
   public void OnTriggerBooster2()
   {
+    GameManager.Instance.Booster2--;
     var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
     for (int i = directionBlockAvailables.Length - 1; i >= 0; i--)
     {
@@ -117,6 +116,7 @@ public partial class LevelManager
     if (IsMergeBooster3SlotsMMoving()) return;
     int colorValue = GetRandomColor();
     if (colorValue == -1) return;
+    GameManager.Instance.Booster3--;
     var needBlocks = FindDirectionBlockColorAt(3, colorValue);
     foreach (var mergeableBlock in needBlocks)
     {
