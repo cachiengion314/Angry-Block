@@ -2601,7 +2601,7 @@ MonoBehaviour:
   rotationSpeed: 18
   bulletSpeed: 22
   wanderingSpeed: 5
-  fireRate: 0.037
+  fireRate: 0.04
   updateSpeed: 1
   levelSelected: 18
   IsSelectlevel: 1
