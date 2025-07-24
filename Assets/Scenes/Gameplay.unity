@@ -2236,7 +2236,7 @@ MonoBehaviour:
   arrangeSpeed: 2.78
   arrangeDampSpeed: 3.4
   movingSpeed: 19
-  topGridShakeSpeed: 5
+  topGridShakeSpeed: 2.37
   impulseSource: {fileID: 229877050}
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 18
@@ -2244,8 +2244,8 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.04
   updateSpeed: 1
-  levelSelected: 6
-  IsSelectlevel: 0
+  levelSelected: 13
+  IsSelectlevel: 1
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}

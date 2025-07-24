@@ -60,7 +60,7 @@ public partial class LevelManager : MonoBehaviour
     UpdateLoseLevel();
     MovesToWaitingUpdate();
     UpdateWinLevel();
-    // ShakeTopGridUpdate();
+    ShakeTopGridUpdate();
   }
 
   void OnDestroy()

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  float3 _shakeCenter;
+  float3 _shakeCenterPos;
   readonly List<GameObject> _needShakingObjs = new();
   [Range(0, 10f)]
   [SerializeField] float topGridShakeSpeed;
@@ -19,62 +19,62 @@ public partial class LevelManager : MonoBehaviour
 
   void AddToShakeQueue(float3 shakeCenter)
   {
-    _shakeCenter = shakeCenter;
-    var shakeCenterGridPos = topGrid.ConvertWorldPosToGridPos(shakeCenter);
+    _shakeCenterPos = shakeCenter;
 
     for (int i = 0; i < _colorBlocks.Length; ++i)
     {
       var obj = _colorBlocks[i];
       if (obj == null) continue;
-      if (!obj.TryGetComponent<ISpriteRend>(out var rendComp)) continue;
-      if (DOTween.IsTweening(rendComp.GetBodyRenderer().transform)) continue;
+      if (obj.gameObject.activeSelf == false) continue;
       if (!obj.TryGetComponent<IMoveable>(out var moveableComp)) continue;
 
-      var startGridPos = topGrid.ConvertIndexToGridPos(i);
-      var distFromCenterGrid = startGridPos - shakeCenterGridPos;
-      var targetGridPos = startGridPos + math.normalize(distFromCenterGrid);
-      var targetPos = topGrid.ConvertGridPosToWorldPos((int2)targetGridPos);
+      var startPos = topGrid.ConvertIndexToWorldPos(i);
+      var distFromCenterPos = startPos - _shakeCenterPos;
+      // we have vector field F(x,y) = 1/r^2 * [x y] / √(x^2 + y^2) * 12
+      var distSq = math.lengthsq(distFromCenterPos);
+      var F = 1 / distSq * math.normalize(distFromCenterPos) * 12;
+      var targetPos = 0f + F;
 
-      moveableComp.SetInitPostion(obj.transform.position);
-      moveableComp.SetLockedPosition(targetPos);
+      var path = new float3[] { 0, targetPos, 0 };
+      moveableComp.SetPath(path);
       _needShakingObjs.Add(obj.gameObject);
     }
   }
 
   void ShakeTopGridUpdate()
   {
-    var shakeCenterGrid = topGrid.ConvertWorldPosToGridPos(_shakeCenter);
-
     for (int i = 0; i < _needShakingObjs.Count; ++i)
     {
       var obj = _needShakingObjs[i];
       if (obj == null) continue;
       if (!obj.TryGetComponent<ISpriteRend>(out var rendComp)) continue;
-      if (DOTween.IsTweening(rendComp.GetBodyRenderer().transform)) continue;
       if (!obj.TryGetComponent<IMoveable>(out var moveableComp)) continue;
+      if (DOTween.IsTweening(rendComp.GetBodyRenderer())) continue;
 
-      var startGrid = topGrid.ConvertWorldPosToGridPos(moveableComp.GetInitPostion());
-      var distFromCenterGrid = startGrid - shakeCenterGrid;
+      var currentPos = rendComp.GetBodyRenderer().transform.localPosition;
+      var path = moveableComp.GetPath();
+      if (path == null) continue;
 
-      var speed = topGridShakeSpeed
-          + math.pow(math.E, -arrangeDampSpeed * distFromCenterGrid.x)
-          + math.pow(math.E, -arrangeDampSpeed * distFromCenterGrid.y);
+      if (!_needMovingObjPathIndexes.ContainsKey(obj.GetInstanceID()))
+        _needMovingObjPathIndexes.Add(obj.GetInstanceID(), 0);
+      var currentIdx = _needMovingObjPathIndexes[obj.GetInstanceID()];
 
-      HoangNam.Utility.InterpolateMoveUpdate(
-        obj.transform.position,
-        moveableComp.GetInitPostion(),
-        moveableComp.GetLockedPosition(),
-        speed,
+      var distFromShakeCenterPos = obj.transform.position - (Vector3)_shakeCenterPos;
+      InterpolatePathUpdate(
+        currentPos,
+        currentIdx,
+        path,
+        topGridShakeSpeed + math.pow(math.E, -.01f * distFromShakeCenterPos.y),
         out var t,
-        out var nextPos
+        out var nextPos,
+        out var nextIdx
       );
-      obj.transform.position = nextPos;
+      rendComp.GetBodyRenderer().transform.localPosition = nextPos;
+      _needMovingObjPathIndexes[obj.GetInstanceID()] = nextIdx;
       if (t < 1) continue;
 
-      var initPos = moveableComp.GetInitPostion();
-      var targetPos = moveableComp.GetLockedPosition();
-      moveableComp.SetInitPostion(targetPos);
-      moveableComp.SetLockedPosition(initPos);
+      moveableComp.SetPath(null);
+      _needMovingObjPathIndexes[obj.GetInstanceID()] = 0;
       _needShakingObjs.Remove(obj);
     }
   }
