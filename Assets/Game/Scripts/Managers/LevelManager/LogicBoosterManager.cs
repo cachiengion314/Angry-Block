@@ -372,6 +372,10 @@ public partial class LevelManager
     if (colorValue == -1) colorValue = GetRandomColorInWoodenBlock(availableColor);
     if (colorValue == -1) colorValue = GetRandomColorInIceBlock(availableColor);
     if (colorValue == -1) colorValue = GetRandomColorInTunnel(availableColor);
+    if (colorValue == -1) colorValue = GetRandomColorInTable();
+    if (colorValue == -1) colorValue = GetRandomColorInWoodenBlock();
+    if (colorValue == -1) colorValue = GetRandomColorInIceBlock();
+    if (colorValue == -1) colorValue = GetRandomColorInTunnel();
     return colorValue;
   }
 
@@ -392,7 +396,7 @@ public partial class LevelManager
       var colorValue = availableColor[i];
       for (int j = 0; j < waitingSlots.Count; j++)
       {
-        var waitingSlot = waitingSlots[i];
+        var waitingSlot = waitingSlots[j];
         if (waitingSlot == null) continue;
         if (!waitingSlot.TryGetComponent(out IColorBlock component)) continue;
         if (colorValue == component.GetColorValue()) return colorValue;
@@ -500,5 +504,57 @@ public partial class LevelManager
       }
     }
     return -1;
+  }
+
+  int GetRandomColorInTable()
+  {
+    var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
+    if (directionBlockAvailables.Length == 0) return -1;
+    int index = Random.Range(0, directionBlockAvailables.Length);
+    var directionBlock = directionBlockAvailables[index];
+    if (!directionBlock.TryGetComponent(out IColorBlock colorBlock)) return -1;
+    return colorBlock.GetColorValue();
+  }
+
+  int GetRandomColorInWoodenBlock()
+  {
+    var woodenBlockAvailables = FindWoodenBlocksNotNullAt(_directionBlocks);
+    if (woodenBlockAvailables.Length == 0) return -1;
+    int index = Random.Range(0, woodenBlockAvailables.Length);
+    var woodenBlock = woodenBlockAvailables[index];
+    if (!woodenBlock.TryGetComponent(out WoodenBlockControl component)) return -1;
+    var blockParent = component.blockParent;
+    if (blockParent.childCount == 0) return -1;
+    int index1 = Random.Range(0, blockParent.childCount);
+    if (!blockParent.GetChild(index1).TryGetComponent(out IColorBlock colorBlock)) return -1;
+    return colorBlock.GetColorValue();
+  }
+
+  int GetRandomColorInIceBlock()
+  {
+    var iceBlockAvailables = FindIceBlocksNotNullAt(_directionBlocks);
+    if (iceBlockAvailables.Length == 0) return -1;
+    int index = Random.Range(0, iceBlockAvailables.Length);
+    var iceBlock = iceBlockAvailables[index];
+    if (!iceBlock.TryGetComponent(out IceBlockControl component)) return -1;
+    var blockParent = component.blockParent;
+    if (blockParent.childCount == 0) return -1;
+    int index1 = Random.Range(0, blockParent.childCount);
+    if (!blockParent.GetChild(index1).TryGetComponent(out IColorBlock colorBlock)) return -1;
+    return colorBlock.GetColorValue();
+  }
+
+  int GetRandomColorInTunnel()
+  {
+    var tunnelAvailables = FindTunnelNotNullAt(_directionBlocks);
+    if (tunnelAvailables.Length == 0) return -1;
+    int index = Random.Range(0, tunnelAvailables.Length);
+    var tunnel = tunnelAvailables[index];
+    if (!tunnel.TryGetComponent(out TunnelControl component)) return -1;
+    var blockParent = component.blockParent;
+    if (blockParent.childCount == 0) return -1;
+    int index1 = Random.Range(0, blockParent.childCount);
+    if (!blockParent.GetChild(index1).TryGetComponent(out IColorBlock colorBlock)) return -1;
+    return colorBlock.GetColorValue();
   }
 }
