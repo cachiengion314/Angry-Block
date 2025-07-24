@@ -73,7 +73,7 @@ public partial class LevelManager : MonoBehaviour
       if (DOTween.IsTweening(rend.GetBodyRenderer().transform)) continue;
 
       rend.GetBodyRenderer()
-        .transform.DOShakePosition(duration, .4f);
+        .transform.DOShakePosition(duration, .15f);
     }
 
     if (!colorBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
