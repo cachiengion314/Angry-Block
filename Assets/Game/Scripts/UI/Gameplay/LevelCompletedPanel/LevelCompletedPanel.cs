@@ -10,14 +10,14 @@ public class LevelCompletedPanel : MonoBehaviour
 
   public void Start()
   {
-    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevel + 1}";
+    levelText.text = $"LEVEL {GameManager.Instance.CurrentLevelIndex + 1}";
   }
   public void NextLevel()
   {
     DOTween.KillAll();
     SoundManager.Instance.PlayPressBtnSfx();
     GameManager.Instance.CurrentCoin += 10;
-    GameManager.Instance.CurrentLevel++;
+    GameManager.Instance.CurrentLevelIndex++;
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);
   }
 }

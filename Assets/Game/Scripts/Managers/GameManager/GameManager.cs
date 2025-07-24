@@ -29,10 +29,11 @@ public partial class GameManager : MonoBehaviour
   public Action<GameState> onGameStateChanged;
 
   [Header("User Settings")]
-  [SerializeField] int maxLevelIndex;
-  public int MaxLevelIndex
+  [Range(19, 20)]
+  [SerializeField] int levelIndexCapacity;
+  public int LevelIndexCapacity
   {
-    get { return maxLevelIndex; }
+    get { return levelIndexCapacity; }
   }
 
   GameState _gameState;
@@ -107,19 +108,18 @@ public partial class GameManager : MonoBehaviour
     }
   }
 
-  public int CurrentLevel
+  public int CurrentLevelIndex
   {
     get
     {
-      var currentLevel = PlayerPrefs.GetInt(KeyString.KEY_CURRENT_LEVEL, 0);
-      currentLevel = currentLevel > maxLevelIndex ? maxLevelIndex : currentLevel;
-      return currentLevel;
+      var currentLevelIdx = PlayerPrefs.GetInt(KeyString.KEY_CURRENT_LEVEL_INDEX, 0);
+      currentLevelIdx = currentLevelIdx > levelIndexCapacity ? levelIndexCapacity : currentLevelIdx;
+      return currentLevelIdx;
     }
     set
     {
-      // TODO
-      var currentLevel = value > maxLevelIndex ? maxLevelIndex : value;
-      PlayerPrefs.SetInt(KeyString.KEY_CURRENT_LEVEL, currentLevel);
+      var currentLevelIdx = value > levelIndexCapacity ? levelIndexCapacity : value;
+      PlayerPrefs.SetInt(KeyString.KEY_CURRENT_LEVEL_INDEX, currentLevelIdx);
     }
   }
   /// <summary>
