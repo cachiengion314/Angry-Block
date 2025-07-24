@@ -53,7 +53,7 @@ public partial class LevelManager : MonoBehaviour
   {
     var duration = .12f;
     colorBlock.transform
-     .DOScale(1.3f, duration)
+     .DOScale(.45f, duration)
      .OnComplete(() =>
      {
        SoundManager.Instance.PlayDestoyColorBlockSfx();

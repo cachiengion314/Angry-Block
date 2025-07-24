@@ -13,8 +13,10 @@ public partial class LevelManager : MonoBehaviour
   ColorBlockControl[] _colorBlocks;
   int _amountColorBlock = 0;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
-  [Range(1f, 10f)]
-  [SerializeField] float arrangeSpeed = 5.5f;
+  [Range(.01f, 10f)]
+  [SerializeField] float arrangeSpeed = 2.5f;
+  [Range(.01f, 10f)]
+  [SerializeField] float arrangeDampSpeed = 3.4f;
 
   bool ShouldAdd(GameObject colorBlockObj, GameObject blastBlock)
   {
@@ -155,7 +157,7 @@ public partial class LevelManager : MonoBehaviour
           obj.transform.position,
           colorMoveable.GetInitPostion(),
           colorMoveable.GetLockedPosition(),
-          updateSpeed * arrangeSpeed + 1 / math.max(y, 1),
+          updateSpeed * (arrangeSpeed + math.pow(math.E, -arrangeDampSpeed * y)),
           out var t,
           out var nextPos
         );
