@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IceBlockControl : MonoBehaviour, IColorBlock
+public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 {
     [SerializeField] SpriteRenderer bodyRenderer;
     public Transform blockParent;
@@ -69,5 +69,25 @@ public class IceBlockControl : MonoBehaviour, IColorBlock
         if (heart == 3) bodyRenderer.color = Color.green;
         if (heart == 2) bodyRenderer.color = Color.yellow;
         if (heart == 1) bodyRenderer.color = Color.red;
+    }
+
+    public SpriteRenderer GetBodyRenderer()
+    {
+        return bodyRenderer;
+    }
+
+    public int GetSortingOrder()
+    {
+        return bodyRenderer.sortingOrder;
+    }
+
+    public void SetSortingOrder(int sortingOrder)
+    {
+        bodyRenderer.sortingOrder = sortingOrder;
+        foreach (Transform child in blockParent)
+        {
+            if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
+            spriteRend.SetSortingOrder(sortingOrder -2);
+        }
     }
 }

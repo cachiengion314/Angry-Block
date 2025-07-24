@@ -1,10 +1,17 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock
+public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteRend
 {
+    [SerializeField] SpriteRenderer bodyRenderer;
     public Transform blockParent;
     int Index;
+
+    public SpriteRenderer GetBodyRenderer()
+    {
+        return bodyRenderer;
+    }
+
     public int GetColorValue()
     {
         throw new System.NotImplementedException();
@@ -13,6 +20,11 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock
     public int GetIndex()
     {
         return Index;
+    }
+
+    public int GetSortingOrder()
+    {
+        return bodyRenderer.sortingOrder;
     }
 
     public void Initialize(DirectionBlockData directionBlockData)
@@ -49,5 +61,15 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock
     public void SetIndex(int index)
     {
         Index = index;
+    }
+
+    public void SetSortingOrder(int sortingOrder)
+    {
+        bodyRenderer.sortingOrder = sortingOrder;
+        foreach (Transform child in blockParent)
+        {
+            if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
+            spriteRend.SetSortingOrder(sortingOrder);
+        }
     }
 }

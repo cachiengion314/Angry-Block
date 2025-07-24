@@ -92,6 +92,7 @@ public partial class LevelManager : MonoBehaviour
     var initTunnels = levelInformation.InitTunnels;
 
     _colorBlocks = new ColorBlockControl[topGrid.Grid.Length];
+    var maxTopSortingOrder = topGrid.GridSize.y;
 
     for (int i = 0; i < colorBlockPartitionDatas.Length; ++i)
     {
@@ -114,6 +115,7 @@ public partial class LevelManager : MonoBehaviour
           colorBlock.SetIndex(index);
           colorBlock.SetColorValue(partition.ColorValue);
           colorBlock.SetInitHealth(partition.Health);
+          colorBlock.SetSortingOrder(maxTopSortingOrder);
 
           if (!IsAtVisibleBound(colorBlock.gameObject))
             colorBlock.gameObject.SetActive(false);
@@ -121,6 +123,7 @@ public partial class LevelManager : MonoBehaviour
           _colorBlocks[index] = colorBlock;
           _amountColorBlock++;
         }
+        maxTopSortingOrder--;
       }
     }
 
@@ -134,6 +137,8 @@ public partial class LevelManager : MonoBehaviour
       directionBlock.SetColorValue(initDirectionBlocks[i].ColorValue);
       directionBlock.SetDirectionValue(initDirectionBlocks[i].DirectionValue);
       directionBlock.SetAmmunition(initDirectionBlocks[i].Ammunition);
+      var gridPos = bottomGrid.ConvertIndexToGridPos(initDirectionBlocks[i].Index);
+      directionBlock.SetSortingOrder(-gridPos.y);
       _directionBlocks[initDirectionBlocks[i].Index] = directionBlock.gameObject;
     }
 
@@ -145,6 +150,8 @@ public partial class LevelManager : MonoBehaviour
       var woodenBlock = SpawnWoondenBlockAt(woodenData.Index, spawnedParent);
       woodenBlock.SetIndex(woodenData.Index);
       woodenBlock.Initialize(woodenData);
+      var gridPos = bottomGrid.ConvertIndexToGridPos(initWoodenBlocks[i].Index);
+      woodenBlock.SetSortingOrder(-gridPos.y);
       _directionBlocks[woodenData.Index] = woodenBlock.gameObject;
     }
 
@@ -156,6 +163,8 @@ public partial class LevelManager : MonoBehaviour
       var iceBlock = SpawnIceBlockAt(iceData.Index, spawnedParent);
       iceBlock.SetIndex(iceData.Index);
       iceBlock.Initialize(iceData);
+      var gridPos = bottomGrid.ConvertIndexToGridPos(initIceBlock[i].Index);
+      iceBlock.SetSortingOrder(-gridPos.y);
       _directionBlocks[iceData.Index] = iceBlock.gameObject;
     }
 
@@ -168,6 +177,8 @@ public partial class LevelManager : MonoBehaviour
       tunnel.SetDirectionValue(tunnelData.DirectionValue);
       tunnel.SetIndex(tunnelData.Index);
       tunnel.Initialize(tunnelData.directionBlockDatas);
+      var gridPos = bottomGrid.ConvertIndexToGridPos(initTunnels[i].Index);
+      tunnel.SetSortingOrder(-gridPos.y);
       _directionBlocks[tunnelData.Index] = tunnel.gameObject;
     }
 

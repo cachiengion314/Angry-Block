@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlock
+public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlock, ISpriteRend
 {
     [SerializeField] SpriteRenderer bodyRenderer;
     public Transform blockParent;
@@ -108,5 +108,25 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
     public void SetIndex(int index)
     {
         Index = index;
+    }
+
+    public SpriteRenderer GetBodyRenderer()
+    {
+        return bodyRenderer;
+    }
+
+    public int GetSortingOrder()
+    {
+        return bodyRenderer.sortingOrder;
+    }
+
+    public void SetSortingOrder(int sortingOrder)
+    {
+        bodyRenderer.sortingOrder = sortingOrder;
+        foreach (Transform child in blockParent)
+        {
+            if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
+            spriteRend.SetSortingOrder(sortingOrder - Direction.y);
+        }
     }
 }

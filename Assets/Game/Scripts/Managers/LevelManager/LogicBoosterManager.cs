@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using NUnit.Framework;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -113,7 +114,9 @@ public partial class LevelManager
 
   public void OntriggerBooster3()
   {
+    if (IsMergeBooster3SlotsMMoving()) return;
     int colorValue = GetRandomColor();
+    Debug.Log("colorValue" + colorValue);
     if (colorValue == -1) return;
     var needBlocks = FindDirectionBlockColorAt(3, colorValue);
     foreach (var mergeableBlock in needBlocks)
@@ -127,7 +130,9 @@ public partial class LevelManager
       if (emptyMergeSlot == -1) continue;
       _mergeSlotBooster3[emptyMergeSlot] = mergeableBlock;
 
+      OnDirectionBlockMove?.Invoke();
       OnTriggerNeighborAt(mergeableBlock);
+
       if (!mergeableBlock.TryGetComponent(out IColorBlock colorBlock)) return;
       colorBlock.SetIndex(-1);
       SoundManager.Instance.PlayBlockMoveSfx();
@@ -361,7 +366,12 @@ public partial class LevelManager
 
   int GetRandomColor()
   {
-    int colorValue = GetRandomColorInMergeSlots();
+    var availableColor = FindColorMatchedFor();
+    int colorValue = GetRandomColorInMergeSlots(availableColor);
+    if (colorValue == -1) colorValue = GetRandomColorInTable(availableColor);
+    if (colorValue == -1) colorValue = GetRandomColorInWoodenBlock(availableColor);
+    if (colorValue == -1) colorValue = GetRandomColorInIceBlock(availableColor);
+    if (colorValue == -1) colorValue = GetRandomColorInTunnel(availableColor);
     if (colorValue == -1) colorValue = GetRandomColorInTable();
     if (colorValue == -1) colorValue = GetRandomColorInWoodenBlock();
     if (colorValue == -1) colorValue = GetRandomColorInIceBlock();
@@ -369,19 +379,131 @@ public partial class LevelManager
     return colorValue;
   }
 
-  int GetRandomColorInMergeSlots()
+  int GetRandomColorInMergeSlots(int[] availableColor)
   {
     List<GameObject> waitingSlots = new();
     for (int i = 0; i < _waitingSlots.Length; i++)
     {
-      if (_waitingSlots[i] == null) continue;
-      if (!_waitingSlots[i].TryGetComponent(out DirectionBlockControl component)) continue;
+      var waitingSlot = _waitingSlots[i];
+      if (waitingSlot == null) continue;
+      if (!waitingSlot.TryGetComponent(out DirectionBlockControl component)) continue;
       waitingSlots.Add(_waitingSlots[i]);
     }
     if (waitingSlots.Count == 0) return -1;
+
+    for (int i = 0; i < availableColor.Length; i++)
+    {
+      var colorValue = availableColor[i];
+      for (int j = 0; j < waitingSlots.Count; j++)
+      {
+        var waitingSlot = waitingSlots[j];
+        if (waitingSlot == null) continue;
+        if (!waitingSlot.TryGetComponent(out IColorBlock component)) continue;
+        if (colorValue == component.GetColorValue()) return colorValue;
+      }
+    }
+
     int randomIndex = Random.Range(0, waitingSlots.Count);
     if (!waitingSlots[randomIndex].TryGetComponent(out IColorBlock colorBlock)) return -1;
     return colorBlock.GetColorValue();
+  }
+
+  int GetRandomColorInTable(int[] availableColor)
+  {
+    var directionBlockAvailables = FindDirectionBlocksNotNullAt(_directionBlocks);
+    if (directionBlockAvailables.Length == 0) return -1;
+
+    for (int i = 0; i < availableColor.Length; i++)
+    {
+      var colorValue = availableColor[i];
+      for (int j = 0; j < directionBlockAvailables.Length; j++)
+      {
+        var dirBlock = directionBlockAvailables[j];
+        if (dirBlock == null) continue;
+        if (!dirBlock.TryGetComponent(out IColorBlock component)) continue;
+        if (colorValue == component.GetColorValue()) return colorValue;
+      }
+    }
+
+    return -1;
+  }
+
+  int GetRandomColorInWoodenBlock(int[] availableColor)
+  {
+    var woodenBlockAvailables = FindWoodenBlocksNotNullAt(_directionBlocks);
+    if (woodenBlockAvailables.Length == 0) return -1;
+
+    for (int i = 0; i < availableColor.Length; i++)
+    {
+      var colorValue = availableColor[i];
+      for (int j = 0; j < woodenBlockAvailables.Length; j++)
+      {
+        var woodenBlock = woodenBlockAvailables[j];
+        if (woodenBlock == null) continue;
+
+        if (!woodenBlock.TryGetComponent(out WoodenBlockControl component)) continue;
+        var blockParent = component.blockParent;
+        if (blockParent.childCount == 0) continue;
+        for (int k = 0; k < blockParent.childCount; k++)
+        {
+          if (!blockParent.GetChild(k).TryGetComponent(out IColorBlock colorBlock)) continue;
+          if (colorValue == colorBlock.GetColorValue()) return colorValue;
+        }
+      }
+    }
+    return -1;
+  }
+
+  int GetRandomColorInIceBlock(int[] availableColor)
+  {
+    var iceBlockAvailables = FindIceBlocksNotNullAt(_directionBlocks);
+    if (iceBlockAvailables.Length == 0) return -1;
+
+    for (int i = 0; i < availableColor.Length; i++)
+    {
+      var colorValue = availableColor[i];
+      for (int j = 0; j < iceBlockAvailables.Length; j++)
+      {
+        var iceBlock = iceBlockAvailables[j];
+        if (iceBlock == null) continue;
+
+        if (!iceBlock.TryGetComponent(out IceBlockControl component)) continue;
+        var blockParent = component.blockParent;
+        if (blockParent.childCount == 0) continue;
+        for (int k = 0; k < blockParent.childCount; k++)
+        {
+          if (!blockParent.GetChild(k).TryGetComponent(out IColorBlock colorBlock)) continue;
+          if (colorValue == colorBlock.GetColorValue()) return colorValue;
+        }
+      }
+    }
+    return -1;
+  }
+
+  int GetRandomColorInTunnel(int[] availableColor)
+  {
+    var tunnelAvailables = FindTunnelNotNullAt(_directionBlocks);
+    if (tunnelAvailables.Length == 0) return -1;
+
+    for (int i = 0; i < availableColor.Length; i++)
+    {
+      var colorValue = availableColor[i];
+      for (int j = 0; j < tunnelAvailables.Length; j++)
+      {
+        var tunnel = tunnelAvailables[j];
+        if (tunnel == null) continue;
+
+        if (!tunnel.TryGetComponent(out TunnelControl component)) continue;
+        var blockParent = component.blockParent;
+        if (blockParent.childCount == 0) continue;
+        for (int k = 0; k < blockParent.childCount; k++)
+        {
+          if (!blockParent.GetChild(k).TryGetComponent(out IColorBlock colorBlock)) continue;
+          if (colorValue == colorBlock.GetColorValue()) return colorValue;
+        }
+      }
+    }
+    return -1;
   }
 
   int GetRandomColorInTable()
