@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -40,6 +41,20 @@ public partial class LevelManager : MonoBehaviour
       return obj;
     }
     return null;
+  }
+
+  int[] FindColorMatchedFor()
+  {
+    HashSet<int> availableColor = new();
+    for (int x = 0; x < topGrid.GridSize.x; ++x)
+    {
+      var idx = topGrid.ConvertGridPosToIndex(new int2(x, 0));
+      var obj = _colorBlocks[idx];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent(out IColorBlock colorBlock)) continue;
+      availableColor.Add(colorBlock.GetColorValue());
+    }
+    return availableColor.ToArray();
   }
 
   List<GameObject> FindColorBlocksMatchedFor(GameObject blastBlock)

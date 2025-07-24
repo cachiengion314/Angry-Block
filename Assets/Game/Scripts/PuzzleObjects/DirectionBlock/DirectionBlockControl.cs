@@ -7,6 +7,7 @@ public class DirectionBlockControl : MonoBehaviour
   , IMoveable
   , IMergeable
   , IGameObj
+  , ISpriteRend
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
@@ -136,5 +137,21 @@ public class DirectionBlockControl : MonoBehaviour
   public float3[] GetPath()
   {
     return _path;
+  }
+
+  public SpriteRenderer GetBodyRenderer()
+  {
+    return bodyRenderer;
+  }
+
+  public int GetSortingOrder()
+  {
+    return bodyRenderer.sortingOrder;
+  }
+
+  public void SetSortingOrder(int sortingOrder)
+  {
+    bodyRenderer.sortingOrder = sortingOrder;
+    directionRenderer.sortingOrder = sortingOrder + 1;
   }
 }

@@ -83,7 +83,7 @@ public partial class LevelManager : MonoBehaviour
      });
 
     if (!colorBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
-    sprite.SetSortingOrder(sprite.GetSortingOrder() + 1);
+    sprite.SetSortingOrder(sprite.GetSortingOrder() + 2);
     sprite.GetBodyRenderer()
      .DOColor(Color.yellow, duration);
     var targetPos = colorBlock.transform.position + Vector3.up * .3f;
