@@ -156,6 +156,12 @@ public partial class KeyString
   public const string FIREBASE_INAPP_PROCESS = "inapp_process";
   public const string FIREBASE_INAPP_SUCCESS = "inapp_success";
   public const string FIREBASE_INAPP_FAIL = "inapp_fail";
+  public const string FIREBASE_COIN_USE = "coin_use";
+  public const string FIREBASE_LEVEL_RETRY = "level_retry";
+  public const string FIREBASE_COIN_EARN = "coin_earn";
+  public const string FIREBASE_SOUND_DISABLED = "sound_disabled";
+  public const string FIREBASE_MUSIC_DISABLED = "music_disabled";
+  public const string FIREBASE_HAPTIC_DISABLED = "haptic_disabled";
 
   // v1.5.3
   public const string FIREBASE_WEEKLY_QUEST_PROGRESS = "weekly_quest_progress";

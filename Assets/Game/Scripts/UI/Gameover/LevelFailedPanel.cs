@@ -15,6 +15,11 @@ public class LevelFailedPanel : MonoBehaviour
 
   public void TryAgain()
   {
+    FirebaseAnalytics.LogEvent(KeyString.FIREBASE_LEVEL_RETRY,
+  new Parameter[]
+  {
+        new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
+  });
     DOTween.KillAll();
     SceneManager.LoadScene(KeyString.NAME_SCENE_GAMEPLAY);
   }

@@ -1,4 +1,5 @@
 using System;
+using Firebase.Analytics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,7 +41,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster1
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 999);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_1, value);
@@ -50,7 +51,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster2
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 1);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_2, value);
@@ -60,7 +61,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster3
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 1);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 10);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_3, value);
@@ -73,6 +74,7 @@ public partial class GameManager : MonoBehaviour
     get => PlayerPrefs.GetInt(KeyString.KEY_IS_SOUND_ON, 1) == 1;
     set
     {
+      if (!value) FirebaseAnalytics.LogEvent(KeyString.FIREBASE_SOUND_DISABLED);
       PlayerPrefs.SetInt(KeyString.KEY_IS_SOUND_ON, value ? 1 : 0);
       OnSoundChange?.Invoke();
     }
@@ -83,6 +85,7 @@ public partial class GameManager : MonoBehaviour
     get => PlayerPrefs.GetInt(KeyString.KEY_IS_MUSIC_ON, 1) == 1;
     set
     {
+      if (!value) FirebaseAnalytics.LogEvent(KeyString.FIREBASE_MUSIC_DISABLED);
       PlayerPrefs.SetInt(KeyString.KEY_IS_MUSIC_ON, value ? 1 : 0);
       OnMusicChange?.Invoke();
     }
@@ -93,6 +96,7 @@ public partial class GameManager : MonoBehaviour
     get => PlayerPrefs.GetInt(KeyString.KEY_IS_HAPTIC_ON, 1) == 1;
     set
     {
+      if(!value) FirebaseAnalytics.LogEvent(KeyString.FIREBASE_HAPTIC_DISABLED);
       PlayerPrefs.SetInt(KeyString.KEY_IS_HAPTIC_ON, value ? 1 : 0);
       OnHapticChange?.Invoke();
     }

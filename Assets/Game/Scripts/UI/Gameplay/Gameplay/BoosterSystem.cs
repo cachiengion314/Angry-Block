@@ -1,3 +1,4 @@
+using Firebase.Analytics;
 using UnityEngine;
 
 public partial class GameplayPanel
@@ -163,6 +164,12 @@ public partial class GameplayPanel
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster1++;
+
+        FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
+    new Parameter[]
+    {
+            new ("purpose", "BuyBooster1"),
+    });
     }
     public void BuyBooster2()
     {
@@ -176,6 +183,12 @@ public partial class GameplayPanel
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster2++;
+
+        FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
+new Parameter[]
+{
+            new ("purpose", "BuyBooster2"),
+});
     }
     public void BuyBooster3()
     {
@@ -189,5 +202,11 @@ public partial class GameplayPanel
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster3++;
+
+        FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
+new Parameter[]
+{
+            new ("purpose", "BuyBooster3"),
+});
     }
 }

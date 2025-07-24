@@ -53,6 +53,16 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
         }
     }
 
+    public void RemoveBlock()
+    {
+        if (blockParent.childCount <= 0) return;
+        var block = blockParent.GetChild(0);
+        block.gameObject.SetActive(true);
+        block.SetParent(LevelManager.Instance.SpawnedParent);
+        LevelManager.Instance.SetDirectionBlocks(Index, null);
+        Destroy(gameObject);
+    }
+
     public void SetColorValue(int colorValue)
     {
         throw new System.NotImplementedException();

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Firebase.Analytics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,11 @@ public class LevelCompletedPanel : MonoBehaviour
   }
   public void NextLevel()
   {
+    FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_EARN,
+  new Parameter[]
+  {
+        new ("source", "ContinueGame"),
+  });
     DOTween.KillAll();
     SoundManager.Instance.PlayPressBtnSfx();
     GameManager.Instance.CurrentCoin += 10;
