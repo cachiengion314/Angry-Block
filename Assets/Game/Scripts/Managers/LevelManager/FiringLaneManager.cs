@@ -86,16 +86,6 @@ public partial class LevelManager : MonoBehaviour
       if (damageable.GetWhoPicked() != null && damageable.GetWhoPicked() != blastBlock)
         continue;
 
-      // if (
-      //   _firingPositionIndexes.ContainsKey(blastBlock.GetInstanceID())
-      //   && _firingPositionIndexes[blastBlock.GetInstanceID()] % _firingPositions.childCount != 0
-      // )
-      // {
-      //   // if block is not standing at firing zone its should not permitted for firing
-      //   damageable.SetWhoPicked(null);
-      //   continue;
-      // }
-
       damageable.SetWhoPicked(blastBlock); // picking this target to prevent other interfere
       var dirToTarget = target.transform.position - blastBlock.transform.position;
       var targetRad = math.acos(
@@ -122,6 +112,27 @@ public partial class LevelManager : MonoBehaviour
       if (_fireRateTimers[blastBlock.GetInstanceID()] < fireRate) continue;
 
       _fireRateTimers[blastBlock.GetInstanceID()] = 0f;
+
+      blastBlock.GetComponent<IGun>().SetAmmunition(
+        blastBlock.GetComponent<IGun>().GetAmmunition() - 1
+      );
+      var bullet = SpawnBulletAt(
+        blastBlock.transform.position,
+        updateSpeed * bulletSpeed,
+        1
+      );
+      damageable.SetWhoLocked(bullet.gameObject);
+      if (bullet.TryGetComponent<IBullet>(out var bulletComp))
+      {
+        bulletComp.SetLifeTimer(0);
+      }
+      if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
+      {
+        moveableBullet.SetInitPostion(bullet.transform.position);
+        moveableBullet.SetLockedPosition(target.transform.position);
+        moveableBullet.SetLockedTarget(target.transform);
+      }
+
       OnFireTarget(blastBlock, target);
     }
   }

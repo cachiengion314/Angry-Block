@@ -35,29 +35,8 @@ public partial class LevelManager : MonoBehaviour
 
   void OnFireTarget(GameObject blastBlock, GameObject target)
   {
-    if (!target.TryGetComponent<IDamageable>(out var damageable)) return;
-
-    blastBlock.GetComponent<IGun>().SetAmmunition(
-      blastBlock.GetComponent<IGun>().GetAmmunition() - 1
-    );
-    var bullet = SpawnBulletAt(
-      blastBlock.transform.position,
-      updateSpeed * bulletSpeed,
-      1
-    );
-    damageable.SetWhoLocked(bullet.gameObject);
-    if (bullet.TryGetComponent<IBullet>(out var bulletComp))
-    {
-      bulletComp.SetLifeTimer(0);
-    }
-    if (bullet.TryGetComponent<IMoveable>(out var moveableBullet))
-    {
-      moveableBullet.SetInitPostion(bullet.transform.position);
-      moveableBullet.SetLockedPosition(target.transform.position);
-      moveableBullet.SetLockedTarget(target.transform);
-    }
-
     if (!blastBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
+
     var dirToTarget = (target.transform.position - blastBlock.transform.position).normalized;
     var targetPos = Vector3.zero + -1 * .4f * dirToTarget;
     sprite.GetBodyRenderer()
