@@ -13,6 +13,13 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] TunnelControl tunnelControlPref;
   [SerializeField] SlotControl slotControlPref;
   [SerializeField] ParticleSystem colorSplashEfx;
+  [SerializeField] ParticleSystem splashExplosionEfx;
+
+  public ParticleSystem SpawnSplashExplosionEfx(float3 pos)
+  {
+    var obj = Instantiate(splashExplosionEfx, pos, splashExplosionEfx.transform.rotation);
+    return obj;
+  }
 
   public ParticleSystem SpawnColorSplashEfxAt(float3 pos)
   {

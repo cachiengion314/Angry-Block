@@ -51,6 +51,8 @@ public partial class LevelManager : MonoBehaviour
 
   void OnColorBlockDestroyedByBullet(GameObject colorBlock)
   {
+    SpawnSplashExplosionEfx(colorBlock.transform.position);
+
     var duration = .12f;
     colorBlock.transform
      .DOScale(.45f, duration)

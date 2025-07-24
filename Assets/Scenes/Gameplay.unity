@@ -2601,7 +2601,7 @@ MonoBehaviour:
   rotationSpeed: 18
   bulletSpeed: 22
   wanderingSpeed: 5
-  fireRate: 0.07
+  fireRate: 0.037
   updateSpeed: 1
   levelSelected: 18
   IsSelectlevel: 1
@@ -2630,6 +2630,8 @@ MonoBehaviour:
   slotControlPref: {fileID: 3067627321831602852, guid: d98a7bcbb6f3a462c934fd3ace47659b,
     type: 3}
   colorSplashEfx: {fileID: 8846621222330615231, guid: 63f9cc64309a14e50bc764f3fede4fd3,
+    type: 3}
+  splashExplosionEfx: {fileID: 4134303933088781847, guid: 3031be8078f7b4e8bbdb07ebe713c83b,
     type: 3}
   waitingPositions: {fileID: 2103059040}
 --- !u!4 &229877049
