@@ -11,6 +11,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] IceBlockControl iceBlockControlPref;
   [SerializeField] BlastBlockControl blastBlockPref;
   [SerializeField] TunnelControl tunnelControlPref;
+  [SerializeField] SlotControl slotControlPref;
   [SerializeField] ParticleSystem colorSplashEfx;
 
   public ParticleSystem SpawnColorSplashEfxAt(float3 pos)
@@ -77,6 +78,13 @@ public partial class LevelManager : MonoBehaviour
   {
     var pos = bottomGrid.ConvertIndexToWorldPos(index);
     var obj = Instantiate(tunnelControlPref, parent);
+    obj.transform.position = pos;
+    return obj;
+  }
+
+  public SlotControl SpawnSlotAt(float3 pos, Transform parent)
+  {
+    var obj = Instantiate(slotControlPref, parent);
     obj.transform.position = pos;
     return obj;
   }

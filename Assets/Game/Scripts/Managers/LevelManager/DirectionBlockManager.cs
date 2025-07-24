@@ -74,6 +74,13 @@ public partial class LevelManager : MonoBehaviour
     return col.gameObject;
   }
 
+  GameObject FindWatingSlotIn(Collider2D[] cols)
+  {
+    var col = FindObjIn<SlotControl>(cols);
+    if (col == null) return null;
+    return col.gameObject;
+  }
+
   void AddToMoveQueue(
     int slotIndex,
     GameObject directionBlock,

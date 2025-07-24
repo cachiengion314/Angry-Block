@@ -7,11 +7,53 @@ public partial class LevelManager : MonoBehaviour
 {
   [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
+  GameObject[] slotObjects;
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
 
-  void InitWaitingSlots()
+  void InitWaitingSlots(int lockSlot)
   {
-    _waitingSlots = new GameObject[waitingPositions.childCount];
+    int unlockSlot = waitingPositions.childCount - lockSlot;
+    _waitingSlots = new GameObject[unlockSlot];
+    slotObjects = new GameObject[waitingPositions.childCount];
+    for (int i = 0; i < slotObjects.Length; i++)
+    {
+      var slot = SpawnSlotAt(waitingPositions.GetChild(i).position, spawnedParent);
+      if (i < unlockSlot) slot.UnlockSlot();
+      else slot.LockSlot();
+      slotObjects[i] = slot.gameObject;
+    }
+  }
+
+  void UnlockSlot()
+  {
+    int unlockSlot = _waitingSlots.Length;
+    unlockSlot++;
+    if (unlockSlot > waitingPositions.childCount)
+      unlockSlot = waitingPositions.childCount;
+    GameObject[] watingSlotTemp = (GameObject[])_waitingSlots.Clone();
+
+    _waitingSlots = new GameObject[unlockSlot];
+    for (int i = 0; i < watingSlotTemp.Length; i++)
+      _waitingSlots[i] = watingSlotTemp[i];
+  }
+
+  bool IsUnlockSlot(GameObject slot)
+  {
+    for (int i = 0; i < slotObjects.Length; i++)
+    {
+      if (!slotObjects[i].TryGetComponent(out SlotControl component)) continue;
+      if (component.isLock) return slot == slotObjects[i];
+    }
+    return false;
+  }
+
+  void OnUnlockSlot(GameObject slot)
+  {
+    if (slot == null) return;
+    if (!IsUnlockSlot(slot)) return;
+    if (!slot.TryGetComponent(out SlotControl control)) return;
+    control.UnlockSlot();
+    UnlockSlot();
   }
 
   void AutoSortingWaitingSlots()
@@ -101,7 +143,7 @@ public partial class LevelManager : MonoBehaviour
         .GetAmmunition();
 
     GameObject blast = null;
-    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * .5f;
+    var upperPos = mergeableBlocks[1].transform.position + Vector3.up * .0f;
     for (int i = 0; i < mergeableBlocks.Length; ++i)
     {
       var mergeableBlock = mergeableBlocks[i];
