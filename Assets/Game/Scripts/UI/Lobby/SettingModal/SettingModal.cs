@@ -11,12 +11,15 @@ using DG.Tweening;
 public class SettingModal : MonoBehaviour
 {
   [Header("Internal")]
-  [SerializeField] Image hapticNegativeBarImg;
-  [SerializeField] Image soundNegativeBarImg;
-  [SerializeField] Image musicNegativeBarImg;
-  [SerializeField] RectTransform hackPanel;
+  [SerializeField] GameObject hapticNegativeBarOn;
+  [SerializeField] GameObject hapticNegativeBarOff;
+
+  [SerializeField] GameObject soundNegativeBarOn;
+  [SerializeField] GameObject soundNegativeBarOff;
+
+  [SerializeField] GameObject musicNegativeBarOn;
+  [SerializeField] GameObject musicNegativeBarOff;
   [SerializeField] TMP_Text versionText;
-  [SerializeField] TMP_Text versionTextAndroid;
 
   [Header("Fill UrlGame")]
   [SerializeField] string _urlGame;
@@ -29,115 +32,36 @@ public class SettingModal : MonoBehaviour
 
   void UpdateUI()
   {
-    if (!GameManager.Instance.IsSoundOn)
-    {
-      soundNegativeBarImg.gameObject.SetActive(true);
-    }
-    else
-    {
-      soundNegativeBarImg.gameObject.SetActive(false);
-    }
-
-    if (!GameManager.Instance.IsMusicOn)
-    {
-      musicNegativeBarImg.gameObject.SetActive(true);
-    }
-    else
-    {
-      musicNegativeBarImg.gameObject.SetActive(false);
-    }
-
-    if (!GameManager.Instance.IsHapticOn)
-    {
-      hapticNegativeBarImg.gameObject.SetActive(true);
-    }
-    else
-    {
-      hapticNegativeBarImg.gameObject.SetActive(false);
-    }
-  }
-
-  void TurnOnMainThemeMusic()
-  {
-    GameManager.Instance.IsMusicOn = true;
-    musicNegativeBarImg.gameObject.SetActive(false);
-  }
-
-  void TurnOffMainThemeMusic()
-  {
-    GameManager.Instance.IsMusicOn = false;
-    musicNegativeBarImg.gameObject.SetActive(true);
-  }
-
-  void TurnOnSound()
-  {
-    GameManager.Instance.IsSoundOn = true;
-    soundNegativeBarImg.gameObject.SetActive(false);
-  }
-
-  void TurnOffSound()
-  {
-    GameManager.Instance.IsSoundOn = false;
-    soundNegativeBarImg.gameObject.SetActive(true);
-  }
-
-  void TurnOnHaptic()
-  {
-    GameManager.Instance.IsHapticOn = true;
-    hapticNegativeBarImg.gameObject.SetActive(false);
-  }
-
-  void TurnOffHaptic()
-  {
-    GameManager.Instance.IsHapticOn = false;
-    hapticNegativeBarImg.gameObject.SetActive(true);
-  }
-
-  public void ToggleHackPanel()
-  {
-    if (hackPanel.gameObject.activeSelf) hackPanel.gameObject.SetActive(false);
-    else hackPanel.gameObject.SetActive(true);
+    soundNegativeBarOn.SetActive(GameManager.Instance.IsSoundOn);
+    soundNegativeBarOff.SetActive(!GameManager.Instance.IsSoundOn);
+    musicNegativeBarOn.SetActive(GameManager.Instance.IsMusicOn);
+    musicNegativeBarOff.SetActive(!GameManager.Instance.IsMusicOn);
+    hapticNegativeBarOn.SetActive(GameManager.Instance.IsHapticOn);
+    hapticNegativeBarOff.SetActive(!GameManager.Instance.IsHapticOn);
   }
 
   public void ToggleMainThemeMusic()
   {
+    GameManager.Instance.IsMusicOn = !GameManager.Instance.IsMusicOn;
+    musicNegativeBarOn.SetActive(GameManager.Instance.IsMusicOn);
+    musicNegativeBarOff.SetActive(!GameManager.Instance.IsMusicOn);
     SoundManager.Instance.PlayPressBtnSfx();
-
-    if (!GameManager.Instance.IsMusicOn)
-    {
-      TurnOnMainThemeMusic();
-      return;
-    }
-    TurnOffMainThemeMusic();
   }
 
   public void ToggleSound()
   {
+    GameManager.Instance.IsSoundOn = !GameManager.Instance.IsSoundOn;
+    soundNegativeBarOn.SetActive(GameManager.Instance.IsSoundOn);
+    soundNegativeBarOff.SetActive(!GameManager.Instance.IsSoundOn);
     SoundManager.Instance.PlayPressBtnSfx();
-
-    if (!GameManager.Instance.IsSoundOn)
-    {
-      TurnOnSound();
-      return;
-    }
-    TurnOffSound();
   }
 
   public void ToggleHaptic()
   {
+    GameManager.Instance.IsHapticOn = !GameManager.Instance.IsHapticOn;
+    hapticNegativeBarOn.SetActive(GameManager.Instance.IsHapticOn);
+    hapticNegativeBarOff.SetActive(!GameManager.Instance.IsHapticOn);
     SoundManager.Instance.PlayPressBtnSfx();
-
-    if (!GameManager.Instance.IsHapticOn)
-    {
-      TurnOnHaptic();
-      return;
-    }
-    TurnOffHaptic();
-  }
-
-  public void UnlockHack()
-  {
-
   }
 
   public void SendEmail()

@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public partial class GameplayPanel : MonoBehaviour
 {
   public static GameplayPanel Instance { get; private set; }
+  [SerializeField] TextMeshProUGUI coinText;
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
   [SerializeField] Transform SettingModal;
@@ -30,10 +32,18 @@ public partial class GameplayPanel : MonoBehaviour
   private void Start()
   {
     InitBooster();
+    UpdateCoin();
+    GameManager.Instance.OnCoinChange += UpdateCoin;
   }
   private void OnDestroy()
   {
     UnsubscribeBoosterEvent();
+    GameManager.Instance.OnCoinChange -= UpdateCoin;
+  }
+
+  void UpdateCoin()
+  {
+    coinText.text = GameManager.Instance.CurrentCoin.ToString();
   }
 
   bool IsShowingNotify = false;
