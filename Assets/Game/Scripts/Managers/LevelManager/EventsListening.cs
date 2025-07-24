@@ -82,6 +82,21 @@ public partial class LevelManager : MonoBehaviour
        Destroy(colorBlock);
      });
 
+    var neighbors = topGrid.FindNeighborsAt(colorBlock.transform.position);
+    for (int i = 0; i < neighbors.Length; ++i)
+    {
+      var neighborPos = neighbors[i];
+      if (neighborPos.Equals(new float3(-1, -1, -1))) continue;
+      var idx = topGrid.ConvertWorldPosToIndex(neighborPos);
+      var obj = _colorBlocks[idx];
+      if (obj == null) continue;
+      if (!obj.TryGetComponent<ISpriteRend>(out var rend)) continue;
+      if (DOTween.IsTweening(rend.GetBodyRenderer().transform)) continue;
+
+      rend.GetBodyRenderer()
+        .transform.DOShakePosition(duration, .4f);
+    }
+
     if (!colorBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
     sprite.SetSortingOrder(sprite.GetSortingOrder() + 1);
     sprite.GetBodyRenderer()
