@@ -49,6 +49,17 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
         col.enabled = false;
     }
 
+    public void RemoveBlock()
+    {
+        if (blockParent.childCount <= 0) return;
+        var block = blockParent.GetChild(0);
+        if (!block.TryGetComponent(out Collider2D col)) return;
+        col.enabled = true;
+        block.SetParent(LevelManager.Instance.SpawnedParent);
+        LevelManager.Instance.SetDirectionBlocks(Index, null);
+        Destroy(gameObject);
+    }
+
     void OnTrigger()
     {
         heart--;
@@ -87,7 +98,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
-            spriteRend.SetSortingOrder(sortingOrder -2);
+            spriteRend.SetSortingOrder(sortingOrder - 2);
         }
     }
 }

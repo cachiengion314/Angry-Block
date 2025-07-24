@@ -116,23 +116,16 @@ public partial class LevelManager
   {
     if (IsMergeBooster3SlotsMMoving()) return;
     int colorValue = GetRandomColor();
-    Debug.Log("colorValue" + colorValue);
     if (colorValue == -1) return;
     var needBlocks = FindDirectionBlockColorAt(3, colorValue);
     foreach (var mergeableBlock in needBlocks)
     {
       if (mergeableBlock == null) continue;
-
-      var slot = FindSlotFor(mergeableBlock, _waitingSlots);
-      if (slot != -1) _waitingSlots[slot] = null;
-
       var emptyMergeSlot = FindEmptySlotFrom(_mergeSlotBooster3);
       if (emptyMergeSlot == -1) continue;
       _mergeSlotBooster3[emptyMergeSlot] = mergeableBlock;
-
       OnDirectionBlockMove?.Invoke();
-      OnTriggerNeighborAt(mergeableBlock);
-
+      OnTriggerNeighborAt(mergeableBlock.gameObject);
       if (!mergeableBlock.TryGetComponent(out IColorBlock colorBlock)) return;
       colorBlock.SetIndex(-1);
       SoundManager.Instance.PlayBlockMoveSfx();
@@ -286,7 +279,9 @@ public partial class LevelManager
       if (waittingBlock == null) continue;
       if (!waittingBlock.TryGetComponent(out DirectionBlockControl component)) continue;
       if (!waittingBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
-      if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(waittingBlock);
+      if (colorBlock.GetColorValue() != colorValue) continue;
+      directionBlocks.Add(waittingBlock);
+      _waitingSlots[i] = null;
       if (directionBlocks.Count == misAmount) return directionBlocks;
     }
 
@@ -295,7 +290,9 @@ public partial class LevelManager
     {
       var dirBlock = directionBlockAvailables[i];
       if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
-      if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(dirBlock);
+      if (colorBlock.GetColorValue() != colorValue) continue;
+      directionBlocks.Add(dirBlock);
+      _directionBlocks[colorBlock.GetIndex()] = null;
       if (directionBlocks.Count == misAmount) return directionBlocks;
     }
 
@@ -306,18 +303,13 @@ public partial class LevelManager
       if (!woodenBlock.TryGetComponent(out WoodenBlockControl component)) continue;
       var blockParent = component.blockParent;
       if (blockParent.childCount == 0) continue;
-      for (int j = blockParent.childCount - 1; j >= 0; j--)
-      {
-        var dirBlock = blockParent.GetChild(j);
-        if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
-        if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(dirBlock.gameObject);
 
-        dirBlock.gameObject.SetActive(true);
-        dirBlock.SetParent(spawnedParent);
-        Destroy(woodenBlock.gameObject);
-
-        if (directionBlocks.Count == misAmount) return directionBlocks;
-      }
+      var dirBlock = blockParent.GetChild(0);
+      if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
+      if (colorBlock.GetColorValue() != colorValue) continue;
+      directionBlocks.Add(dirBlock.gameObject);
+      component.RemoveBlock();
+      if (directionBlocks.Count == misAmount) return directionBlocks;
     }
 
     var iceBlockAvailables = FindIceBlocksNotNullAt(_directionBlocks);
@@ -327,18 +319,13 @@ public partial class LevelManager
       if (!iceBlock.TryGetComponent(out IceBlockControl component)) continue;
       var blockParent = component.blockParent;
       if (blockParent.childCount == 0) continue;
-      for (int j = blockParent.childCount - 1; j >= 0; j--)
-      {
-        var dirBlock = blockParent.GetChild(j);
-        if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
-        if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(dirBlock.gameObject);
 
-        dirBlock.gameObject.SetActive(true);
-        dirBlock.SetParent(spawnedParent);
-        Destroy(iceBlock.gameObject);
-
-        if (directionBlocks.Count == misAmount) return directionBlocks;
-      }
+      var dirBlock = blockParent.GetChild(0);
+      if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
+      if (colorBlock.GetColorValue() != colorValue) continue;
+      directionBlocks.Add(dirBlock.gameObject);
+      component.RemoveBlock();
+      if (directionBlocks.Count == misAmount) return directionBlocks;
     }
 
     var tunnelAvailables = FindTunnelNotNullAt(_directionBlocks);
@@ -352,12 +339,10 @@ public partial class LevelManager
       {
         var dirBlock = blockParent.GetChild(j);
         if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) continue;
-        if (colorBlock.GetColorValue() == colorValue) directionBlocks.Add(dirBlock.gameObject);
-
-        dirBlock.gameObject.SetActive(true);
-        dirBlock.SetParent(spawnedParent);
+        if (colorBlock.GetColorValue() != colorValue) continue;
+        directionBlocks.Add(dirBlock.gameObject);
+        component.RemoveBlockAt(j);
         colorBlock.SetIndex(999);
-
         if (directionBlocks.Count == misAmount) return directionBlocks;
       }
     }

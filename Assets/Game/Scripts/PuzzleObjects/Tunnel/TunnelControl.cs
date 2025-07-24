@@ -60,15 +60,21 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             if (!gridPosBlockAhead.Equals(tunnelGird + Direction)) return;
 
             // anim kick hoad
-            if (blockParent.childCount > 0)
-            {
-                var dirBlock = blockParent.GetChild(0);
-                if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) return;
-                dirBlock.gameObject.SetActive(true);
-                LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
-                dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
-            }
+            if (blockParent.childCount <= 0) return;
+            var dirBlock = blockParent.GetChild(0);
+            if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) return;
+            dirBlock.gameObject.SetActive(true);
+            LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
+            dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
         }
+    }
+
+    public void RemoveBlockAt(int index)
+    {
+        if (index >= blockParent.childCount) return;
+        var dirBlock = blockParent.GetChild(index);
+        dirBlock.gameObject.SetActive(true);
+        dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
     }
 
     public void SetColorValue(int colorValue)
