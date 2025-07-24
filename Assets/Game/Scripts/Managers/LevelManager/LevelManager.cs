@@ -60,6 +60,7 @@ public partial class LevelManager : MonoBehaviour
     UpdateLoseLevel();
     MovesToWaitingUpdate();
     UpdateWinLevel();
+    // ShakeTopGridUpdate();
   }
 
   void OnDestroy()
@@ -187,10 +188,10 @@ public partial class LevelManager : MonoBehaviour
     GameManager.Instance.SetGameState(GameState.Gameplay);
 
     FirebaseAnalytics.LogEvent(KeyString.FIREBASE_START_LEVEL,
-   new Parameter[]
-   {
+      new Parameter[]
+      {
         new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
-   });
+      });
   }
 
   public Collider2D FindObjIn<T>(Collider2D[] cols)
@@ -293,8 +294,8 @@ public partial class LevelManager : MonoBehaviour
     FirebaseAnalytics.LogEvent(KeyString.FIREBASE_END_LEVEL,
      new Parameter[]
      {
-          new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
-          new ("result", 0),
+        new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
+        new ("result", 0),
      });
   }
 
@@ -306,10 +307,10 @@ public partial class LevelManager : MonoBehaviour
     DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelCompleteModal);
 
     FirebaseAnalytics.LogEvent(KeyString.FIREBASE_END_LEVEL,
-  new Parameter[]
-  {
+      new Parameter[]
+      {
         new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
         new ("result", 1),
-  });
+      });
   }
 }

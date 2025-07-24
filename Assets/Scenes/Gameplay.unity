@@ -2596,6 +2596,7 @@ MonoBehaviour:
   arrangeSpeed: 2.78
   arrangeDampSpeed: 3.4
   movingSpeed: 19
+  topGridShakeSpeed: 5
   impulseSource: {fileID: 229877050}
   _firingPositions: {fileID: 1142100}
   rotationSpeed: 18

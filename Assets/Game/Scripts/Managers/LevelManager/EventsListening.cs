@@ -22,11 +22,14 @@ public partial class LevelManager : MonoBehaviour
           .OnComplete(
             () =>
             {
-              _firingSlots.Remove(blastBlock);
-              SpawnColorSplashEfxAt(blastBlock.transform.position);
-              ShakeCameraBy(new float3(.0f, -.25f, .0f));
-              Destroy(blastBlock);
               SoundManager.Instance.PlayDestoyShootingBlockSfx();
+
+              ShakeCameraBy(new float3(.0f, -.25f, .0f));
+              // AddToShakeQueue(blastBlock.transform.position);
+              SpawnColorSplashEfxAt(blastBlock.transform.position);
+
+              _firingSlots.Remove(blastBlock);
+              Destroy(blastBlock);
             }
           );
         }
