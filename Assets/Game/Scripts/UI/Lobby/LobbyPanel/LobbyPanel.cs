@@ -10,6 +10,7 @@ public partial class LobbyPanel : MonoBehaviour
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
   [SerializeField] TextMeshProUGUI levelText;
+  [SerializeField] TextMeshProUGUI coinText;
 
   private void Start()
   {
@@ -17,11 +18,19 @@ public partial class LobbyPanel : MonoBehaviour
     else Destroy(gameObject);
 
     levelText.text = $"LEVEL {GameManager.Instance.CurrentLevelIndex + 1}";
+    UpdateCoin();
+    GameManager.Instance.OnCoinChange += UpdateCoin;
   }
 
   private void OnDestroy()
   {
     DOTween.KillAll();
+    GameManager.Instance.OnCoinChange -= UpdateCoin;
+  }
+
+  void UpdateCoin()
+  {
+    coinText.text = GameManager.Instance.CurrentCoin.ToString();
   }
 
   void OpenModal(Transform panel)
