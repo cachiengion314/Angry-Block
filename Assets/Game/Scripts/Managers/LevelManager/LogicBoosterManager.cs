@@ -22,6 +22,9 @@ public partial class LevelManager
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
+    if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
+    spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
+
     SoundManager.Instance.PlayClickBlockSfx();
     SoundManager.Instance.PlayBlockMoveSfx();
     OnTriggerBooster1Success?.Invoke();
@@ -123,11 +126,18 @@ public partial class LevelManager
       if (mergeableBlock == null) continue;
       var emptyMergeSlot = FindEmptySlotFrom(_mergeSlotBooster3);
       if (emptyMergeSlot == -1) continue;
+
+      if (!mergeableBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
+      spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
+
       _mergeSlotBooster3[emptyMergeSlot] = mergeableBlock;
+
       OnDirectionBlockMove?.Invoke();
       OnTriggerNeighborAt(mergeableBlock.gameObject);
+
       if (!mergeableBlock.TryGetComponent(out IColorBlock colorBlock)) return;
       colorBlock.SetIndex(-1);
+
       SoundManager.Instance.PlayBlockMoveSfx();
     }
     AutoSortingMergeSlotBooster3AndMoves();

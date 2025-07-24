@@ -30,6 +30,9 @@ public partial class LevelManager : MonoBehaviour
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
     if (!moveable.GetLockedPosition().Equals(0)) return;
 
+    if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
+    spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
+
     SoundManager.Instance.PlayClickBlockSfx();
 
     if (!IsBlockMoveable(directionBlock, out var collidedBlock))
