@@ -7,17 +7,20 @@ public partial class LevelManager : MonoBehaviour
 {
   [SerializeField] Transform waitingPositions;
   GameObject[] _waitingSlots;
+  GameObject[] slotObjects;
   readonly Dictionary<int, HashSet<GameObject>> _mergeSlots = new();
 
   void InitWaitingSlots(int lockSlot)
   {
     int unlockSlot = waitingPositions.childCount - lockSlot;
     _waitingSlots = new GameObject[unlockSlot];
-    for (int i = 0; i < waitingPositions.childCount; i++)
+    slotObjects = new GameObject[waitingPositions.childCount];
+    for (int i = 0; i < slotObjects.Length; i++)
     {
       var slot = SpawnSlotAt(waitingPositions.GetChild(i).position, spawnedParent);
       if (i < unlockSlot) slot.UnlockSlot();
       else slot.LockSlot();
+      slotObjects[i] = slot.gameObject;
     }
   }
 
@@ -34,9 +37,20 @@ public partial class LevelManager : MonoBehaviour
       _waitingSlots[i] = watingSlotTemp[i];
   }
 
+  bool IsUnlockSlot(GameObject slot)
+  {
+    for (int i = 0; i < slotObjects.Length; i++)
+    {
+      if (!slotObjects[i].TryGetComponent(out SlotControl component)) continue;
+      if (component.isLock) return slot == slotObjects[i];
+    }
+    return false;
+  }
+
   void OnUnlockSlot(GameObject slot)
   {
     if (slot == null) return;
+    if (!IsUnlockSlot(slot)) return;
     if (!slot.TryGetComponent(out SlotControl control)) return;
     control.UnlockSlot();
     UnlockSlot();

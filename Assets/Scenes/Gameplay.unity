@@ -2603,7 +2603,7 @@ MonoBehaviour:
   fireRate: 0.07
   updateSpeed: 1
   levelSelected: 6
-  IsSelectlevel: 1
+  IsSelectlevel: 0
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -7010,16 +7010,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577034904263904071, guid: 3e301a139d9174e9b8f0122adc1a7193,
-        type: 3}
-      propertyPath: RunInEditor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577034904263904071, guid: 3e301a139d9174e9b8f0122adc1a7193,
-        type: 3}
-      propertyPath: TargetFrameRate
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5060072142226198143, guid: 3e301a139d9174e9b8f0122adc1a7193,
         type: 3}
