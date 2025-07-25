@@ -29,10 +29,6 @@ public partial class LevelManager : MonoBehaviour
     if (color.GetIndex() == -1) return;
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
     if (!moveable.GetLockedPosition().Equals(0)) return;
-
-    if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
-    spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
-
     SoundManager.Instance.PlayClickBlockSfx();
 
     if (!IsBlockMoveable(directionBlock, out var collidedBlock))
@@ -55,6 +51,9 @@ public partial class LevelManager : MonoBehaviour
         .SetLoops(2, LoopType.Yoyo);
       return;
     }
+
+    if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
+    spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
 
     SoundManager.Instance.PlayBlockMoveSfx();
 

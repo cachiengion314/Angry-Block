@@ -100,9 +100,9 @@ public partial class LevelManager : MonoBehaviour
     if (!blast.TryGetComponent<ISpriteRend>(out var blastSprite)) return;
     if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;
 
-    blastSprite.GetBodyRenderer().color = Color.yellow;
-    var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
-    blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
+    // blastSprite.GetBodyRenderer().color = Color.yellow;
+    // var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
+    // blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
   }
 
   void VisualizeUseTriggerBooster2()

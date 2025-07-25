@@ -31,7 +31,7 @@ public class DirectionBlockControl : MonoBehaviour
   public void SetColorValue(int colorValue)
   {
     _colorValue = colorValue;
-    bodyRenderer.color = RendererSystem.Instance.GetColorBy(colorValue);
+    bodyRenderer.sprite = RendererSystem.Instance.GetDirectionBlockAt(colorValue);
   }
 
   public void SetIndex(int index)

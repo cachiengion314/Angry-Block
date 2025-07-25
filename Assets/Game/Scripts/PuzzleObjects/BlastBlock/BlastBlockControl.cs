@@ -26,7 +26,7 @@ public class BlastBlockControl : MonoBehaviour
   public void SetColorValue(int colorValue)
   {
     _colorValue = colorValue;
-    bodyRenderer.color = RendererSystem.Instance.GetColorBy(colorValue);
+    bodyRenderer.sprite = RendererSystem.Instance.GetBlastBlockAt(colorValue);
   }
 
   public void SetIndex(int index)
