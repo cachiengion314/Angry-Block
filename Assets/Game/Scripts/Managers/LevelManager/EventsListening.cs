@@ -4,9 +4,9 @@ using UnityEngine;
 
 public partial class LevelManager : MonoBehaviour
 {
-  void OnOutOfAmmunition(GameObject blastBlock)
+  void OnOutOfAmmunition(GameObject blast)
   {
-    if (!blastBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
+    if (!blast.TryGetComponent<ISpriteRend>(out var sprite)) return;
     if (DOTween.IsTweening(sprite.GetBodyRenderer().transform)) return;
 
     var duration = .2f;
@@ -25,11 +25,12 @@ public partial class LevelManager : MonoBehaviour
               SoundManager.Instance.PlayDestoyShootingBlockSfx();
 
               ShakeCameraBy(new float3(.0f, -.25f, .0f));
-              AddToShakeQueue(blastBlock.transform.position);
-              SpawnColorSplashEfxAt(blastBlock.transform.position);
+              AddToShakeQueue(blast.transform.position);
+              ShakeBottomGrid(blast.transform.position);
+              SpawnColorSplashEfxAt(blast.transform.position);
 
-              _firingSlots.Remove(blastBlock);
-              Destroy(blastBlock);
+              _firingSlots.Remove(blast);
+              Destroy(blast);
             }
           );
         }
@@ -97,6 +98,7 @@ public partial class LevelManager : MonoBehaviour
     SpawnColorSplashEfxAt(blast.transform.position);
     ShakeCameraBy(new float3(.0f, .25f, .0f));
     AddToShakeQueue(blast.transform.position);
+    ShakeBottomGrid(blast.transform.position);
 
     if (!blast.TryGetComponent<ISpriteRend>(out var blastSprite)) return;
     if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;

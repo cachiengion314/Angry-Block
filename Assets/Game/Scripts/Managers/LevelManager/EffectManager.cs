@@ -17,6 +17,32 @@ public partial class LevelManager : MonoBehaviour
     impulseSource.GenerateImpulse(force);
   }
 
+  void ShakeBottomGrid(
+    Vector3 shakeCenterPos,
+    float _dampValue = .8f,
+    float _defaultStrength = .20f
+  )
+  {
+    for (int i = 0; i < _directionBlocks.Length; ++i)
+    {
+      var obj = _directionBlocks[i];
+      if (obj == null) continue;
+
+      if (!obj.TryGetComponent<ISpriteRend>(out var rendComp)) continue;
+      if (!obj.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (moveable.GetPath() != null) continue;
+      if (DOTween.IsTweening(rendComp.GetBodyRenderer().transform)) continue;
+
+      var distFromShakeCenterPos = obj.transform.position - shakeCenterPos;
+      var magnitude = math.pow(math.E, -_dampValue * math.abs(distFromShakeCenterPos.y));
+
+      if (magnitude < .01f) continue;
+      var strength = _defaultStrength + magnitude;
+      rendComp.GetBodyRenderer().transform.DOShakePosition(.3f, strength);
+
+    }
+  }
+
   void AddToShakeQueue(float3 shakeCenter)
   {
     _shakeCenterPos = shakeCenter;
@@ -32,8 +58,8 @@ public partial class LevelManager : MonoBehaviour
       var distFromCenterPos = startPos - _shakeCenterPos;
       // we have vector field F(x,y) = 1/r^2 * [x y] / √(x^2 + y^2) * 12
       var distSq = math.lengthsq(distFromCenterPos);
-      var F = 1 / distSq * math.normalize(distFromCenterPos) * 12;
-      var targetPos = 0f + F;
+      var magnitude = 1 / distSq * math.normalize(distFromCenterPos) * 12;
+      var targetPos = 0f + magnitude;
 
       var path = new float3[] { 0, targetPos, 0 };
       moveableComp.SetPath(path);
@@ -49,7 +75,7 @@ public partial class LevelManager : MonoBehaviour
       if (obj == null) continue;
       if (!obj.TryGetComponent<ISpriteRend>(out var rendComp)) continue;
       if (!obj.TryGetComponent<IMoveable>(out var moveableComp)) continue;
-      if (DOTween.IsTweening(rendComp.GetBodyRenderer())) continue;
+      if (DOTween.IsTweening(rendComp.GetBodyRenderer().transform)) continue;
 
       var currentPos = rendComp.GetBodyRenderer().transform.localPosition;
       var path = moveableComp.GetPath();
@@ -64,7 +90,7 @@ public partial class LevelManager : MonoBehaviour
         currentPos,
         currentIdx,
         path,
-        topGridShakeSpeed + math.pow(math.E, -.01f * distFromShakeCenterPos.y),
+        topGridShakeSpeed + math.pow(math.E, -.01f * math.abs(distFromShakeCenterPos.y)),
         out var t,
         out var nextPos,
         out var nextIdx

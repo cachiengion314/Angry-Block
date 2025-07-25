@@ -2244,8 +2244,8 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.04
   updateSpeed: 1
-  levelSelected: 13
-  IsSelectlevel: 1
+  levelSelected: 1
+  IsSelectlevel: 0
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}
@@ -15252,7 +15252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 68.23999}
+  m_AnchoredPosition: {x: 0, y: 68.239746}
   m_SizeDelta: {x: 263.75, y: 74.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1636833871
