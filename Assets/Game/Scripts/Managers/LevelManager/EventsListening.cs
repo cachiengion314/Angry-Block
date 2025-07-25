@@ -84,8 +84,6 @@ public partial class LevelManager : MonoBehaviour
 
     if (!colorBlock.TryGetComponent<ISpriteRend>(out var sprite)) return;
     sprite.SetSortingOrder(sprite.GetSortingOrder() + 2);
-    sprite.GetBodyRenderer()
-     .DOColor(Color.yellow, duration);
     var targetPos = colorBlock.transform.position + Vector3.up * .3f;
     sprite.GetBodyRenderer()
       .transform.DOMove(targetPos, duration);
@@ -103,9 +101,9 @@ public partial class LevelManager : MonoBehaviour
     if (!blast.TryGetComponent<ISpriteRend>(out var blastSprite)) return;
     if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;
 
-    // blastSprite.GetBodyRenderer().color = Color.yellow;
-    // var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
-    // blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
+    blastSprite.GetBodyRenderer().color = Color.yellow;
+    var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
+    blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
   }
 
   void VisualizeUseTriggerBooster2()
