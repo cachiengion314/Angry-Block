@@ -1,8 +1,9 @@
 {
     "Index": 7,
+    "lockSlot": 0,
     "ColorBlocksGridPosition": {
         "x": 0.0,
-        "y": 14.5,
+        "y": 17.5,
         "z": 0.0
     },
     "ColorBlocksGridSize": {

@@ -5,6 +5,7 @@ public partial class GameplayPanel : MonoBehaviour
 {
   public static GameplayPanel Instance { get; private set; }
   [SerializeField] TextMeshProUGUI coinText;
+  [SerializeField] TextMeshProUGUI levelText;
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
   [SerializeField] Transform SettingModal;
@@ -44,6 +45,7 @@ public partial class GameplayPanel : MonoBehaviour
   void UpdateCoin()
   {
     coinText.text = GameManager.Instance.CurrentCoin.ToString();
+    levelText.text = $"Level\n{GameManager.Instance.CurrentLevelIndex +1}";
   }
 
   bool IsShowingNotify = false;

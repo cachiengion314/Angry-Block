@@ -84,30 +84,25 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
 
     public void SetDirectionValue(DirectionValue directionValue)
     {
-        var angle90 = 90 / 2f * math.PI / 180f;
         if (directionValue == DirectionValue.Right)
         {
             Direction = new int2(1, 0);
-            transform.rotation
-              = new Quaternion(0, 0, math.sin(-angle90), math.cos(-angle90));
+            bodyRenderer.sprite = RendererSystem.Instance.GetTunnelSprite(0);
         }
         else if (directionValue == DirectionValue.Up)
         {
             Direction = new int2(0, 1);
-            transform.rotation
-              = new Quaternion(0, 0, math.sin(0), math.cos(0));
+            bodyRenderer.sprite = RendererSystem.Instance.GetTunnelSprite(1);
         }
         else if (directionValue == DirectionValue.Left)
         {
             Direction = new int2(-1, 0);
-            transform.rotation
-              = new Quaternion(0, 0, math.sin(angle90), math.cos(angle90));
+            bodyRenderer.sprite = RendererSystem.Instance.GetTunnelSprite(2);
         }
         else if (directionValue == DirectionValue.Down)
         {
             Direction = new int2(0, -1);
-            transform.rotation
-              = new Quaternion(0, 0, math.sin(2 * angle90), math.cos(2 * angle90));
+            bodyRenderer.sprite = RendererSystem.Instance.GetTunnelSprite(3);
         }
     }
 

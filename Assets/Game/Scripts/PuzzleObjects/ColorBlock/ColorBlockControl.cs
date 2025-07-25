@@ -30,7 +30,7 @@ public class ColorBlockControl : MonoBehaviour
   public void SetColorValue(int colorValue)
   {
     _colorValue = colorValue;
-    bodyRenderer.color = RendererSystem.Instance.GetColorBy(colorValue);
+    bodyRenderer.sprite = RendererSystem.Instance.GetColorBlockAt(colorValue);
   }
 
   public void SetIndex(int index)

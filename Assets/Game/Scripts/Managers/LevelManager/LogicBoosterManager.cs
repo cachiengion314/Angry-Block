@@ -116,7 +116,7 @@ public partial class LevelManager
 
   public void OntriggerBooster3()
   {
-    if (IsMergeBooster3SlotsMMoving()) return;
+    if (!IsUseBooster3()) return;
     int colorValue = GetRandomColor();
     if (colorValue == -1) return;
     GameManager.Instance.Booster3--;
@@ -141,6 +141,28 @@ public partial class LevelManager
       SoundManager.Instance.PlayBlockMoveSfx();
     }
     AutoSortingMergeSlotBooster3AndMoves();
+  }
+
+  bool IsMergeBooster3SlotsMMoving()
+  {
+    for (int i = 0; i < _mergeSlotBooster3.Length; ++i)
+    {
+      var block = _mergeSlotBooster3[i];
+      if (block == null) continue;
+      if (!block.TryGetComponent<IMoveable>(out var moveable)) continue;
+      if (!moveable.GetLockedPosition().Equals(0)) return true;
+    }
+    return false;
+  }
+
+  bool IsUseBooster3()
+  {
+    for (int i = 0; i < _mergeSlotBooster3.Length; ++i)
+    {
+      var block = _mergeSlotBooster3[i];
+      if (block != null) return false;
+    }
+    return true;
   }
 
   void AutoSortingMergeSlotBooster3AndMoves()
