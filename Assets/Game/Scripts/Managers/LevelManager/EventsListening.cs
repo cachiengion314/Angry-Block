@@ -102,7 +102,7 @@ public partial class LevelManager : MonoBehaviour
     if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;
 
     blastSprite.GetBodyRenderer().color = Color.yellow;
-    var originalColor = RendererSystem.Instance.GetColorBy(blastColor.GetColorValue());
+    var originalColor = Color.white;
     blastSprite.GetBodyRenderer().DOColor(originalColor, .5f);
   }
 

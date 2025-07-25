@@ -41,7 +41,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster1
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 10);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_1, 3);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_1, value);
@@ -51,7 +51,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster2
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 10);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_2, 3);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_2, value);
@@ -61,7 +61,7 @@ public partial class GameManager : MonoBehaviour
 
   public int Booster3
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 10);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_BOOSTER_3, 3);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_BOOSTER_3, value);
@@ -104,7 +104,7 @@ public partial class GameManager : MonoBehaviour
 
   public int CurrentCoin
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_COIN, 0);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_COIN, 100);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_COIN, value);
