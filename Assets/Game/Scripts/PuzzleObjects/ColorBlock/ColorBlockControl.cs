@@ -19,6 +19,8 @@ public class ColorBlockControl : MonoBehaviour
   GameObject _whoPicked;
   float3 _initPosition;
   float3 _lockedPosition;
+  float3[] _path;
+  Transform _lockedTarget;
 
   public int GetColorValue()
   {
@@ -99,12 +101,12 @@ public class ColorBlockControl : MonoBehaviour
 
   public Transform GetLockedTarget()
   {
-    throw new System.NotImplementedException();
+    return _lockedTarget;
   }
 
   public void SetLockedTarget(Transform lockedTarget)
   {
-    throw new System.NotImplementedException();
+    _lockedTarget = lockedTarget;
   }
 
   public GameObject GetGameObject()
@@ -124,12 +126,12 @@ public class ColorBlockControl : MonoBehaviour
 
   public void SetPath(float3[] path)
   {
-    throw new System.NotImplementedException();
+    _path = path;
   }
 
   public float3[] GetPath()
   {
-    throw new System.NotImplementedException();
+    return _path;
   }
 
   public SpriteRenderer GetBodyRenderer()

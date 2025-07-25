@@ -25,7 +25,7 @@ public partial class LevelManager : MonoBehaviour
               SoundManager.Instance.PlayDestoyShootingBlockSfx();
 
               ShakeCameraBy(new float3(.0f, -.25f, .0f));
-              // AddToShakeQueue(blastBlock.transform.position);
+              AddToShakeQueue(blastBlock.transform.position);
               SpawnColorSplashEfxAt(blastBlock.transform.position);
 
               _firingSlots.Remove(blastBlock);
@@ -96,6 +96,7 @@ public partial class LevelManager : MonoBehaviour
 
     SpawnColorSplashEfxAt(blast.transform.position);
     ShakeCameraBy(new float3(.0f, .25f, .0f));
+    AddToShakeQueue(blast.transform.position);
 
     if (!blast.TryGetComponent<ISpriteRend>(out var blastSprite)) return;
     if (!blast.TryGetComponent<IColorBlock>(out var blastColor)) return;
