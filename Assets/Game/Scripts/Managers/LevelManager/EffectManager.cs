@@ -19,8 +19,8 @@ public partial class LevelManager : MonoBehaviour
 
   void ShakeBottomGrid(
     Vector3 shakeCenterPos,
-    float _dampValue = .8f,
-    float _defaultStrength = .20f
+    float _dampValue = .7f,
+    float _defaultStrength = .2f
   )
   {
     for (int i = 0; i < _directionBlocks.Length; ++i)
@@ -36,10 +36,8 @@ public partial class LevelManager : MonoBehaviour
       var distFromShakeCenterPos = obj.transform.position - shakeCenterPos;
       var magnitude = math.pow(math.E, -_dampValue * math.abs(distFromShakeCenterPos.y));
 
-      if (magnitude < .01f) continue;
       var strength = _defaultStrength + magnitude;
       rendComp.GetBodyRenderer().transform.DOShakePosition(.3f, strength);
-
     }
   }
 
@@ -58,7 +56,7 @@ public partial class LevelManager : MonoBehaviour
       var distFromCenterPos = startPos - _shakeCenterPos;
       // we have vector field F(x,y) = 1/r^2 * [x y] / √(x^2 + y^2) * 12
       var distSq = math.lengthsq(distFromCenterPos);
-      var magnitude = 1 / distSq * math.normalize(distFromCenterPos) * 12;
+      var magnitude = 1 / distSq * math.normalize(distFromCenterPos) * 16;
       var targetPos = 0f + magnitude;
 
       var path = new float3[] { 0, targetPos, 0 };
