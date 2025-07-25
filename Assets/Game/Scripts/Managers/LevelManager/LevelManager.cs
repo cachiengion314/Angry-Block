@@ -197,7 +197,7 @@ public partial class LevelManager : MonoBehaviour
 
   public float GetProgessLevel()
   {
-    return (float)_amountColorBlock/_maxColorBlock;
+    return (float)_amountColorBlock / _maxColorBlock;
   }
 
   public Collider2D FindObjIn<T>(Collider2D[] cols)
@@ -295,14 +295,21 @@ public partial class LevelManager : MonoBehaviour
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot != -1) return;
     GameManager.Instance.SetGameState(GameState.Gameover);
-    DOVirtual.DelayedCall(1f, GameplayPanel.Instance.ToggleLevelFailedModal);
+
+    DOVirtual.DelayedCall(1f, () =>
+    {
+      if (IsLockSlot())
+        GameplayPanel.Instance.ToggleOutOfSpaceModal();
+      else
+        GameplayPanel.Instance.ToggleLevelFailedModal();
+    });
 
     FirebaseAnalytics.LogEvent(KeyString.FIREBASE_END_LEVEL,
-     new Parameter[]
-     {
+       new Parameter[]
+       {
         new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
         new ("result", 0),
-     });
+       });
   }
 
   void UpdateWinLevel()

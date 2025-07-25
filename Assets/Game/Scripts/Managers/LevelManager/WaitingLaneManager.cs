@@ -24,6 +24,25 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
+  bool IsLockSlot()
+  {
+    return _waitingSlots.Length != slotObjects.Length;
+  }
+
+  public void UnlockFirsSlot()
+  {
+    for (int i = 0; i < slotObjects.Length; i++)
+    {
+      if (!slotObjects[i].TryGetComponent(out SlotControl component)) continue;
+      if (component.isLock)
+      {
+        component.UnlockSlot();
+        UnlockSlot();
+        return;
+      }
+    }
+  }
+
   void UnlockSlot()
   {
     int unlockSlot = _waitingSlots.Length;
@@ -50,7 +69,16 @@ public partial class LevelManager : MonoBehaviour
   void OnUnlockSlot(GameObject slot)
   {
     if (slot == null) return;
-    if (!IsUnlockSlot(slot)) return;
+    if (!IsUnlockSlot(slot))
+    {
+      GameplayPanel.Instance.ShowNotifyWith("UNLOCK IN ORDER");
+      return;
+    }
+    if (GameManager.Instance.CurrentCoin < 100)
+    {
+      GameplayPanel.Instance.ShowNotifyWith("NOT ENOUGH COINS");
+      return;
+    }
     if (!slot.TryGetComponent(out SlotControl control)) return;
     control.UnlockSlot();
     UnlockSlot();

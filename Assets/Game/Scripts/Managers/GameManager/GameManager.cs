@@ -104,7 +104,7 @@ public partial class GameManager : MonoBehaviour
 
   public int CurrentCoin
   {
-    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_COIN, 100);
+    get => PlayerPrefs.GetInt(KeyString.KEY_CURRENT_COIN, 10000);
     set
     {
       PlayerPrefs.SetInt(KeyString.KEY_CURRENT_COIN, value);
