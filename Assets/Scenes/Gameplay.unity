@@ -2243,8 +2243,8 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.04
   updateSpeed: 1
-  levelSelected: 16
-  IsSelectlevel: 0
+  levelSelected: 8
+  IsSelectlevel: 1
   topBlockParent: {fileID: 449986420}
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
@@ -5076,7 +5076,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -71, y: 14}
+  m_AnchoredPosition: {x: -49, y: 14}
   m_SizeDelta: {x: 192.77, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596330993
@@ -7436,7 +7436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -204, y: -187}
+  m_AnchoredPosition: {x: -203, y: -184.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &784721117
@@ -9809,7 +9809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 65, y: 9.999979}
+  m_AnchoredPosition: {x: 87, y: 9.999979}
   m_SizeDelta: {x: 109, y: 114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1020651739

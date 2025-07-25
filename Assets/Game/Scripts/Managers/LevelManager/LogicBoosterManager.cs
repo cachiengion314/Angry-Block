@@ -13,14 +13,14 @@ public partial class LevelManager
   public void OnTriggerBooster1(GameObject directionBlock)
   {
     if (directionBlock == null) return;
+    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
+    if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
+
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
 
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
     if (!moveable.GetLockedPosition().Equals(0)) return;
-
-    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
-    if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
     directionBlock.transform.SetParent(topBlockParent);
     if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;

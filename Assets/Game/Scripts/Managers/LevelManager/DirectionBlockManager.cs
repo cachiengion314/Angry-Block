@@ -25,6 +25,8 @@ public partial class LevelManager : MonoBehaviour
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
+    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
+    if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
     if (color.GetIndex() == -1) return;
     if (!directionBlock.TryGetComponent<IMoveable>(out var moveable)) return;
@@ -57,9 +59,6 @@ public partial class LevelManager : MonoBehaviour
     spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
 
     SoundManager.Instance.PlayBlockMoveSfx();
-
-    var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
-    if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
 
     _waitingSlots[emptyWaitingSlot] = directionBlock;
     _directionBlocks[color.GetIndex()] = null;

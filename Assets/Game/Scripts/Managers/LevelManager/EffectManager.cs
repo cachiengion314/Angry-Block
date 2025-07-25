@@ -102,4 +102,46 @@ public partial class LevelManager : MonoBehaviour
       _needShakingObjs.Remove(obj);
     }
   }
+
+  void VisualizeStartColorBlock()
+  {
+    Sequence seq = DOTween.Sequence();
+    var space = 0.03f;
+    var duration = 1f;
+    for (int i = 0; i < _colorBlocks.Length; i++)
+    {
+      var block = _colorBlocks[i];
+      if (block == null) continue;
+      var blockPos = topGrid.ConvertIndexToWorldPos(i);
+      var blockGrid = topGrid.ConvertIndexToGridPos(i);
+
+      block.transform.position = blockPos + new float3(0f, 7f, 0f);
+
+      seq.Insert(space * blockGrid.x,
+      block.transform.DOMove(blockPos, duration)
+      .SetEase(Ease.OutBounce));
+    }
+  }
+
+  void VisualizeStartDirBlock()
+  {
+    Sequence seq = DOTween.Sequence();
+    var space = 0.03f;
+    var duration = 0.06f;
+    for (int i = 0; i < _directionBlocks.Length; i++)
+    {
+      var block = _directionBlocks[i];
+      if (block == null) continue;
+      var blockPos = bottomGrid.ConvertIndexToWorldPos(i);
+      var blockGrid = bottomGrid.ConvertIndexToGridPos(i);
+
+      block.transform.position = blockPos + new float3(0f, 3f, 0f);
+      block.SetActive(false);
+
+      seq.InsertCallback(space * i, () => block.SetActive(true));
+      seq.Insert(space * i,
+      block.transform.DOMove(blockPos, duration)
+      .SetEase(Ease.Linear));
+    }
+  }
 }
