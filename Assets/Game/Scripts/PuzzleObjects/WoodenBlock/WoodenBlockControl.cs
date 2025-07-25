@@ -1,8 +1,10 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteRend
 {
+    [SerializeField] SortingGroup sortingGroup;
     [SerializeField] SpriteRenderer bodyRenderer;
     public Transform blockParent;
     int Index;
@@ -34,7 +36,8 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
         directionBlock.SetColorValue(directionBlockData.ColorValue);
         directionBlock.SetDirectionValue(directionBlockData.DirectionValue);
         directionBlock.SetAmmunition(directionBlockData.Ammunition);
-        directionBlock.gameObject.SetActive(false);
+        if (!directionBlock.TryGetComponent(out Collider2D col)) return;
+        col.enabled = false;
     }
 
     public void OnTrigger<T>(T data)
@@ -46,7 +49,8 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
             if (!block.TryGetComponent(out IDirectionBlock directionBlock)) return;
             var gridPos = LevelManager.Instance.BottomGrid.ConvertIndexToGridPos(Index);
             if (!gridPosBlockAhead.Equals(gridPos + directionBlock.GetDirection())) return;
-            block.gameObject.SetActive(true);
+            if (!block.TryGetComponent(out Collider2D col)) return;
+            col.enabled = true;
             LevelManager.Instance.SetDirectionBlocks(Index, block.gameObject);
             block.SetParent(LevelManager.Instance.SpawnedParent);
             Destroy(gameObject);
@@ -57,7 +61,8 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
     {
         if (blockParent.childCount <= 0) return;
         var block = blockParent.GetChild(0);
-        block.gameObject.SetActive(true);
+        if (!block.TryGetComponent(out Collider2D col)) return;
+        col.enabled = true;
         block.SetParent(LevelManager.Instance.SpawnedParent);
         LevelManager.Instance.SetDirectionBlocks(Index, null);
         Destroy(gameObject);
@@ -75,7 +80,7 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
 
     public void SetSortingOrder(int sortingOrder)
     {
-        bodyRenderer.sortingOrder = sortingOrder;
+        sortingGroup.sortingOrder = sortingOrder;
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;

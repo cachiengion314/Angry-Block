@@ -6,9 +6,11 @@ public class BlastBlockControl : MonoBehaviour
   , IColorBlock
   , IMoveable
   , IGun
+  , IMuzzlePosition
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
+  [SerializeField] Transform muzzlePosition;
   [Header("Datas")]
   int _index;
   int _colorValue;
@@ -103,4 +105,9 @@ public class BlastBlockControl : MonoBehaviour
   {
     bodyRenderer.sortingOrder = sortingOrder;
   }
+
+    public float3 GetMuzzlePosition()
+    {
+    return muzzlePosition.position;
+    }
 }

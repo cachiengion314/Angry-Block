@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 {
+    [SerializeField] SortingGroup sortingGroup;
     [SerializeField] SpriteRenderer bodyRenderer;
     public Transform blockParent;
     int Index;
@@ -39,7 +41,6 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
     public void Initialize(DirectionBlockData directionBlockData)
     {
         Visualze();
-
         var directionBlock = LevelManager.Instance.SpawnDirectionBlockAt(Index, blockParent);
         directionBlock.SetIndex(Index);
         directionBlock.SetColorValue(directionBlockData.ColorValue);
@@ -76,10 +77,10 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 
     void Visualze()
     {
-        if (heart == 4) bodyRenderer.color = Color.blue;
-        if (heart == 3) bodyRenderer.color = Color.green;
-        if (heart == 2) bodyRenderer.color = Color.yellow;
-        if (heart == 1) bodyRenderer.color = Color.red;
+        // if (heart == 4) bodyRenderer.color = Color.blue;
+        // if (heart == 3) bodyRenderer.color = Color.green;
+        // if (heart == 2) bodyRenderer.color = Color.yellow;
+        // if (heart == 1) bodyRenderer.color = Color.red;
     }
 
     public SpriteRenderer GetBodyRenderer()
@@ -94,11 +95,11 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 
     public void SetSortingOrder(int sortingOrder)
     {
-        bodyRenderer.sortingOrder = sortingOrder;
+        sortingGroup.sortingOrder = sortingOrder;
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
-            spriteRend.SetSortingOrder(sortingOrder - 2);
+            spriteRend.SetSortingOrder(sortingOrder);
         }
     }
 }

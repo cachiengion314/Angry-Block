@@ -1,8 +1,10 @@
 using Firebase.Analytics;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public partial class GameplayPanel
 {
+    [SerializeField] SortingGroup sortingGroup;
     [SerializeField] BoosterCtrl booster1Ctrl;
     [SerializeField] BoosterCtrl booster2Ctrl;
     [SerializeField] BoosterCtrl booster3Ctrl;
@@ -43,6 +45,7 @@ public partial class GameplayPanel
     {
         IsTriggerBooster1 = !IsTriggerBooster1;
         UseBooster1Modal.gameObject.SetActive(IsTriggerBooster1);
+        sortingGroup.enabled = IsTriggerBooster1;
     }
 
     public void OnTriggerBooster2()
@@ -54,6 +57,7 @@ public partial class GameplayPanel
             ToggleBooster2Modal();
         else
         {
+            sortingGroup.enabled = true;
             UseBooster2Modal.gameObject.SetActive(true);
             GameManager.Instance.SetGameState(GameState.GamepPause);
         }
@@ -62,6 +66,7 @@ public partial class GameplayPanel
     public void ExitBooster2()
     {
         SoundManager.Instance.PlayPressBtnSfx();
+        sortingGroup.enabled = false;
         UseBooster2Modal.gameObject.SetActive(false);
         GameManager.Instance.SetGameState(GameState.Gameplay);
     }
@@ -80,6 +85,7 @@ public partial class GameplayPanel
             ToggleBooster3Modal();
         else
         {
+            sortingGroup.enabled = true;
             UseBooster3Modal.gameObject.SetActive(true);
             GameManager.Instance.SetGameState(GameState.GamepPause);
         }
@@ -88,6 +94,7 @@ public partial class GameplayPanel
     public void ExitBooster3()
     {
         SoundManager.Instance.PlayPressBtnSfx();
+        sortingGroup.enabled = false;
         UseBooster3Modal.gameObject.SetActive(false);
         GameManager.Instance.SetGameState(GameState.Gameplay);
     }

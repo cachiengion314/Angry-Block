@@ -64,14 +64,20 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             if (blockParent.childCount <= 0) return;
             var dirBlock = blockParent.GetChild(0);
             if (!dirBlock.TryGetComponent(out IColorBlock colorBlock)) return;
-            dirBlock.gameObject.SetActive(true);
             LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
             dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
 
+            var delay = 0.1f;
             var duration = 0.3f;
             var endScale = dirBlock.transform.localScale;
-            dirBlock.transform.localScale = endScale * .8f;
-            dirBlock.transform.DOScale(endScale, duration);
+            dirBlock.transform.localScale = endScale * 0f;
+            var endPos = dirBlock.transform.position;
+            dirBlock.transform.position = transform.position;
+
+            Sequence seq = DOTween.Sequence();
+            seq.InsertCallback(delay, () => dirBlock.gameObject.SetActive(true));
+            seq.Insert(delay, dirBlock.transform.DOScale(endScale, duration));
+            seq.Insert(delay, dirBlock.transform.DOMove(endPos, duration));
         }
     }
 

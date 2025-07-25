@@ -16,6 +16,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField][Range(1, 20)] int levelSelected = 1;
   [SerializeField] bool IsSelectlevel = false;
   [Header("Dependencies")]
+  [SerializeField] Transform topBlockParent;
   [SerializeField] Transform spawnedParent;
   public Transform SpawnedParent => spawnedParent;
   [Header("Grids")]
@@ -113,7 +114,7 @@ public partial class LevelManager : MonoBehaviour
         {
           var gridPos = new int2(x, y);
           var index = topGrid.ConvertGridPosToIndex(gridPos);
-          var colorBlock = SpawnColorBlockAt(index, spawnedParent);
+          var colorBlock = SpawnColorBlockAt(index, topBlockParent);
           colorBlock.SetIndex(index);
           colorBlock.SetColorValue(partition.ColorValue);
           colorBlock.SetInitHealth(partition.Health);

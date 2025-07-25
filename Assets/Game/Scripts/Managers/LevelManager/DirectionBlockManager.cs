@@ -52,6 +52,7 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
 
+    directionBlock.transform.SetParent(topBlockParent);
     if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;
     spriteRend.SetSortingOrder(spriteRend.GetSortingOrder() + 10);
 

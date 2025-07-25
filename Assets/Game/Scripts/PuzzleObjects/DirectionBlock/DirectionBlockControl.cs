@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DirectionBlockControl : MonoBehaviour
   , IDirectionBlock
@@ -10,6 +11,7 @@ public class DirectionBlockControl : MonoBehaviour
   , ISpriteRend
 {
   [Header("Dependencies")]
+  [SerializeField] SortingGroup sortingGroup;
   [SerializeField] SpriteRenderer bodyRenderer;
   [SerializeField] SpriteRenderer directionRenderer;
   [Header("Datas")]
@@ -151,7 +153,6 @@ public class DirectionBlockControl : MonoBehaviour
 
   public void SetSortingOrder(int sortingOrder)
   {
-    bodyRenderer.sortingOrder = sortingOrder;
-    directionRenderer.sortingOrder = sortingOrder + 1;
+    sortingGroup.sortingOrder = sortingOrder;
   }
 }

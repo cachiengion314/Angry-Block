@@ -17,7 +17,7 @@ public partial class LevelManager : MonoBehaviour
     slotObjects = new GameObject[waitingPositions.childCount];
     for (int i = 0; i < slotObjects.Length; i++)
     {
-      var slot = SpawnSlotAt(waitingPositions.GetChild(i).position, spawnedParent);
+      var slot = SpawnSlotAt(waitingPositions.GetChild(i).position, topBlockParent);
       if (i < unlockSlot) slot.UnlockSlot();
       else slot.LockSlot();
       slotObjects[i] = slot.gameObject;
@@ -29,7 +29,7 @@ public partial class LevelManager : MonoBehaviour
     return _waitingSlots.Length != slotObjects.Length;
   }
 
-  public void UnlockFirsSlot()
+  public void UnlockAllSlot()
   {
     for (int i = 0; i < slotObjects.Length; i++)
     {
@@ -38,7 +38,6 @@ public partial class LevelManager : MonoBehaviour
       {
         component.UnlockSlot();
         UnlockSlot();
-        return;
       }
     }
   }
@@ -170,7 +169,7 @@ public partial class LevelManager : MonoBehaviour
       _waitingSlots[slot] = null;
       if (i == 1)
       {
-        blast = SpawnBlastBlockAt(upperPos, spawnedParent).gameObject;
+        blast = SpawnBlastBlockAt(upperPos, topBlockParent).gameObject;
         if (blast.TryGetComponent<IColorBlock>(out var blastColor))
         {
           blastColor.SetIndex(-1);

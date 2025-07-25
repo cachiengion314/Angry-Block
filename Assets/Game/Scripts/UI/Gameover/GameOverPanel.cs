@@ -12,7 +12,7 @@ public class GameOverPanel : MonoBehaviour
     }
     GameplayPanel.Instance.ToggleOutOfSpaceModal();
     GameManager.Instance.CurrentCoin -= coin;
-    LevelManager.Instance.UnlockFirsSlot();
+    LevelManager.Instance.UnlockAllSlot();
   }
   public void LevelFail()
   {

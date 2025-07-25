@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 3735127944660334627}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7686096543915409947}
+  m_Father: {fileID: 8393328626429581151}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &651559473571377345
 SpriteRenderer:
@@ -114,10 +114,9 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 9019899971595070768}
+  m_Children: []
   m_Father: {fileID: 8393328626429581151}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &167577749203645474
@@ -186,6 +185,7 @@ GameObject:
   - component: {fileID: 8393328626429581151}
   - component: {fileID: 1633368844517106154}
   - component: {fileID: 217141691816111116}
+  - component: {fileID: 6026133786644111307}
   m_Layer: 0
   m_Name: DirectionBlock
   m_TagString: Untagged
@@ -203,10 +203,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7686096543915409947}
+  - {fileID: 9019899971595070768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1633368844517106154
@@ -221,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5effaf84f8b4744829c6a0c425a1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingGroup: {fileID: 6026133786644111307}
   bodyRenderer: {fileID: 167577749203645474}
   directionRenderer: {fileID: 651559473571377345}
 --- !u!61 &217141691816111116
@@ -269,3 +271,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!210 &6026133786644111307
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8341526535115181582}
+  m_Enabled: 1
+  m_SortingLayerID: -1028455307
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

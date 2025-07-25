@@ -57,8 +57,8 @@ Transform:
   m_GameObject: {fileID: 4559897645029003953}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8393328626429581151}
@@ -128,6 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8393328626429581151}
   - component: {fileID: 8065321804541392809}
+  - component: {fileID: 3153258292693809483}
   m_Layer: 0
   m_Name: WoodenBlock
   m_TagString: Untagged
@@ -164,5 +165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f983eedb5b8423a906ed8bc3b2016a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingGroup: {fileID: 3153258292693809483}
   bodyRenderer: {fileID: 4444817080609548555}
   blockParent: {fileID: 5213740679888056485}
+--- !u!210 &3153258292693809483
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8341526535115181582}
+  m_Enabled: 1
+  m_SortingLayerID: -1028455307
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
