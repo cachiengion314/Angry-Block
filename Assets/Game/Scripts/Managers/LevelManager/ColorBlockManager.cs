@@ -11,6 +11,7 @@ public partial class LevelManager : MonoBehaviour
   /// </summary>
   readonly Dictionary<int, List<GameObject>> _needMovingColorBlocks = new();
   ColorBlockControl[] _colorBlocks;
+  int _maxColorBlock = 0;
   int _amountColorBlock = 0;
   public ColorBlockControl[] ColorBlocks { get { return _colorBlocks; } }
   [Range(.01f, 10f)]

@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class GameplayPanel : MonoBehaviour
 {
   public static GameplayPanel Instance { get; private set; }
   [SerializeField] TextMeshProUGUI coinText;
   [SerializeField] TextMeshProUGUI levelText;
+  [SerializeField] Image progessLevelBar;
   [SerializeField] RectTransform goalCompletedNotify;
   [SerializeField] RectTransform showCanvas;
   [SerializeField] Transform SettingModal;
@@ -42,10 +44,16 @@ public partial class GameplayPanel : MonoBehaviour
     GameManager.Instance.OnCoinChange -= UpdateCoin;
   }
 
+  void Update()
+  {
+    if (!LevelManager.Instance.isLoadLevelSuccess) return;
+    progessLevelBar.fillAmount = 1 -LevelManager.Instance.GetProgessLevel();
+  }
+
   void UpdateCoin()
   {
     coinText.text = GameManager.Instance.CurrentCoin.ToString();
-    levelText.text = $"Level\n{GameManager.Instance.CurrentLevelIndex +1}";
+    levelText.text = $"Level\n{GameManager.Instance.CurrentLevelIndex + 1}";
   }
 
   bool IsShowingNotify = false;

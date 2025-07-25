@@ -22,7 +22,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] GridWorld topGrid;
   [SerializeField] GridWorld bottomGrid;
   public GridWorld BottomGrid => bottomGrid;
-  bool isLoadLevelSuccess = false;
+  public bool isLoadLevelSuccess = false;
 
   IEnumerator Start()
   {
@@ -128,6 +128,7 @@ public partial class LevelManager : MonoBehaviour
         maxTopSortingOrder--;
       }
     }
+    _maxColorBlock = _amountColorBlock;
 
     _directionBlocks = new GameObject[bottomGrid.Grid.Length];
     for (int i = 0; i < initDirectionBlocks.Length; ++i)
@@ -192,6 +193,11 @@ public partial class LevelManager : MonoBehaviour
       {
         new ("level_id", (GameManager.Instance.CurrentLevelIndex + 1).ToString()),
       });
+  }
+
+  public float GetProgessLevel()
+  {
+    return (float)_amountColorBlock/_maxColorBlock;
   }
 
   public Collider2D FindObjIn<T>(Collider2D[] cols)

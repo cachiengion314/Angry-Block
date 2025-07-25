@@ -4157,10 +4157,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: d6d81d30b00034f46bf786451077c692, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -20678,6 +20678,7 @@ MonoBehaviour:
   booster3Ctrl: {fileID: 1439786215}
   coinText: {fileID: 725164410}
   levelText: {fileID: 1759371149}
+  progessLevelBar: {fileID: 461049916}
   goalCompletedNotify: {fileID: 1483219109}
   showCanvas: {fileID: 1310897724}
   SettingModal: {fileID: 639691833}
