@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -66,6 +67,11 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             dirBlock.gameObject.SetActive(true);
             LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
             dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
+
+            var duration = 0.3f;
+            var endScale = dirBlock.transform.localScale;
+            dirBlock.transform.localScale = endScale * .8f;
+            dirBlock.transform.DOScale(endScale, duration);
         }
     }
 

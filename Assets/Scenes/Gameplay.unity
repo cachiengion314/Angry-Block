@@ -2244,8 +2244,8 @@ MonoBehaviour:
   wanderingSpeed: 5
   fireRate: 0.04
   updateSpeed: 1
-  levelSelected: 19
-  IsSelectlevel: 1
+  levelSelected: 7
+  IsSelectlevel: 0
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
   bottomGrid: {fileID: 313449926}

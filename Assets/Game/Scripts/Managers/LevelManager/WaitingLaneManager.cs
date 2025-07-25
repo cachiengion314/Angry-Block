@@ -80,6 +80,7 @@ public partial class LevelManager : MonoBehaviour
       return;
     }
     if (!slot.TryGetComponent(out SlotControl control)) return;
+    GameManager.Instance.CurrentCoin -= 100;
     control.UnlockSlot();
     UnlockSlot();
   }
