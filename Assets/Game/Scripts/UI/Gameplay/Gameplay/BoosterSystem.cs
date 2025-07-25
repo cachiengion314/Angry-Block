@@ -164,6 +164,7 @@ public partial class GameplayPanel
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster1++;
+        ToggleBooster1Modal();
 
         FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
     new Parameter[]
@@ -183,6 +184,7 @@ public partial class GameplayPanel
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster2++;
+        ToggleBooster2Modal();
 
         FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
 new Parameter[]
@@ -202,6 +204,7 @@ new Parameter[]
 
         GameManager.Instance.CurrentCoin -= price;
         GameManager.Instance.Booster3++;
+        ToggleBooster3Modal();
 
         FirebaseAnalytics.LogEvent(KeyString.FIREBASE_COIN_USE,
 new Parameter[]
