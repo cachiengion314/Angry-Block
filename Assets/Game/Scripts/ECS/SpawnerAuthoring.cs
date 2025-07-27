@@ -16,6 +16,12 @@ public struct Spawner : IComponentData
   public float3 Offset;
 }
 
+public struct Block : IComponentData
+{
+  public int Index;
+}
+
+
 public class SpawnerBaker : Baker<SpawnerAuthoring>
 {
   public override void Bake(SpawnerAuthoring authoring)

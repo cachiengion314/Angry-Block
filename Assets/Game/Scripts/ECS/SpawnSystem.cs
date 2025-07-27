@@ -11,7 +11,7 @@ namespace AngryBlock
     public void OnCreate(ref SystemState state)
     {
       state.RequireForUpdate<Spawner>();
-      Debug.Log("Hello world! 1");
+      Debug.Log("SpawnSystem invoke");
     }
 
     public void OnUpdate(ref SystemState state)
@@ -19,16 +19,19 @@ namespace AngryBlock
       state.Enabled = false;
       var spawner = SystemAPI.GetSingleton<Spawner>();
       var spawnerEntity = SystemAPI.GetSingletonEntity<Spawner>();
-      var spawnerTransform = SystemAPI.GetComponentRO<LocalTransform>(spawnerEntity);
+      var spawnerTransformRO = SystemAPI.GetComponentRO<LocalTransform>(spawnerEntity);
 
       var instances = new NativeArray<Entity>(spawner.Count, Allocator.Temp);
       state.EntityManager.Instantiate(spawner.Prefab, instances);
 
-      var offset = math.float3(spawnerTransform.ValueRO.Position);
+      var offset = math.float3(spawnerTransformRO.ValueRO.Position);
+      var i = 0;
       foreach (var entity in instances)
       {
         state.EntityManager.SetComponentData(entity, LocalTransform.FromPosition(offset));
+        state.EntityManager.AddComponentData(entity, new Block { Index = i });
         offset += spawner.Offset;
+        i++;
       }
     }
   }
