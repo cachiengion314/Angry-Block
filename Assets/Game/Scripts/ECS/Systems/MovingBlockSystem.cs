@@ -1,4 +1,3 @@
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -18,11 +17,13 @@ namespace AngryBlock
     {
       foreach (var (transform, entity) in
                SystemAPI.Query<RefRW<LocalTransform>>()
-               .WithAll<Block>()
+               .WithAll<Block, Moveable>()
                .WithEntityAccess())
       {
-        var nextPos = transform.ValueRO.Position + SystemAPI.Time.DeltaTime * new float3(1, 0, 0);
-        transform.ValueRW.Position = nextPos;
+        var nextPosition
+          = transform.ValueRO.Position
+            + SystemAPI.Time.DeltaTime * new float3(1, 0, 0);
+        transform.ValueRW.Position = nextPosition;
       }
     }
   }

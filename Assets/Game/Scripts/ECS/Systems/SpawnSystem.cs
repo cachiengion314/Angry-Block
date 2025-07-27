@@ -30,6 +30,7 @@ namespace AngryBlock
       {
         state.EntityManager.SetComponentData(entity, LocalTransform.FromPosition(offset));
         state.EntityManager.AddComponentData(entity, new Block { Index = i });
+        state.EntityManager.AddComponentData(entity, new Moveable());
         offset += spawner.Offset;
         i++;
       }
