@@ -125,9 +125,11 @@ public partial class LevelManager : MonoBehaviour
 
   void VisualizeStartDirBlock()
   {
+    if (IsDirectionBlockTeewning) return;
     Sequence seq = DOTween.Sequence();
     var space = 0.03f;
     var duration = 0.06f;
+    IsDirectionBlockTeewning = true;
     for (int i = 0; i < _directionBlocks.Length; i++)
     {
       var block = _directionBlocks[i];
@@ -143,5 +145,6 @@ public partial class LevelManager : MonoBehaviour
       block.transform.DOMove(blockPos, duration)
       .SetEase(Ease.Linear));
     }
+    seq.OnComplete(() => IsDirectionBlockTeewning = false);
   }
 }

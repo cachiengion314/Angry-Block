@@ -102,9 +102,11 @@ public partial class LevelManager : MonoBehaviour
 
   void VisualizeUseTriggerBooster2()
   {
+    if(IsDirectionBlockTeewning) return;
     Sequence seq = DOTween.Sequence();
     float spaceTime = 0.08f;
     float duration = 0.16f;
+    IsDirectionBlockTeewning = true;
 
     for (int i = 0; i < _directionBlocks.Length; i++)
     {
@@ -134,6 +136,8 @@ public partial class LevelManager : MonoBehaviour
       seq.Insert(gridPos.y * spaceTime + duration,
         directionBlock.transform.DOScale(startScale, duration / 2)
         .SetEase(Ease.Linear));
+
+      seq.OnComplete(()=> IsDirectionBlockTeewning= false);
     }
   }
 }

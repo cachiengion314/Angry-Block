@@ -15,6 +15,7 @@ public partial class LevelManager : MonoBehaviour
   readonly Dictionary<int, int> _needMovingObjPathIndexes = new();
   public GameObject[] DirectionBlocks { get { return _directionBlocks; } }
   public Action OnDirectionBlockMove;
+  public bool IsDirectionBlockTeewning = false;
   [SerializeField][Range(1, 100)] float movingSpeed = 12.5f;
 
   public void SetDirectionBlocks(int index, GameObject directionBlock)
@@ -25,6 +26,7 @@ public partial class LevelManager : MonoBehaviour
   void TouchControlling(GameObject directionBlock)
   {
     if (directionBlock == null) return;
+    if (!IsUseBooster3()) return;
     var emptyWaitingSlot = FindEmptySlotFrom(_waitingSlots);
     if (emptyWaitingSlot == -1 || emptyWaitingSlot > _waitingSlots.Length - 1) return;
     if (!directionBlock.TryGetComponent(out IColorBlock color)) return;
@@ -36,6 +38,7 @@ public partial class LevelManager : MonoBehaviour
     if (!IsBlockMoveable(directionBlock, out var collidedBlock))
     {
       if (DOTween.IsTweening(directionBlock.transform)) return;
+      if(IsDirectionBlockTeewning) return;
 
       var duration = .1f;
       var dir = collidedBlock.transform.position - directionBlock.transform.position;
