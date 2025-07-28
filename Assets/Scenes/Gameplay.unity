@@ -2234,6 +2234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrangeSpeed: 2.78
   arrangeDampSpeed: 3.4
+  IsDirectionBlockTeewning: 0
   movingSpeed: 19
   topGridShakeSpeed: 2.37
   impulseSource: {fileID: 229877050}
@@ -2244,7 +2245,7 @@ MonoBehaviour:
   fireRate: 0.04
   updateSpeed: 1
   levelSelected: 8
-  IsSelectlevel: 1
+  IsSelectlevel: 0
   topBlockParent: {fileID: 449986420}
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
@@ -7436,7 +7437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -203, y: -184.7}
+  m_AnchoredPosition: {x: -203, y: -184.7002}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &784721117
@@ -15309,8 +15310,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6d97e393989fd40b782d90ff03bd923f, type: 2}
-  m_sharedMaterial: {fileID: -6239952282333648589, guid: 6d97e393989fd40b782d90ff03bd923f,
+  m_fontAsset: {fileID: 11400000, guid: 711a80f7059494d6f8689e1597539749, type: 2}
+  m_sharedMaterial: {fileID: 2166756622401534595, guid: 711a80f7059494d6f8689e1597539749,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
