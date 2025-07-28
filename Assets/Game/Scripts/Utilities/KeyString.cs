@@ -209,4 +209,7 @@ public partial class KeyString
   public const string KEY_TUTORIAL_3 = "KEY_TUTORIAL_3";
   public const string KEY_TUTORIAL_4 = "KEY_TUTORIAL_4";
   public const string KEY_TUTORIAL_5 = "KEY_TUTORIAL_5";
+  public const string KEY_TUTORIAL_6 = "KEY_TUTORIAL_6";
+  public const string KEY_TUTORIAL_7 = "KEY_TUTORIAL_7";
+  public const string KEY_TUTORIAL_8 = "KEY_TUTORIAL_8";
 }

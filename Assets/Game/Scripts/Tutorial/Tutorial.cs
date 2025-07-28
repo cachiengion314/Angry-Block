@@ -20,11 +20,12 @@ public class Tutorial : MonoBehaviour
     [SerializeField] SpriteMask lightPanel;
     [SerializeField] Sprite squareSpr;
     [SerializeField] Sprite circleSpr;
+    [SerializeField] Button exit1Btn;
 
     [Header("Tutorial Panel")]
     [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI textMesh;
-    [SerializeField] GameObject button;
+    [SerializeField] Button exit2Btn;
 
     [Header("receive")]
     [SerializeField] GameObject receiveModal;
@@ -161,21 +162,28 @@ public class Tutorial : MonoBehaviour
         lightPanel.transform.localScale = size;
     }
 
-    public void ShowTutorialPanelAt(string keyTutorial, string text, bool showBtn = false)
+    public void ShowTutorialPanelAt(string keyTutorial, string text, bool showBtn = false, Action OnComplete = null)
     {
         this.keyTutorial = keyTutorial;
+        this.OnComplete = OnComplete;
 
         panel.SetActive(true);
-        button.SetActive(showBtn);
+        exit2Btn.gameObject.SetActive(showBtn);
         textMesh.text = text;
     }
 
-    public void ShowDarkPanel()
+    public void Exit()
     {
-        darkPanel.SetActive(true);
+        OnComplete?.Invoke();
     }
 
-    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, Action Oncomplete)
+    public void ShowDarkPanel(Action OnComplete = null)
+    {
+        darkPanel.SetActive(true);
+        this.OnComplete = OnComplete;
+    }
+
+    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, Action Oncomplete = null)
     {
         this.keyTutorial = keyTutorial;
         this.OnComplete = Oncomplete;
@@ -190,7 +198,7 @@ public class Tutorial : MonoBehaviour
         var spaceTime = 0.12f;
         Sequence seq = DOTween.Sequence();
 
-        seq.InsertCallback(atPosition, ShowDarkPanel);
+        seq.InsertCallback(atPosition,()=> darkPanel.SetActive(true));
 
         seq.Insert(atPosition,
         rewardImg.transform.DOScale(Vector2.one, duration)

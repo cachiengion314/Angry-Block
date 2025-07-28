@@ -55,6 +55,9 @@ public partial class LevelManager : MonoBehaviour
     StartTutorial3();
     StartTutorial4();
     StartTutorial5();
+    StartTutorial6();
+    StartTutorial7();
+    StartTutorial8();
     isLoadLevelSuccess = true;
   }
 
