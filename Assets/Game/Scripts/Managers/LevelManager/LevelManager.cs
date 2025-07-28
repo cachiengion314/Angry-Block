@@ -46,8 +46,15 @@ public partial class LevelManager : MonoBehaviour
 
     yield return new WaitForSeconds(0.2f);
     SetupCurrentLevel();
+
     VisualizeStartColorBlock();
     VisualizeStartDirBlock();
+
+    StartTutorial1();
+    StartTutorial2();
+    StartTutorial3();
+    StartTutorial4();
+    StartTutorial5();
     isLoadLevelSuccess = true;
   }
 

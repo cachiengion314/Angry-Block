@@ -35,6 +35,7 @@ public partial class GameplayPanel
     {
         SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster1) return;
+        LevelManager.Instance.StopTutorial3();
         if (GameManager.Instance.Booster1 <= 0)
             ToggleBooster1Modal();
         else
@@ -52,7 +53,7 @@ public partial class GameplayPanel
     {
         SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster2) return;
-
+        LevelManager.Instance.StopTutorial4();
         if (GameManager.Instance.Booster2 <= 0)
             ToggleBooster2Modal();
         else
@@ -81,6 +82,7 @@ public partial class GameplayPanel
     {
         SoundManager.Instance.PlayPressBtnSfx();
         if (GameManager.Instance.CurrentLevelIndex < levelUnlockBooster3) return;
+        LevelManager.Instance.StopTutorial5();
         if (GameManager.Instance.Booster3 <= 0)
             ToggleBooster3Modal();
         else

@@ -56,6 +56,8 @@ public partial class LevelManager : MonoBehaviour
         .SetLoops(2, LoopType.Yoyo);
       return;
     }
+    StopTutorial1();
+    StopTutorial2();
 
     directionBlock.transform.SetParent(topBlockParent);
     if (!directionBlock.TryGetComponent(out ISpriteRend spriteRend)) return;

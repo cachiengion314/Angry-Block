@@ -203,4 +203,10 @@ public partial class KeyString
   public const string KEY_CURRENT_METASTREAK = "KEY_CURRENT_METASTREAK";
   public const string KEY_NEXT_METASTREAK = "KEY_NEXT_METASTREAK";
   public const string KEY_CURRENT_MILESTONE = "KEY_CURRENT_MILESTONE";
+  // tutorial
+  public const string KEY_TUTORIAL_1 = "KEY_TUTORIAL_1";
+  public const string KEY_TUTORIAL_2 = "KEY_TUTORIAL_2";
+  public const string KEY_TUTORIAL_3 = "KEY_TUTORIAL_3";
+  public const string KEY_TUTORIAL_4 = "KEY_TUTORIAL_4";
+  public const string KEY_TUTORIAL_5 = "KEY_TUTORIAL_5";
 }
