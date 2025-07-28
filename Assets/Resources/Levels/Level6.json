@@ -30,9 +30,21 @@
             },
             "PercentInY": {
                 "x": 17,
-                "y": 50
+                "y": 34
             },
             "ColorValue": 1,
+            "Health": 1
+        },
+        {
+            "PercentInX": {
+                "x": 0,
+                "y": 100
+            },
+            "PercentInY": {
+                "x": 34,
+                "y": 50
+            },
+            "ColorValue": 4,
             "Health": 1
         },
         {
@@ -72,7 +84,7 @@
     "InitDirectionBlocks": [
         {
             "Index": 0,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 3,
             "Ammunition": 10
         },
@@ -114,7 +126,7 @@
         },
         {
             "Index": 7,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -156,7 +168,7 @@
         },
         {
             "Index": 14,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 3,
             "Ammunition": 10
         },
@@ -198,7 +210,7 @@
         },
         {
             "Index": 21,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -240,7 +252,7 @@
         },
         {
             "Index": 28,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -282,7 +294,7 @@
         },
         {
             "Index": 35,
-            "ColorValue": 1,
+            "ColorValue": 4,
             "DirectionValue": 1,
             "Ammunition": 10
         }

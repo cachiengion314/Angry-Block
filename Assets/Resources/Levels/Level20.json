@@ -173,21 +173,9 @@
             "Ammunition": 10
         },
         {
-            "Index": 15,
-            "ColorValue": 6,
-            "DirectionValue": 3,
-            "Ammunition": 10
-        },
-        {
             "Index": 17,
             "ColorValue": 4,
             "DirectionValue": 1,
-            "Ammunition": 10
-        },
-        {
-            "Index": 19,
-            "ColorValue": 6,
-            "DirectionValue": 0,
             "Ammunition": 10
         },
         {
@@ -215,18 +203,6 @@
             "Ammunition": 10
         },
         {
-            "Index": 24,
-            "ColorValue": 6,
-            "DirectionValue": 1,
-            "Ammunition": 10
-        },
-        {
-            "Index": 25,
-            "ColorValue": 6,
-            "DirectionValue": 3,
-            "Ammunition": 10
-        },
-        {
             "Index": 26,
             "ColorValue": 7,
             "DirectionValue": 0,
@@ -242,12 +218,6 @@
             "Index": 28,
             "ColorValue": 7,
             "DirectionValue": 0,
-            "Ammunition": 10
-        },
-        {
-            "Index": 29,
-            "ColorValue": 6,
-            "DirectionValue": 1,
             "Ammunition": 10
         }
     ],
@@ -266,6 +236,12 @@
             "Ammunition": 10
         },
         {
+            "Index": 15,
+            "ColorValue": 6,
+            "DirectionValue": 3,
+            "Ammunition": 10
+        },
+        {
             "Index": 16,
             "ColorValue": 2,
             "DirectionValue": 3,
@@ -274,6 +250,30 @@
         {
             "Index": 18,
             "ColorValue": 2,
+            "DirectionValue": 1,
+            "Ammunition": 10
+        },
+        {
+            "Index": 19,
+            "ColorValue": 6,
+            "DirectionValue": 0,
+            "Ammunition": 10
+        },
+        {
+            "Index": 24,
+            "ColorValue": 6,
+            "DirectionValue": 1,
+            "Ammunition": 10
+        },
+        {
+            "Index": 25,
+            "ColorValue": 6,
+            "DirectionValue": 3,
+            "Ammunition": 10
+        },
+        {
+            "Index": 29,
+            "ColorValue": 6,
             "DirectionValue": 1,
             "Ammunition": 10
         }

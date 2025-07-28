@@ -94,6 +94,7 @@ public class SettingModal : MonoBehaviour
 
   public void BackHome()
   {
+    DOTween.PauseAll(); 
     DOTween.KillAll();
     SoundManager.Instance.PlayPressBtnSfx();
     SceneManager.LoadScene(KeyString.NAME_SCENE_LOBBY);

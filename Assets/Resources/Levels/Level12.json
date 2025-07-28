@@ -18,7 +18,7 @@
             },
             "PercentInY": {
                 "x": 0,
-                "y": 36
+                "y": 22
             },
             "ColorValue": 1,
             "Health": 1
@@ -29,10 +29,22 @@
                 "y": 100
             },
             "PercentInY": {
-                "x": 36,
-                "y": 58
+                "x": 22,
+                "y": 43
             },
             "ColorValue": 2,
+            "Health": 1
+        },
+        {
+            "PercentInX": {
+                "x": 0,
+                "y": 100
+            },
+            "PercentInY": {
+                "x": 43,
+                "y": 58
+            },
+            "ColorValue": 5,
             "Health": 1
         },
         {
@@ -162,7 +174,7 @@
         },
         {
             "Index": 15,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -192,19 +204,19 @@
         },
         {
             "Index": 20,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 3,
             "Ammunition": 10
         },
         {
             "Index": 21,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 2,
             "Ammunition": 10
         },
         {
             "Index": 22,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -258,13 +270,13 @@
         },
         {
             "Index": 31,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 3,
             "Ammunition": 10
         },
         {
             "Index": 32,
-            "ColorValue": 1,
+            "ColorValue": 5,
             "DirectionValue": 3,
             "Ammunition": 10
         },

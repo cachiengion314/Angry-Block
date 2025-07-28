@@ -30,9 +30,21 @@
             },
             "PercentInY": {
                 "x": 29,
-                "y": 72
+                "y": 58
             },
             "ColorValue": 0,
+            "Health": 1
+        },
+        {
+            "PercentInX": {
+                "x": 0,
+                "y": 100
+            },
+            "PercentInY": {
+                "x": 58,
+                "y": 72
+            },
+            "ColorValue": 3,
             "Health": 1
         },
         {
@@ -144,7 +156,7 @@
         },
         {
             "Index": 25,
-            "ColorValue": 0,
+            "ColorValue": 3,
             "DirectionValue": 1,
             "Ammunition": 10
         },
@@ -181,7 +193,7 @@
             "directionBlockDatas": [
                 {
                     "Index": 0,
-                    "ColorValue": 2,
+                    "ColorValue": 3,
                     "DirectionValue": 1,
                     "Ammunition": 10
                 }
@@ -193,13 +205,13 @@
             "directionBlockDatas": [
                 {
                     "Index": 0,
-                    "ColorValue": 0,
+                    "ColorValue": 2,
                     "DirectionValue": 1,
                     "Ammunition": 10
                 },
                 {
                     "Index": 0,
-                    "ColorValue": 0,
+                    "ColorValue": 3,
                     "DirectionValue": 1,
                     "Ammunition": 10
                 }
