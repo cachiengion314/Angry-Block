@@ -96,6 +96,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
     public void SetSortingOrder(int sortingOrder)
     {
         sortingGroup.sortingOrder = sortingOrder;
+        bodyRenderer.sortingOrder = sortingOrder +1;
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;

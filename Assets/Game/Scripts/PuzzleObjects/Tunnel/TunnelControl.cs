@@ -67,6 +67,7 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
             dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
 
+            if (LevelManager.Instance.IsDirectionBlockTeewning) return;
             var delay = 0.1f;
             var duration = 0.3f;
             var endScale = dirBlock.transform.localScale;
@@ -75,9 +76,11 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             dirBlock.transform.position = transform.position;
 
             Sequence seq = DOTween.Sequence();
+            LevelManager.Instance.IsDirectionBlockTeewning = true;
             seq.InsertCallback(delay, () => dirBlock.gameObject.SetActive(true));
             seq.Insert(delay, dirBlock.transform.DOScale(endScale, duration));
             seq.Insert(delay, dirBlock.transform.DOMove(endPos, duration));
+            seq.OnComplete(() => LevelManager.Instance.IsDirectionBlockTeewning = false);
         }
     }
 
