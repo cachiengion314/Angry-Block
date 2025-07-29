@@ -32,14 +32,12 @@ public partial class LevelManager
     {
         if (GameManager.Instance.CurrentLevelIndex != 1) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_2, 0) == 1) return;
-        GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_2, "Blocks can be match in any order", true, () => StopTutorial2());
+        tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_2, "Blocks can be match in any order");
     }
 
     void StopTutorial2()
     {
         if (!tutorial.IsTutorialAt(KeyString.KEY_TUTORIAL_2)) return;
-        GameManager.Instance.SetGameState(GameState.Gameplay);
         PlayerPrefs.SetInt(KeyString.KEY_TUTORIAL_2, 1);
         tutorial.StopTutorial();
     }
@@ -50,7 +48,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 4) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_3, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_3, booster1Sprite, () =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_3, booster1Sprite, "Select",() =>
         {
             StartTutorial3pass2();
             GameManager.Instance.Booster1++;
@@ -78,7 +76,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 9) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_4, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_4, booster2Sprite, () =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_4, booster2Sprite, "Shuffle",() =>
         {
             StartTutorial4pass2();
             GameManager.Instance.Booster2++;
@@ -107,7 +105,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 14) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_5, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_5, booster3Sprite, () =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_5, booster3Sprite, "Magnet",() =>
         {
             StartTutorial5pass2();
             GameManager.Instance.Booster3++;
@@ -173,7 +171,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 15) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_8, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_8, "Break the ice by making moves to free the frozen block.");
+        tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_8, "Break the ice by making moves to free the frozen block");
         tutorial.ShowDarkPanel(() => StopTutorial8());
         SetLayerNameAt<IceBlockControl>("Notif");
     }

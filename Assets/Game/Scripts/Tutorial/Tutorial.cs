@@ -30,6 +30,7 @@ public class Tutorial : MonoBehaviour
     [Header("receive")]
     [SerializeField] GameObject receiveModal;
     [SerializeField] GameObject lightEfx;
+    [SerializeField] TextMeshProUGUI nameBooster;
     [SerializeField] Image rewardImg;
     [SerializeField] Button receiveBtn;
     Action OnReceive;
@@ -190,15 +191,17 @@ public class Tutorial : MonoBehaviour
         this.OnTap = OnTap;
     }
 
-    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, Action OnReceive = null)
+    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, string name, Action OnReceive = null)
     {
         this.keyTutorial = keyTutorial;
         this.OnReceive = OnReceive;
         rewardImg.sprite = rewardSprite;
         receiveModal.SetActive(true);
         lightEfx.SetActive(false);
+        nameBooster.gameObject.SetActive(false);
         rewardImg.transform.localScale = Vector2.zero;
         receiveBtn.transform.localScale = Vector2.zero;
+        nameBooster.text = name;
 
         var atPosition = 0.3f;
         var duration = 0.3f;
@@ -210,6 +213,8 @@ public class Tutorial : MonoBehaviour
         seq.Insert(atPosition,
         rewardImg.transform.DOScale(Vector2.one, duration)
         .SetEase(Ease.OutBack));
+
+        seq.InsertCallback(atPosition + duration,()=> nameBooster.gameObject.SetActive(true));
 
         seq.Insert(atPosition + duration,
         receiveBtn.transform.DOScale(Vector2.one, duration)
@@ -246,6 +251,7 @@ public class Tutorial : MonoBehaviour
         {
             receiveModal.SetActive(false);
             darkPanel.SetActive(false);
+            nameBooster.gameObject.SetActive(false);
             OnReceive?.Invoke();
         });
     }
