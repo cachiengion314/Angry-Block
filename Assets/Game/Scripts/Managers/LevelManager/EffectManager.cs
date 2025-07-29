@@ -126,9 +126,9 @@ public partial class LevelManager : MonoBehaviour
   void VisualizeStartColorBlock()
   {
     Sequence seq = DOTween.Sequence();
-    var spaceY = 0.2f;
+    var spaceY = 0.1f;
     var spaceX = 0.03f;
-    var duration = 0.15f;
+    var duration = 0.3f;
 
     for (int i = 0; i < _colorBlocks.Length; i++)
     {
@@ -141,7 +141,7 @@ public partial class LevelManager : MonoBehaviour
 
       seq.Insert(spaceX * blockGrid.x + spaceY * blockGrid.y,
       block.transform.DOMove(blockPos, duration)
-      .SetEase(Ease.InSine));
+      .SetEase(Ease.OutQuart));
     }
   }
 
