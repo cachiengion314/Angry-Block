@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -5,6 +6,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 {
     [SerializeField] SortingGroup sortingGroup;
     [SerializeField] SpriteRenderer bodyRenderer;
+    [SerializeField] TextMeshPro heartTxt;
     public Transform blockParent;
     int Index;
     int heart = 4;
@@ -77,6 +79,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 
     void Visualze()
     {
+        heartTxt.text = heart.ToString();
         // if (heart == 4) bodyRenderer.color = Color.blue;
         // if (heart == 3) bodyRenderer.color = Color.green;
         // if (heart == 2) bodyRenderer.color = Color.yellow;
@@ -97,6 +100,7 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
     {
         sortingGroup.sortingOrder = sortingOrder;
         bodyRenderer.sortingOrder = sortingOrder +1;
+        heartTxt.sortingOrder = sortingOrder +2;
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;
