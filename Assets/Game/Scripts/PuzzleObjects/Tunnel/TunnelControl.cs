@@ -67,7 +67,6 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             LevelManager.Instance.SetDirectionBlocks(colorBlock.GetIndex(), dirBlock.gameObject);
             dirBlock.SetParent(LevelManager.Instance.SpawnedParent);
 
-            if (LevelManager.Instance.IsDirectionBlockTeewning) return;
             var delay = 0.1f;
             var duration = 0.3f;
             var endScale = dirBlock.transform.localScale;
