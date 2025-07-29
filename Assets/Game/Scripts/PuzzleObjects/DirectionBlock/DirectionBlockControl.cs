@@ -155,4 +155,9 @@ public class DirectionBlockControl : MonoBehaviour
   {
     sortingGroup.sortingOrder = sortingOrder;
   }
+
+  public void SetLayerName(string layerName)
+  {
+    sortingGroup.sortingLayerName = layerName;
+  }
 }

@@ -32,7 +32,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject lightEfx;
     [SerializeField] Image rewardImg;
     [SerializeField] Button receiveBtn;
-    Action OnComplete;
+    Action OnReceive;
+    Action OnExit;
+    Action OnTap;
 
     string keyTutorial = "";
 
@@ -162,10 +164,10 @@ public class Tutorial : MonoBehaviour
         lightPanel.transform.localScale = size;
     }
 
-    public void ShowTutorialPanelAt(string keyTutorial, string text, bool showBtn = false, Action OnComplete = null)
+    public void ShowTutorialPanelAt(string keyTutorial, string text, bool showBtn = false, Action OnExit = null)
     {
         this.keyTutorial = keyTutorial;
-        this.OnComplete = OnComplete;
+        this.OnExit = OnExit;
 
         panel.SetActive(true);
         exit2Btn.gameObject.SetActive(showBtn);
@@ -174,19 +176,24 @@ public class Tutorial : MonoBehaviour
 
     public void Exit()
     {
-        OnComplete?.Invoke();
+        OnExit?.Invoke();
     }
 
-    public void ShowDarkPanel(Action OnComplete = null)
+    public void Tap()
+    {
+        OnTap?.Invoke();
+    }
+
+    public void ShowDarkPanel(Action OnTap = null)
     {
         darkPanel.SetActive(true);
-        this.OnComplete = OnComplete;
+        this.OnTap = OnTap;
     }
 
-    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, Action Oncomplete = null)
+    public void ShowReceivePanel(string keyTutorial, Sprite rewardSprite, Action OnReceive = null)
     {
         this.keyTutorial = keyTutorial;
-        this.OnComplete = Oncomplete;
+        this.OnReceive = OnReceive;
         rewardImg.sprite = rewardSprite;
         receiveModal.SetActive(true);
         lightEfx.SetActive(false);
@@ -239,7 +246,7 @@ public class Tutorial : MonoBehaviour
         {
             receiveModal.SetActive(false);
             darkPanel.SetActive(false);
-            OnComplete?.Invoke();
+            OnReceive?.Invoke();
         });
     }
 }

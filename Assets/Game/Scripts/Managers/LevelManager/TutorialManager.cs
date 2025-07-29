@@ -137,41 +137,17 @@ public partial class LevelManager
         GameManager.Instance.SetGameState(GameState.GamepPause);
         tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_6, "Block come out of tunnel");
         tutorial.ShowDarkPanel(() => StopTutorial6());
-        ShowTunnel();
+        SetLayerNameAt<TunnelControl>("Notif");
     }
     void StopTutorial6()
     {
         if (!tutorial.IsTutorialAt(KeyString.KEY_TUTORIAL_6)) return;
         GameManager.Instance.SetGameState(GameState.Gameplay);
         PlayerPrefs.SetInt(KeyString.KEY_TUTORIAL_6, 1);
-        HideTunnel();
+        SetLayerNameAt<TunnelControl>("Item");
         tutorial.StopTutorial();
     }
-    void ShowTunnel()
-    {
-        for (var i = 0; i < _directionBlocks.Length; i++)
-        {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out TunnelControl component)) continue;
 
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup))
-                sortingGroup = tunnel.AddComponent<SortingGroup>();
-            sortingGroup.sortingLayerName = "Notif";
-        }
-    }
-
-    void HideTunnel()
-    {
-        for (var i = 0; i < _directionBlocks.Length; i++)
-        {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out TunnelControl component)) continue;
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup)) continue;
-            Destroy(sortingGroup);
-        }
-    }
     // woodenblock
     void StartTutorial7()
     {
@@ -180,41 +156,17 @@ public partial class LevelManager
         GameManager.Instance.SetGameState(GameState.GamepPause);
         tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_7, "Break the box by clear the part");
         tutorial.ShowDarkPanel(() => StopTutorial7());
-        ShowWoodenBlock();
+        SetLayerNameAt<WoodenBlockControl>("Notif");
     }
     void StopTutorial7()
     {
         if (!tutorial.IsTutorialAt(KeyString.KEY_TUTORIAL_7)) return;
         GameManager.Instance.SetGameState(GameState.Gameplay);
         PlayerPrefs.SetInt(KeyString.KEY_TUTORIAL_7, 1);
-        HideWoodenBlock();
+        SetLayerNameAt<WoodenBlockControl>("Item");
         tutorial.StopTutorial();
     }
-    void ShowWoodenBlock()
-    {
-        for (var i = 0; i < _directionBlocks.Length; i++)
-        {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out WoodenBlockControl component)) continue;
-
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup))
-                sortingGroup = tunnel.AddComponent<SortingGroup>();
-            sortingGroup.sortingLayerName = "Notif";
-        }
-    }
-
-    void HideWoodenBlock()
-    {
-        for (var i = 0; i < _directionBlocks.Length; i++)
-        {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out WoodenBlockControl component)) continue;
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup)) continue;
-            sortingGroup.sortingLayerName = "Item";
-        }
-    }
+   
     // Ice Block
     void StartTutorial8()
     {
@@ -223,39 +175,26 @@ public partial class LevelManager
         GameManager.Instance.SetGameState(GameState.GamepPause);
         tutorial.ShowTutorialPanelAt(KeyString.KEY_TUTORIAL_8, "Break the ice by making moves to free the frozen block.");
         tutorial.ShowDarkPanel(() => StopTutorial8());
-        ShowIceBlock();
+        SetLayerNameAt<IceBlockControl>("Notif");
     }
     void StopTutorial8()
     {
         if (!tutorial.IsTutorialAt(KeyString.KEY_TUTORIAL_8)) return;
         GameManager.Instance.SetGameState(GameState.Gameplay);
         PlayerPrefs.SetInt(KeyString.KEY_TUTORIAL_8, 1);
-        HideIceBlock();
+        SetLayerNameAt<IceBlockControl>("Item");
         tutorial.StopTutorial();
     }
-    void ShowIceBlock()
+
+    void SetLayerNameAt<T>(string layerName)
     {
         for (var i = 0; i < _directionBlocks.Length; i++)
         {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out IceBlockControl component)) continue;
-
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup))
-                sortingGroup = tunnel.AddComponent<SortingGroup>();
-            sortingGroup.sortingLayerName = "Notif";
-        }
-    }
-
-    void HideIceBlock()
-    {
-        for (var i = 0; i < _directionBlocks.Length; i++)
-        {
-            var tunnel = _directionBlocks[i];
-            if (tunnel == null) continue;
-            if (!tunnel.TryGetComponent(out IceBlockControl component)) continue;
-            if (!tunnel.TryGetComponent(out SortingGroup sortingGroup)) continue;
-            sortingGroup.sortingLayerName = "Item";
+            var obj = _directionBlocks[i];
+            if (obj == null) continue;
+            if (!obj.TryGetComponent(out T component)) continue;
+            if (!obj.TryGetComponent(out ISpriteRend spriteRend)) continue;
+            spriteRend.SetLayerName(layerName);
         }
     }
 }

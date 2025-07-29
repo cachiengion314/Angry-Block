@@ -106,8 +106,13 @@ public class BlastBlockControl : MonoBehaviour
     bodyRenderer.sortingOrder = sortingOrder;
   }
 
-    public float3 GetMuzzlePosition()
-    {
+  public float3 GetMuzzlePosition()
+  {
     return muzzlePosition.position;
-    }
+  }
+
+  public void SetLayerName(string layerName)
+  {
+    bodyRenderer.sortingLayerName = layerName;
+  }
 }

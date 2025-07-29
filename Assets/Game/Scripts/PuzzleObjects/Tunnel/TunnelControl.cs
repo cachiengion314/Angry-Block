@@ -145,4 +145,9 @@ public class TunnelControl : MonoBehaviour, ITrigger, IDirectionBlock, IColorBlo
             spriteRend.SetSortingOrder(sortingOrder - Direction.y);
         }
     }
+
+    public void SetLayerName(string layerName)
+    {
+        bodyRenderer.sortingLayerName = layerName;
+    }
 }

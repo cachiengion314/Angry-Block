@@ -148,4 +148,8 @@ public class ColorBlockControl : MonoBehaviour
   {
     bodyRenderer.sortingOrder = sortingOrder;
   }
+  public void SetLayerName(string layerName)
+  {
+    bodyRenderer.sortingLayerName = layerName;
+  }
 }

@@ -103,4 +103,9 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
             spriteRend.SetSortingOrder(sortingOrder);
         }
     }
+
+    public void SetLayerName(string layerName)
+    {
+        sortingGroup.sortingLayerName = layerName;
+    }
 }

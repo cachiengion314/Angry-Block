@@ -2287,7 +2287,7 @@ MonoBehaviour:
   fireRate: 0.04
   updateSpeed: 1
   levelSelected: 16
-  IsSelectlevel: 1
+  IsSelectlevel: 0
   topBlockParent: {fileID: 449986420}
   spawnedParent: {fileID: 2142750223}
   topGrid: {fileID: 144897620}
@@ -14659,7 +14659,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 803374013}
         m_TargetAssemblyTypeName: Tutorial, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: Tap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
