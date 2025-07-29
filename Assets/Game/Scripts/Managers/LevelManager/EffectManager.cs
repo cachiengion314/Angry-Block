@@ -103,11 +103,33 @@ public partial class LevelManager : MonoBehaviour
     }
   }
 
+  // void VisualizeStartColorBlock()
+  // {
+  //   Sequence seq = DOTween.Sequence();
+  //   var space = 0.03f;
+  //   var duration = 1f;
+  //   for (int i = 0; i < _colorBlocks.Length; i++)
+  //   {
+  //     var block = _colorBlocks[i];
+  //     if (block == null) continue;
+  //     var blockPos = topGrid.ConvertIndexToWorldPos(i);
+  //     var blockGrid = topGrid.ConvertIndexToGridPos(i);
+
+  //     block.transform.position = blockPos + new float3(0f, 7f, 0f);
+
+  //     seq.Insert(space * blockGrid.x,
+  //     block.transform.DOMove(blockPos, duration)
+  //     .SetEase(Ease.OutBounce));
+  //   }
+  // }
+
   void VisualizeStartColorBlock()
   {
     Sequence seq = DOTween.Sequence();
-    var space = 0.03f;
-    var duration = 1f;
+    var spaceY = 0.2f;
+    var spaceX = 0.03f;
+    var duration = 0.15f;
+
     for (int i = 0; i < _colorBlocks.Length; i++)
     {
       var block = _colorBlocks[i];
@@ -117,9 +139,9 @@ public partial class LevelManager : MonoBehaviour
 
       block.transform.position = blockPos + new float3(0f, 7f, 0f);
 
-      seq.Insert(space * blockGrid.x,
+      seq.Insert(spaceX * blockGrid.x + spaceY * blockGrid.y,
       block.transform.DOMove(blockPos, duration)
-      .SetEase(Ease.OutBounce));
+      .SetEase(Ease.InSine));
     }
   }
 

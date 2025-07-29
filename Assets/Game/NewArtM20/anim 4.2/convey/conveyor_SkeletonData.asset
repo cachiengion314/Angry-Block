@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: conveyor_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: a6bb89ec58b2b4dc88252a6c6a2980e0, type: 2}
+  - {fileID: 11400000, guid: d86674f90f01c4cc2bbc50ff28a4fb4d, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 7eb7353179c6048b7b99fb850a631902, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: fcedf407cab9945768bd6ebf922e4184, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
