@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class BlastBlockControl : MonoBehaviour
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
+  [SerializeField] TextMeshPro amountText;
   [SerializeField] Transform muzzlePosition;
   [Header("Datas")]
   int _index;
@@ -64,6 +66,7 @@ public class BlastBlockControl : MonoBehaviour
   public void SetAmmunition(int ammunition)
   {
     _ammunition = ammunition;
+    amountText.text = ammunition.ToString();
   }
 
   public int GetAmmunition()
