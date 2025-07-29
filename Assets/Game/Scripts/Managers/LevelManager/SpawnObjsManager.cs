@@ -12,7 +12,7 @@ public partial class LevelManager : MonoBehaviour
   [SerializeField] BlastBlockControl blastBlockPref;
   [SerializeField] TunnelControl tunnelControlPref;
   [SerializeField] SlotControl slotControlPref;
-  [SerializeField] ParticleSystem colorSplashEfx;
+  [SerializeField] YellowBloodExplosion2D colorSplashEfx;
   [SerializeField] ParticleSystem splashExplosionEfx;
 
   public ParticleSystem SpawnSplashExplosionEfx(float3 pos)
@@ -21,9 +21,11 @@ public partial class LevelManager : MonoBehaviour
     return obj;
   }
 
-  public ParticleSystem SpawnColorSplashEfxAt(float3 pos)
+  public YellowBloodExplosion2D SpawnColorSplashEfxAt(float3 pos, int colorValue)
   {
     var obj = Instantiate(colorSplashEfx, pos, colorSplashEfx.transform.rotation);
+    var color = RendererSystem.Instance.GetColorBy(colorValue);
+    obj.SetColor(color);
     return obj;
   }
 

@@ -1,5 +1,5 @@
 conveyor.png
-size:1356,492
+size:1354,491
 filter:Linear,Linear
 pma:true
 arrow

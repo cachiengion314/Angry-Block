@@ -27,7 +27,8 @@ public partial class LevelManager : MonoBehaviour
               ShakeCameraBy(new float3(.0f, -.25f, .0f));
               AddToShakeQueue(blast.transform.position);
               ShakeBottomGrid(blast.transform.position);
-              SpawnColorSplashEfxAt(blast.transform.position);
+              if (blast.TryGetComponent(out IColorBlock color))
+                SpawnColorSplashEfxAt(blast.transform.position, color.GetColorValue());
 
               _firingSlots.Remove(blast);
               Destroy(blast);
@@ -57,7 +58,8 @@ public partial class LevelManager : MonoBehaviour
      .OnComplete(() =>
      {
        SoundManager.Instance.PlayDestoyColorBlockSfx();
-       SpawnColorSplashEfxAt(colorBlock.transform.position);
+       if (colorBlock.TryGetComponent(out IColorBlock color))
+         SpawnColorSplashEfxAt(colorBlock.transform.position, color.GetColorValue());
        Destroy(colorBlock);
      });
 
@@ -86,8 +88,8 @@ public partial class LevelManager : MonoBehaviour
   void OnMergedCollided(GameObject blast)
   {
     SoundManager.Instance.PlayMergeBlockSfx();
-
-    SpawnColorSplashEfxAt(blast.transform.position);
+    if (blast.TryGetComponent(out IColorBlock color))
+      SpawnColorSplashEfxAt(blast.transform.position, color.GetColorValue());
     ShakeCameraBy(new float3(.0f, .25f, .0f));
     AddToShakeQueue(blast.transform.position);
     ShakeBottomGrid(blast.transform.position);
@@ -102,7 +104,7 @@ public partial class LevelManager : MonoBehaviour
 
   void VisualizeUseTriggerBooster2()
   {
-    if(IsDirectionBlockTeewning) return;
+    if (IsDirectionBlockTeewning) return;
     Sequence seq = DOTween.Sequence();
     float spaceTime = 0.08f;
     float duration = 0.16f;
@@ -137,7 +139,7 @@ public partial class LevelManager : MonoBehaviour
         directionBlock.transform.DOScale(startScale, duration / 2)
         .SetEase(Ease.Linear));
 
-      seq.OnComplete(()=> IsDirectionBlockTeewning= false);
+      seq.OnComplete(() => IsDirectionBlockTeewning = false);
     }
   }
 }
