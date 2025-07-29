@@ -4,10 +4,12 @@ using UnityEngine;
 public class BulletControl : MonoBehaviour
   , IBullet
   , IMoveable
+  , IColorBlock
 {
   [Header("Dependencies")]
   [SerializeField] SpriteRenderer bodyRenderer;
   [Header("Datas")]
+  int _colorValue;
   int _damage;
   float3 _velocity;
   float3 _lockedPosition;
@@ -84,5 +86,26 @@ public class BulletControl : MonoBehaviour
   public float3[] GetPath()
   {
     return _path;
+  }
+
+  public int GetColorValue()
+  {
+    return _colorValue;
+  }
+
+  public void SetColorValue(int colorValue)
+  {
+    _colorValue = colorValue;
+    bodyRenderer.color = RendererSystem.Instance.GetColorBy(colorValue);
+  }
+
+  public void SetIndex(int index)
+  {
+    throw new System.NotImplementedException();
+  }
+
+  public int GetIndex()
+  {
+    return -1;
   }
 }

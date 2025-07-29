@@ -72,6 +72,7 @@ public partial class LevelManager : MonoBehaviour
     if (
       firstHit.collider != null
       && firstHit.collider.TryGetComponent<IColorBlock>(out var color)
+      && color.GetIndex() != -1
     )
       startX = topGrid.ConvertIndexToGridPos(color.GetIndex()).x;
 

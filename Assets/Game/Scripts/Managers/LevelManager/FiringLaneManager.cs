@@ -121,10 +121,14 @@ public partial class LevelManager : MonoBehaviour
         updateSpeed * bulletSpeed,
         1
       );
-      
+
       if (blastBlock.TryGetComponent(out IMuzzlePosition muzzlePosition))
         bullet.transform.position = muzzlePosition.GetMuzzlePosition();
         
+      if (bullet.TryGetComponent(out IColorBlock colorBullet)
+          && blastBlock.TryGetComponent(out IColorBlock colorblastBlock))
+        colorBullet.SetColorValue(colorblastBlock.GetColorValue());
+
       damageable.SetWhoLocked(bullet.gameObject);
       if (bullet.TryGetComponent<IBullet>(out var bulletComp))
       {
