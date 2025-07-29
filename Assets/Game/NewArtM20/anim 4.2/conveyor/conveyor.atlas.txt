@@ -1,0 +1,10 @@
+conveyor.png
+size:1356,492
+filter:Linear,Linear
+pma:true
+arrow
+bounds:1325,447,27,42
+offsets:1,1,29,44
+conveyor
+bounds:2,2,1321,487
+offsets:5,5,1331,497

@@ -1,3 +1,4 @@
+using Spine.Unity;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -5,13 +6,14 @@ using UnityEngine.Rendering;
 public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteRend
 {
     [SerializeField] SortingGroup sortingGroup;
-    [SerializeField] SpriteRenderer bodyRenderer;
+    // [SerializeField] SpriteRenderer bodyRenderer;
+    [SerializeField] SkeletonAnimation bodySkeleton;
     public Transform blockParent;
     int Index;
 
     public SpriteRenderer GetBodyRenderer()
     {
-        return bodyRenderer;
+        return null;
     }
 
     public int GetColorValue()
@@ -26,7 +28,7 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
 
     public int GetSortingOrder()
     {
-        return bodyRenderer.sortingOrder;
+        return bodySkeleton.GetComponent<Renderer>().sortingOrder;
     }
 
     public void Initialize(DirectionBlockData directionBlockData)
@@ -53,7 +55,9 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
             col.enabled = true;
             LevelManager.Instance.SetDirectionBlocks(Index, block.gameObject);
             block.SetParent(LevelManager.Instance.SpawnedParent);
-            Destroy(gameObject);
+
+            bodySkeleton.AnimationState.SetAnimation(0, "animation", false);
+            Destroy(gameObject,1f);
         }
     }
 
@@ -81,7 +85,7 @@ public class WoodenBlockControl : MonoBehaviour, ITrigger, IColorBlock, ISpriteR
     public void SetSortingOrder(int sortingOrder)
     {
         sortingGroup.sortingOrder = sortingOrder;
-        bodyRenderer.sortingOrder = sortingOrder + 1;
+        bodySkeleton.GetComponent<Renderer>().sortingOrder = sortingOrder + 1;
         foreach (Transform child in blockParent)
         {
             if (!child.TryGetComponent(out ISpriteRend spriteRend)) continue;

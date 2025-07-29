@@ -1,3 +1,4 @@
+using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -5,7 +6,8 @@ using UnityEngine.Rendering;
 public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 {
     [SerializeField] SortingGroup sortingGroup;
-    [SerializeField] SpriteRenderer bodyRenderer;
+    // [SerializeField] SpriteRenderer bodyRenderer;
+    [SerializeField] SkeletonAnimation bodySkeleton;
     [SerializeField] TextMeshPro heartTxt;
     public Transform blockParent;
     int Index;
@@ -74,7 +76,10 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
         col.enabled = true;
         LevelManager.Instance.SetDirectionBlocks(Index, block.gameObject);
         block.SetParent(LevelManager.Instance.SpawnedParent);
-        Destroy(gameObject);
+
+        bodySkeleton.AnimationState.SetAnimation(0, "animation", false);
+        heartTxt.gameObject.SetActive(false);
+        Destroy(gameObject,1f);
     }
 
     void Visualze()
@@ -88,18 +93,18 @@ public class IceBlockControl : MonoBehaviour, IColorBlock, ISpriteRend
 
     public SpriteRenderer GetBodyRenderer()
     {
-        return bodyRenderer;
+        return null;
     }
 
     public int GetSortingOrder()
     {
-        return bodyRenderer.sortingOrder;
+        return bodySkeleton.GetComponent<Renderer>().sortingOrder;
     }
 
     public void SetSortingOrder(int sortingOrder)
     {
         sortingGroup.sortingOrder = sortingOrder;
-        bodyRenderer.sortingOrder = sortingOrder +1;
+        bodySkeleton.GetComponent<Renderer>().sortingOrder = sortingOrder +1;
         heartTxt.sortingOrder = sortingOrder +2;
         foreach (Transform child in blockParent)
         {
