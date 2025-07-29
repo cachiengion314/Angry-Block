@@ -48,7 +48,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 4) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_3, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_3, booster1Sprite, "Select",() =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_3, booster1Sprite, "New Booster\nSelect",() =>
         {
             StartTutorial3pass2();
             GameManager.Instance.Booster1++;
@@ -76,7 +76,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 9) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_4, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_4, booster2Sprite, "Shuffle",() =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_4, booster2Sprite, "New Booster\nShuffle",() =>
         {
             StartTutorial4pass2();
             GameManager.Instance.Booster2++;
@@ -105,7 +105,7 @@ public partial class LevelManager
         if (GameManager.Instance.CurrentLevelIndex != 14) return;
         if (PlayerPrefs.GetInt(KeyString.KEY_TUTORIAL_5, 0) == 1) return;
         GameManager.Instance.SetGameState(GameState.GamepPause);
-        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_5, booster3Sprite, "Magnet",() =>
+        tutorial.ShowReceivePanel(KeyString.KEY_TUTORIAL_5, booster3Sprite, "New Booster\nMagnet",() =>
         {
             StartTutorial5pass2();
             GameManager.Instance.Booster3++;
