@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
-  <string name="gcm_defaultSenderId" translatable="false">1031407332260</string>
-  <string name="google_storage_bucket" translatable="false">coffeesort-8b186.firebasestorage.app</string>
-  <string name="project_id" translatable="false">coffeesort-8b186</string>
-  <string name="google_api_key" translatable="false">AIzaSyDwMIMQUQfGIpFUd5uj1acCJPBbampavLg</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDwMIMQUQfGIpFUd5uj1acCJPBbampavLg</string>
-  <string name="google_app_id" translatable="false">1:1031407332260:android:b589e177358191fed22f31</string>
-  <string name="default_web_client_id" translatable="false">1031407332260-g74og7vemfa3d600in6hs73ob6ecdiq9.apps.googleusercontent.com</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">298098198510</string>
+  <string name="google_storage_bucket" translatable="false">m20-blast-jam-block-away.firebasestorage.app</string>
+  <string name="project_id" translatable="false">m20-blast-jam-block-away</string>
+  <string name="google_api_key" translatable="false">AIzaSyDISOkKO3Xe6S_buO_E05YYUevYtmny0-8</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDISOkKO3Xe6S_buO_E05YYUevYtmny0-8</string>
+  <string name="google_app_id" translatable="false">1:298098198510:android:eac546193ccef1e8d8f0ff</string>
 </resources>

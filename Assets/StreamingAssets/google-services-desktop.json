@@ -1,35 +1,28 @@
 {
   "project_info": {
-    "project_number": "1031407332260",
-    "project_id": "coffeesort-8b186",
-    "storage_bucket": "coffeesort-8b186.firebasestorage.app"
+    "project_number": "298098198510",
+    "project_id": "m20-blast-jam-block-away",
+    "storage_bucket": "m20-blast-jam-block-away.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1031407332260:ios:59b2a97584f9cd46d22f31",
+        "mobilesdk_app_id": "1:298098198510:android:eac546193ccef1e8d8f0ff",
         "android_client_info": {
-          "package_name": "com.unbrella.man"
+          "package_name": "com.cmz.blastjam.blockaway"
         }
       },
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBvCTJ7bmBEKZTJdiqPR1qAPY8PA77Hs78"
+          "current_key": "AIzaSyDISOkKO3Xe6S_buO_E05YYUevYtmny0-8"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 0
-        },
         "appinvite_service": {
-          "status": 1
+          "other_platform_oauth_client": []
         }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1031407332260-cmrqr1mjk22n30m7pv19epgtv1lkbo55.apps.googleusercontent.com"
-        }
-      ]
+      }
     }
   ],
   "configuration_version": "1"
