@@ -1,5 +1,3 @@
-using com.binouze;
-using Unity.Services.LevelPlay;
 using UnityEngine;
 
 public class ShowConsentUMP : MonoBehaviour
