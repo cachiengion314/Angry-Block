@@ -1,13 +1,11 @@
 <dependencies>
   <packages>
     <package>androidx.preference:preference:1.2+</package>
-    <package>androidx.recyclerview:recyclerview:1.2.1</package>
     <package>com.android.installreferrer:installreferrer:2.1</package>
     <package>com.android.support:appcompat-v7:25.3.1</package>
     <package>com.android.support:cardview-v7:25.3.1</package>
     <package>com.android.support:customtabs:25.3.1</package>
     <package>com.android.support:support-v4:25.3.1</package>
-    <package>com.applovin:applovin-sdk:13.3.1</package>
     <package>com.appsflyer:af-android-sdk:6.15.0</package>
     <package>com.appsflyer:unity-wrapper:6.15.3</package>
     <package>com.facebook.android:facebook-applinks:[17.0.0,18)</package>
@@ -15,8 +13,6 @@
     <package>com.facebook.android:facebook-gamingservices:[17.0.0,18)</package>
     <package>com.facebook.android:facebook-login:[17.0.0,18)</package>
     <package>com.facebook.android:facebook-share:[17.0.0,18)</package>
-    <package>com.google.android.gms:play-services-ads:24.4.0</package>
-    <package>com.google.android.gms:play-services-ads-identifier:18.1.0</package>
     <package>com.google.android.gms:play-services-base:18.6.0</package>
     <package>com.google.android.ump:user-messaging-platform:3.2.0+</package>
     <package>com.google.firebase:firebase-analytics:22.4.0</package>
@@ -35,16 +31,7 @@
     <package>com.google.firebase:firebase-messaging:24.1.1</package>
     <package>com.google.firebase:firebase-messaging-unity:12.10.1</package>
     <package>com.google.flatbuffers:flatbuffers-java:1.12.0</package>
-    <package>com.mbridge.msdk.oversea:mbridge_android_sdk:16.9.71</package>
     <package>com.parse.bolts:bolts-android:1.4.0</package>
-    <package>com.unity3d.ads:unity-ads:4.15.0</package>
-    <package>com.unity3d.ads-mediation:admob-adapter:4.3.52</package>
-    <package>com.unity3d.ads-mediation:applovin-adapter:4.3.54</package>
-    <package>com.unity3d.ads-mediation:mediation-sdk:8.10.0</package>
-    <package>com.unity3d.ads-mediation:mintegral-adapter:4.3.43</package>
-    <package>com.unity3d.ads-mediation:unityads-adapter:4.3.55</package>
-    <package>com.unity3d.ads-mediation:vungle-adapter:4.3.30</package>
-    <package>com.vungle:vungle-ads:7.5.0</package>
   </packages>
   <files>
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/12.10.1/firebase-analytics-unity-12.10.1.aar</file>
@@ -74,7 +61,7 @@
     <setting name="packageDir" value="Assets/Plugins/Android" />
     <setting name="patchAndroidManifest" value="True" />
     <setting name="patchMainTemplateGradle" value="True" />
-    <setting name="projectExportEnabled" value="True" />
+    <setting name="projectExportEnabled" value="False" />
     <setting name="useFullCustomMavenRepoPathWhenExport" value="True" />
     <setting name="useFullCustomMavenRepoPathWhenNotExport" value="False" />
     <setting name="useJetifier" value="True" />
